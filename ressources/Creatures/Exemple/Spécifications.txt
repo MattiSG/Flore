@@ -1,0 +1,7 @@
+Hirarchie des dossiers :
+- ID crature
+	-> description.xml
+	-> assets
+		->img
+		->img
+		->imgÉ

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Flore" default="compile" basedir="." xmlns:doxygen="antlib:org.doxygen.tools">
+<project name="Flore" default="junit" basedir="." xmlns:doxygen="antlib:org.doxygen.tools">
   <property name="dir.src" location="src"/>
   <property name="dir.bin" location="bin"/>
   <property name="dir.lib" location="lib"/>
@@ -8,10 +8,11 @@
   <property name="dir.rsc" location="ressources"/>
   <property name="dir.test" location="test"/>
   <property name="dir.dist" location="dist"/>
+  <property name="dir.jar" location="jars"/>
   <property name="compile.debug" value="true"/>
   <property name="file.build" value="build.xml"/>
   <property name="class.main" value="game.Flore"/>
-  <property name="class.test" value="test.WholeTests"/>
+  <property name="class.test" value="test.RunAndPray"/>
   <property name="lib.vox" value="${dir.lib}/si_vox.jar"/>
   <property name="lib.json" value="${dir.lib}/json.jar"/>
   <property name="lib.junit" value="${dir.lib}/junit-4.5.jar"/>
@@ -44,11 +45,13 @@
   </target>
 
   <target name="jar" depends="compile" description="Build jar">
+	<mkdir dir="${dir.jar}"/>
     <jar jarfile="${dir.jar}/${project.name}.jar" basedir="${dir.src}">
     </jar>
   </target>
 
   <target name="jar_tests" depends="compile_tests" description="Build tests jar">
+	<mkdir dir="${dir.jar}"/>
     <jar jarfile="${dir.jar}/${project.name}_tests.jar" basedir="${dir.test}">
     </jar>
   </target>

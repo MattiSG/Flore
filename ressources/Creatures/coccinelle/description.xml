@@ -1,0 +1,48 @@
+<creature version="1">
+	<id>coccinelle</id>
+	<name lang="fr">Coccinelle</name>
+	
+	<dimension direction="x">100</dimension>
+	<dimension direction="y">40</dimension>
+	
+	<description lang="fr">Coccinellidae, en français coccinellidés, est une famille d'insectes de l'ordre des coléoptères, appelés aussi coccinelles, ou bêtes à bon Dieu. Véritables ogres à pucerons, les coccinelles sont aujourd'hui reconnues comme l'un des meilleurs insecticides naturels.</description>
+	
+	<assets>
+		<standing>
+			<img></img>
+		</standing>
+		<moving direction="left">
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</moving>
+		<moving direction="right">
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</moving>
+		<moving direction="down">
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</moving>
+		<moving direction="up">
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</moving>
+	</assets>
+	
+	<preys>
+		<creature>puceron</creature>
+	</preys>
+	
+	<eats>
+		<seed>rose</seed>
+	</eats>
+	
+</creature>

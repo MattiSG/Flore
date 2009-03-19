@@ -1,6 +1,8 @@
 package element.insect;
 
-public class Insect {
+import element.Element;
+
+public class Insect extends Element {
     public Insect() {
     }
 }

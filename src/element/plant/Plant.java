@@ -7,12 +7,15 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class Plant {
+import element.Element;
+
+public class Plant extends Element {
     BufferedImage image;
     float health = 0;
     float anim = 0;
 
-    public Plant() {
+    public Plant(String file) {
+		loadFromXML(file);
         try {
             image = ImageIO.read(new File("../ressources/images/plant.png"));
         } catch(java.io.IOException e) {

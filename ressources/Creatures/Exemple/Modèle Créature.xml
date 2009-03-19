@@ -1,0 +1,52 @@
+<creature version="1">
+	<id>ID</id>
+	<name lang="fr">Name</name>
+	
+	<dimension direction="x">100</dimension>
+	<dimension direction="y">100</dimension>
+	
+	<description lang="fr">Lorem ipsum dolor sit amet.</description>
+	
+	<assets>
+		<standing>
+			<img></img>
+		</standing>
+		<moving direction="left">
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</moving>
+		<moving direction="right">
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</moving>
+		<moving direction="down">
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</moving>
+		<moving direction="up">
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</moving>
+	</assets>
+	
+	<preys>
+		<creature>ID</creature>
+		<creature>ID</creature>
+		<creature>ID</creature>
+	</preys>
+	
+	<eats>
+		<seed>ID</seed>
+		<seed>ID</seed>
+		<seed>ID</seed>
+	</eats>
+	
+</creature>

@@ -1,0 +1,35 @@
+<seed version="1">
+	<id>ID</id>
+	<name lang="fr">Name</name>
+	
+	<dimension direction="x">100</dimension> <!-- dimensions de la fleur -->
+	<dimension direction="y">100</dimension>
+	
+	<description lang="fr">Lorem ipsum dolor sit amet.</description>
+	
+	<water>10</water> <!-- quantité d'eau nécessaire -->
+	<sun>10</sun> <!-- quantité de soleil nécessaire -->
+	<time>10</time> <!-- nombre de jours avant la floraison (à voir par rapport au soleil ?) -->
+	
+	<assets>
+		<seed>
+			<img></img>
+		</seed>
+		<shaft>
+			<img></img>
+			<img></img>
+			<img></img>
+		</shaft>
+		<leaves>
+			<img></img>
+			<img></img>
+			<img></img>
+		</leaves>
+		<flowers>
+			<img></img>
+			<img></img>
+			<img></img>
+		</flowers>
+	</assets>
+	
+</seed>

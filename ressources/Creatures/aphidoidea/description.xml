@@ -1,0 +1,47 @@
+<creature version="1">
+	<id>aphidoidea</id>
+	<name lang="fr">Puceron</name>
+	
+	<dimension direction="x">60</dimension>
+	<dimension direction="y">30</dimension>
+	
+	<description lang="fr">Les pucerons sont de petits insectes mesurant généralement entre 1 et 4 mm. Ils peuvent être verts, roses, rouges, noirs, bruns, bleus, jaunes ou bien encore bleuâtres. Ils possèdent des antennes situées entre les deux yeux.</description>
+	
+	<assets>
+		<standing>
+			<img></img>
+		</standing>
+		<moving direction="left">
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</moving>
+		<moving direction="right">
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</moving>
+		<moving direction="down">
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</moving>
+		<moving direction="up">
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</moving>
+	</assets>
+	
+	<preys>
+	</preys>
+	
+	<eats>
+		<seed>rose</seed>
+	</eats>
+	
+</creature>
