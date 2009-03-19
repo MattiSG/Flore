@@ -15,8 +15,6 @@ public class GameView extends JPanel {
 
     public GameView() {
         plant.set(100.0f);
-        for(int i = 0; i < 100; i++)
-            plant.grow();
     }
 
     public void paintComponent(Graphics g){
