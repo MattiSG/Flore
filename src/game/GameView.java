@@ -8,9 +8,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import element.plant.*;
 
 public class GameView extends JPanel {
+    Plant plant = new Plant();
+
     public GameView() {
+        plant.set(100.0f);
+        for(int i = 0; i < 100; i++)
+            plant.grow();
     }
 
     public void paintComponent(Graphics g){
@@ -28,6 +34,7 @@ public class GameView extends JPanel {
 
         // herbe
         try {
+            // wtf, a new a each frame ?
             BufferedImage im = ImageIO.read(new File("../ressources/images/grass.jpg"));
             int w = im.getWidth();
             int h = im.getHeight();
@@ -38,6 +45,8 @@ public class GameView extends JPanel {
                 {
                     g2d.drawImage(im, null, x * w, (rect.height * 2 / 3) + y * h);
                 }
+
+            plant.paint(g);
         } catch (java.io.IOException e) {
             System.err.println("[erreur] " + e);
         }
