@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.List;
 
 import javax.xml.xpath.*;
+import javax.xml.parsers.*;
+import org.w3c.dom.Document;
+import java.io.File;
 
 import java.awt.image.BufferedImage;
 
@@ -16,10 +19,10 @@ abstract public class Element {
 	protected String description;
 	protected Map<String, List<BufferedImage>> assets;
 
-	private final static String EXPR_ID = "ID";
-	private final static String EXPR_NAME = "name[lang=fr]";
-	private final static String EXPR_ASSETS = "assets";
-	private final static String EXPR_DESCRIPTION = "description";
+	private final static String EXPR_ID = "//id";
+	private final static String EXPR_NAME = "//name[@lang=fr]";
+	private final static String EXPR_ASSETS = "//assets";
+	private final static String EXPR_DESCRIPTION = "//description";
 	
 	/**@name	Getters*/
 	//@{
@@ -39,14 +42,20 @@ abstract public class Element {
 	
 	/**@name	XML parsing*/
 	//@{
-    public void loadFromXML(String XML) {
+    public void loadFromXML(String file) {
 		try {
+			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			Document XML = builder.parse(new File(file));
 			XPath xpath = XPathFactory.newInstance().newXPath();
 			ID = xpath.evaluate(EXPR_ID, XML);
 			name = xpath.evaluate(EXPR_NAME, XML);
 			description = xpath.evaluate(EXPR_DESCRIPTION, XML);
 		} catch (XPathExpressionException e) {
 			System.err.println("Erreur à l'analyse d'un fichier d'élément (insecte ou plante) !\nLa version est-elle correcte ?\n" + e);
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.err.println("Erreur !! DTC !!" + e);
+			e.printStackTrace();
 		}
 	}
 	//@}

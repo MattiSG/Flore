@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import element.plant.*;
 
 public class GameView extends JPanel {
-    Plant plant = new Plant();
+    Plant plant = new Plant("TEMPORAIRE !!");
 
     public GameView() {
         plant.set(100.0f);

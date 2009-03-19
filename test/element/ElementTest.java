@@ -19,7 +19,7 @@ import element.plant.Plant;
 
 public class ElementTest {
 	
-	public static final String TEST_FILE = "../ressources/Plantes/rosa/description.xml";
+	public static final String TEST_FILE = "ressources/Plantes/rosa/description.xml";
 
 	private Element subject;
 	private static final String EXPECTED_ID = "rosa";
