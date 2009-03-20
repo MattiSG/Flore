@@ -8,10 +8,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import element.plant.*;
+import element.plant.Plant;
 
 public class GameView extends JPanel {
-    Plant plant = new Plant("TEMPORAIRE !!");
+    Plant plant = new Plant("ressources/Plantes/description.xml");
     BufferedImage im;
 
     public GameView() {

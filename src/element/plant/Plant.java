@@ -13,14 +13,22 @@ public class Plant extends Element {
     BufferedImage image;
     float health = 0;
     float anim = 0;
+    int x, y;
 
-    public Plant(String file) {
+    public Plant(String file, int xx, int yy) {
 		loadFromXML(file);
         try {
             image = ImageIO.read(new File("../ressources/images/plant.png"));
         } catch(java.io.IOException e) {
             System.err.println("[erreur] " + e);
         }
+        
+        x = xx;
+        y = yy;
+    }
+
+    public Plant(String file) {
+        this(file, 512, 777);
     }
 
     public void set(float h) {
@@ -47,11 +55,22 @@ public class Plant extends Element {
         // how much pixels of the plant draw
         int h = (int)((float)imh * (anim / 100));
 
+        // drawImage(Image img, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, ImageObserver observer) 
         g.drawImage(image,
-                    rect.width / 2 - imw,
+                    x - imw / 2,
+                    y - h,
+                    x + imw / 2,
+                    y,
+
+                    0,
+                    0,
+                    image.getWidth(),
+                    (int)((float)image.getHeight() * (anim / 100)),
+
+/*                    rect.width / 2 - imw,
                     rect.height - h,
                     imw,
-                    imh,
+                    imh,*/
                     null
                    );
     }
