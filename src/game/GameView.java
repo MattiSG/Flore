@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import element.plant.Plant;
 
 public class GameView extends JPanel {
-    Plant plant = new Plant("ressources/Plantes/description.xml");
+    Plant plant = new Plant("rosa");
     BufferedImage im;
 
     public GameView() {
