@@ -38,11 +38,11 @@
 	</assets>
 	
 	<preys>
-		<creature>puceron</creature>
+		<creature>aphidoidea</creature> <!--id de créature -->
 	</preys>
 	
 	<eats>
-		<seed>rose</seed>
+		<seed>rosa</seed> <!-- id de seed -->
 	</eats>
 	
 </creature>

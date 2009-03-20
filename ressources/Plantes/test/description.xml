@@ -1,8 +1,8 @@
 <seed version="1">
-	<id>ID</id>
-	<name lang="fr">Name</name>
+	<id>ID</id> <!--identifiant unique-->
+	<name lang="fr">Name</name> <!--nom affiché-->
 	
-	<dimension direction="x">100</dimension> <!-- dimensions de la fleur -->
+	<dimension direction="x">100</dimension> <!-- dimensions de la fleur (px)-->
 	<dimension direction="y">100</dimension>
 	
 	<description lang="fr">Lorem ipsum dolor sit amet.</description>
@@ -11,21 +11,42 @@
 	<sun>10</sun> <!-- quantité de soleil nécessaire -->
 	<time>10</time> <!-- nombre de jours avant la floraison (à voir par rapport au soleil ?) -->
 	
-	<assets>
-		<seed>
+	<assets type="standard">
+		<seed> <!-- graine ("icône")-->
 			<img></img>
 		</seed>
-		<shaft>
+		<shaft> <!-- tige -->
 			<img></img>
 			<img></img>
 			<img></img>
 		</shaft>
-		<leaves>
+		<leaves> <!-- feuilles (sélectionnées en random) -->
 			<img></img>
 			<img></img>
 			<img></img>
 		</leaves>
-		<flowers>
+		<flowers> <!-- fleurs (sélectionnées en random) -->
+			<img></img>
+			<img></img>
+			<img></img>
+		</flowers>
+	</assets>
+	
+	<assets type="high_contrast">
+		<seed> <!-- graine ("icône")-->
+			<img></img>
+		</seed>
+		<shaft> <!-- tige -->
+			<img></img>
+			<img></img>
+			<img></img>
+		</shaft>
+		<leaves> <!-- feuilles (sélectionnées en random) -->
+			<img></img>
+			<img></img>
+			<img></img>
+		</leaves>
+		<flowers> <!-- fleurs (sélectionnées en random) -->
 			<img></img>
 			<img></img>
 			<img></img>

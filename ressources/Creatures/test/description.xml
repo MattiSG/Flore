@@ -7,29 +7,29 @@
 	
 	<description lang="fr">Lorem ipsum dolor sit amet.</description>
 	
-	<assets>
-		<standing>
+	<assets type="standard">
+		<standing> <!--insecte immobile-->
 			<img></img>
 		</standing>
-		<moving direction="left">
+		<moving direction="left"> <!-- images pour créer une animation de déplacement à gauche -->
 			<img></img>
 			<img></img>
 			<img></img>
 			<img></img>
 		</moving>
-		<moving direction="right">
+		<moving direction="right"> <!-- images pour créer une animation de déplacement à droite -->
 			<img></img>
 			<img></img>
 			<img></img>
 			<img></img>
 		</moving>
-		<moving direction="down">
+		<moving direction="down"> <!-- images pour créer une animation de déplacement à bas -->
 			<img></img>
 			<img></img>
 			<img></img>
 			<img></img>
 		</moving>
-		<moving direction="up">
+		<moving direction="up"> <!-- images pour créer une animation de déplacement en haut -->
 			<img></img>
 			<img></img>
 			<img></img>

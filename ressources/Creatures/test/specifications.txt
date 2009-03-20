@@ -1,0 +1,24 @@
+Hiérarchie des dossiers :
+- ID crature
+	-> description.xml
+	-> assets
+		-> standard
+			->img
+			->img
+			->img
+			->…
+		-> high_contrast
+			->img
+			->img
+			->img
+			->…
+		-> simple
+			->img
+			->img
+			->img
+			->…
+		
+Valeurs possibles pour l'attribut "type" du nœud assets :
+- standard (le plus détaillé graphiquement)
+- high_contrast
+- simple (des formes géométriques très reconnaissables)
