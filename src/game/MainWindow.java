@@ -109,7 +109,7 @@ public class MainWindow extends JFrame {
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // fait grandir ta plante ici !
-                //statusBar.setText("tick: " + e.getWhen());
+                statusBar.setText("tick: " + e.getWhen());
                 gameView.grow();
                 gameView.repaint();
             }

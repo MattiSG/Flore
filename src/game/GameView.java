@@ -12,9 +12,15 @@ import element.plant.*;
 
 public class GameView extends JPanel {
     Plant plant = new Plant("TEMPORAIRE !!");
+    BufferedImage im;
 
     public GameView() {
         plant.set(100.0f);
+        try {
+            im = ImageIO.read(new File("../ressources/images/grass.jpg"));
+        } catch (java.io.IOException e) {
+            System.err.println("[erreur] " + e);
+        }
     }
 
     public void grow() {
@@ -35,22 +41,16 @@ public class GameView extends JPanel {
         g2d.fillOval(20, 20, 75, 75);
 
         // herbe
-        try {
-            // wtf, a new a each frame ?
-            BufferedImage im = ImageIO.read(new File("../ressources/images/grass.jpg"));
-            int w = im.getWidth();
-            int h = im.getHeight();
-            int nbW = (rect.width / w) + 1;
-            int nbH = (rect.height / h) + 1;
-            for (int x = 0; x < nbW; ++x)
-                for (int y = 0; y < nbH; ++y)
-                {
-                    g2d.drawImage(im, null, x * w, (rect.height * 2 / 3) + y * h);
-                }
+        int w = im.getWidth();
+        int h = im.getHeight();
+        int nbW = (rect.width / w) + 1;
+        int nbH = (rect.height / h) + 1;
+        for (int x = 0; x < nbW; ++x)
+            for (int y = 0; y < nbH; ++y)
+            {
+                g2d.drawImage(im, null, x * w, (rect.height * 2 / 3) + y * h);
+            }
 
-            plant.paint(g);
-        } catch (java.io.IOException e) {
-            System.err.println("[erreur] " + e);
-        }
+        plant.paint(g);
     }
 }
