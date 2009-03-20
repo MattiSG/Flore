@@ -19,11 +19,12 @@ import element.plant.Plant;
 
 public class ElementTest {
 	
-	public static final String TEST_FILE = "ressources/Plantes/rosa/description.xml";
+	public static final String TEST_FILE = "ressources/Plantes/test/description.xml";
 
 	private Element subject;
-	private static final String EXPECTED_ID = "rosa";
-	private static final String EXPECTED_NAME = "rose";
+	private static final String EXPECTED_ID = "ID";
+	private static final String EXPECTED_NAME = "Name";
+	private static final String EXPECTED_DESCRIPTION = "Lorem ipsum dolor sit amet.";
 	
 	
 	@Before
@@ -33,7 +34,8 @@ public class ElementTest {
 	
 	@Test
 	public void parsingTest() {
-		assertEquals("ID badly parsed", EXPECTED_ID, subject.ID());
-		assertEquals("Name badly parsed", EXPECTED_NAME, subject.name());
+		assertEquals("ID badly parsed : ", EXPECTED_ID, subject.ID());
+		assertEquals("Name badly parsed : ", EXPECTED_NAME, subject.name());
+		assertEquals("Description badly parsed : ", EXPECTED_DESCRIPTION, subject.description());
 	}
 }
