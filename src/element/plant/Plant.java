@@ -39,7 +39,7 @@ public class Plant extends Element {
         Rectangle rect = g.getClipBounds();
 
         // get the ratio for perfect plant size (1 / 3 of screen)
-        float ratio = rect.width / 3 / image.getWidth();
+        float ratio = (float)rect.width / 3 / image.getWidth();
 
         int imw = (int)(ratio * (float)image.getWidth()),
             imh = (int)(ratio * (float)image.getHeight());

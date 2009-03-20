@@ -105,11 +105,13 @@ public class MainWindow extends JFrame {
     }
 
     private void run() {
-        int delay = 1000;
+        int delay = 100;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // fait grandir ta plante ici !
-                statusBar.setText("tick: " + e.getWhen());
+                //statusBar.setText("tick: " + e.getWhen());
+                gameView.grow();
+                gameView.repaint();
             }
         };
         new Timer(delay, taskPerformer).start();
