@@ -19,7 +19,6 @@ import org.w3c.dom.Document;
 import element.Element;
 
 public class Plant extends Element {
-	
     BufferedImage image;
     float health = 0;
     float anim = 0;
