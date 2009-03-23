@@ -5,11 +5,10 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import test.element.ElementTest;
-import test.element.plant.PlantTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	PlantTest.class
+	ElementTest.class
 })
 
 public class RunAndPray {}

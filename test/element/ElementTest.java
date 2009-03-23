@@ -19,12 +19,18 @@ import element.plant.Plant;
 
 public class ElementTest {
 	
-	public final static String TEST_FILE = "test";
-	public final static String EXPECTED_ID = "test";
-	public final static String EXPECTED_NAME = "Testing plant file";
-	public final static String EXPECTED_DESCRIPTION = "Lorem ipsum dolor sit amet.";
+	public static final String TEST_FILE = "test";
+
+	private Element subject;
+	private static final String EXPECTED_ID = "ID";
+	private static final String EXPECTED_NAME = "Name";
+	private static final String EXPECTED_DESCRIPTION = "Lorem ipsum dolor sit amet.";
 	
-	protected Element subject;
+	
+	@Before
+	public void setUp() {
+		subject = new Plant(TEST_FILE);
+	}
 	
 	@Test
 	public void parsingTest() {

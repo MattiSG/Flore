@@ -1,11 +1,21 @@
 package game;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.Component;
+import element.Element;
 
-public class DocView extends JPanel {
+import javax.swing.JLabel;
+
+public class DocView extends InfoView {
+    private JLabel doc = new JLabel();
+
     public DocView() {
-        add(new JLabel("C'est l'histoire de Toto..."));
+        description = "Un peu de documentation ne serait pas de refus...";
+        doc.setText(description);
+        add(doc);
+    }
+
+    public void display(Element e) {
+        description = "Voici la description de : " + e.name() + ". \n" + e.description();
+        doc.setText(description);
+        play();
     }
 }

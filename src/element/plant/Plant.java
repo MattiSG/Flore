@@ -19,30 +19,29 @@ import org.w3c.dom.Document;
 import element.Element;
 
 public class Plant extends Element {
-	
-	public static final String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
-	
     BufferedImage image;
     float health = 0;
     float anim = 0;
     int x, y;
 
     public Plant(String file) {
-        this(file, 512, 777);
+        this(file, 500, 500);
     }
     
     public Plant(String ID, int xx, int yy) {
-		assetsNames = ASSETS_NAMES;
-		load(ID);
+		loadFromXML("../ressources/Plantes/" + ID + "/description.xml");
         try {
-            image = ImageIO.read(new File("ressources/images/plant.png"));
+            image = ImageIO.read(new File("../ressources/images/plant.png"));
         } catch(java.io.IOException e) {
             System.err.println("[erreur] " + e);
-			e.printStackTrace();
         }
         
         x = xx;
         y = yy;
+    }
+
+    public String toString() {
+        return name;
     }
 
 	/**@name	Assets getters*/

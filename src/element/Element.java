@@ -24,7 +24,7 @@ abstract public class Element {
 	protected Map<String, List<BufferedImage>> assets;
 	/**The names of all assets nodes to load.
 	 *Designed to be overriden for specific needs by the inheriting classes.*/
-	protected String[] assetsNames;
+	protected List<String> assetsNames;
 
 	private final static String EXPR_VERSION = "//id/../@version";
 	private final static String EXPR_ID = "//id";
@@ -55,20 +55,11 @@ abstract public class Element {
 		return version == PARSER_VERSION;
 	}
 	
-	/**Loads an Element file from its ID.
-	 *Just a gateway to loadFromXML(), hiding the file hierarchy to clients.
-	 *@param	ID	the ID of the element to load.
-	 *@throws	IllegalArgumentException	if the given file isn't parsable or doesn't exist.
-	 */
-	protected void load(String ID) {
-		loadFromXML("ressources/elements/" + ID + "/description.xml");
-	}
-	
 	/**Tries to initialize a new Element from an XML description file.
 	 *@param	file	the XML file to parse.
 	 *@throws	IllegalArgumentException	if the given file isn't parsable by this version of the parser.
 	 */
-    private void loadFromXML(String file) {
+    protected void loadFromXML(String file) {
 		try {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document XML = builder.parse(new File(file));
@@ -100,30 +91,28 @@ abstract public class Element {
 		}
 	}
 	
-	/**Generic method to load assets from the assetsNames attribute, to be defined in inheriting classes.
-	 *While they share a lot of common attributes, the inner assets organisation is completely different, hence the need to redefine some details in the inheriting classes.
-	 *This method populates the assets Map.
+	/**To be overriden for special needs by Insect and Plant.
+	 *While they share a lot of common attributes, the inner assets organisation is completely different, hence the need to redefine the method in the inheriting classes.
+	 *This method has to populate the assets Map.
 	 *@param	xpath	the XPath to be used to parse the given XML document.
 	 *@param	XML		the XML document to be parsed.
 	 */
 	protected void loadAssets(XPath xpath, Document XML) {
 		for (String nodeName : assetsNames) {
 			NodeList imagesPaths = null;
-			String query = EXPR_ASSETS + "/" + nodeName + "/img";
 			try {
-				imagesPaths = ((NodeList) xpath.evaluate(query, XML, XPathConstants.NODESET));
+				imagesPaths = ((NodeList) xpath.evaluate(EXPR_ASSETS + "/" + assetsNames, XML, XPathConstants.NODESET));
 			} catch (javax.xml.xpath.XPathExpressionException e) {
-				System.err.println("Erreur (" + e + ") à l'analyse d'un fichier d'élément (insecte ou plante) !\nRequête Xpath : " + query);
+				System.err.println("Erreur à l'analyse d'un fichier d'élément (insecte ou plante) !\n" + e);
 				e.printStackTrace();
 			}
 			
 			List<BufferedImage> images = new ArrayList<BufferedImage>(imagesPaths.getLength());
 			for (int i = 0; i < imagesPaths.getLength(); i++) {
-				String file = "ressources/elements/" + ID + "/" + imagesPaths.item(i).getTextContent();
 				try {
-					images.add(ImageIO.read(new File(file)));
+					images.add(ImageIO.read(new File("../ressources/" + ID + "/" + imagesPaths.item(i).getNodeValue())));
 				} catch(java.io.IOException e) {
-					System.err.println("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + file);
+					System.err.println("Erreur au chargement d'une image !" + e);
 					e.printStackTrace();
 				}
 			}
