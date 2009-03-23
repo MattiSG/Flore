@@ -3,57 +3,60 @@
 	<head>
 		<title>Scénario</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="author" content="Clément Léger"/>
+		<meta name="author" content="Matti Schneider-Ghibaudo"/>
+		<meta name="author" content="Romain Giraud"/>
+		<meta name="author" content="Josselin Hébert"/>
+		<meta name="language" content="fr"/>
 	</head>
 	<body>
 		<h1>Scénario</h1>
+		
 		<h2>Résumé du jeu</h2>
 		<p>La faune terrestre contient un certain nombre d'animaux et d'insectes en disparition.<br />
 		Le but est d'aider à préserver cet écosystème en capturant ces êtres, il faudra donc trouver une méthode naturelle pour les attirer.</p>
+		
 		<h2>L'interface</h2>
-		<p>L'écran se divide en 3 colonnes:
+		<p>L'écran se divise en 3 colonnes:
 			<ul>
 				<li>À gauche se trouvent les informations : y sont présents la documentation du jeu, le score et la progression pour finir le niveau.</li>
 				<li>Au milieu une représentation de la faune est affichée. Selon l'état de la partie, l'on peut y voir un terrain vierge, une plante ou des insectes.</li>
-				<li>À droite une liste d'îcones sera en permanance accessible. Un clic sur une icone permettra d'activer l'action associée.</li>
+				<li>À droite une liste d'icônes sera en permanance accessible. Un clic sur une icône permettra d'activer l'action associée.</li>
 			</ul>
 		</p>
 		<p>
 			Il faudra poser comme questions :
 			<ul>
-				<li>L'interface est-elle suffisament simple et claire ?</li>
-				<li>L'avancement vers la réussite de la partie est-elle compréhensible ? (Rappel: barre de progression verticale plutôt qu'un score)</li>
-				<li>La selection d'un outil doit faire changer la couleur de fond de l'icone de cet outil, ou bien un changement du curseur de la souris suffit ?</li>
-				<li>Les insectes les plus petits / se confondant le plus avec le decord ne posent-il pas problème ?</li>
+				<li>De manière générale, l'interface est-elle suffisament simple et claire ?</li>
+				<li>L'avancement vers la réussite de la partie est-elle compréhensible ? (Rappel : barre de progression verticale plutôt qu'un score, plus lisible)</li>
+				<li>La sélection d'un outil doit faire changer la couleur de fond de l'icône de cet outil, ou bien un changement du curseur de la souris suffit ?</li>
+				<li>Les insectes les plus petits / se confondant le plus avec le décor ne posent-il pas problème ?</li>
 			</ul>
 		</p>
+		
 		<h2>Gameplay</h2>
-		<p>Une partie commencera par un "briefing" de l'objectif : quelle espèce il lui est demandé d'attraper. Pour y parvenir il devra faire usage de différents outils. En règle générale il devra commencer par obtenir une certaine plante attirant l'espèce cherchée (un rosier attirera des coccinelles).
+		<p>Une partie commencera par un "briefing" de l'objectif : quelle espèce il est demandé au joueur d'attraper. Pour y parvenir, il devra faire usage de différents outils. En règle générale il devra commencer par obtenir une certaine plante attirant l'espèce recherchée (un rosier attirera des coccinelles, par exemple).</p>
 		<ul>
-			<li>Il faudra commencer par utiliser une pelle pour creser un trou, puis choisir les graines de rosier pour les y semer et finalement recouvrir le trou.</li>
-			<li>Ensuite il sera nécéssaire d'entretenir la plante pour qu'elle puisse grandir, le joueur devra donc arroser réglurièrement. Le soleil entrera aussi en jeu pour dans le développement de la plante.</li>
-			<li>Une fois à maturité, un rosier par exemple aura des pucerons qui orneront ses tiges. Des coccinelles seront alors attirées par ces deniers et le joueur n'aura plus qu'à utiliser un dernier outil pour les attraper. Lorsqu'il en aura autant que le nombre indiqué dans le brifiend, il aura gagné la partie.</li>
+			<li>Il faudra commencer par utiliser une pelle pour creuser un trou, puis choisir les graines de rosier pour les y semer et finalement recouvrir le trou.</li>
+			<li>Ensuite il sera nécessaire d'entretenir la plante pour qu'elle puisse grandir, le joueur devra donc arroser régulièrement. Le soleil pourra aussi entrer en jeu pour dans le développement de la plante, en fonction du niveau de difficulté choisi.</li>
+			<li>Une fois à maturité, un rosier par exemple aura des pucerons qui orneront ses tiges. Des coccinelles seront alors attirées par ces deniers et le joueur n'aura plus qu'à utiliser un dernier outil pour les attraper. Lorsqu'il en aura autant que le nombre indiqué dans le briefing, il aura gagné la partie.</li>
 		</ul>
-		</p>
-		<p>
-			Il faudra poser comme questions :
-			<ul>
-				<li>L'objectif est-il clair ? (Les aveugles peuvent n'avoir jamais vu de coccinelle de leur vie)</li>
-				<li>Le contrôle à la souris et le fait d'avoir à viser ne complique pas le jeu ?</li>
-				<li>Le briefieng n'est pas trop long ? (Entendre une voix monotome d'ordinateur sur un roman ne doit pas être très excitant)</li>
-			</ul>
-		</p>
-		<h2>Scénario</h2>
-		<p>
-			Pour notre venue à Clément Ader, nous commencerons par expliquer à l'enfant l'histoire du jeu, son but. Un des deux étudiants de ce projet DeVINT communiquera avec l'enfant, l'autre observera et prendra des notes.<br />
-			On lui décrira alors comment jouer puis nous lui feront essayer un ou deux niveaux (des turoriaux ?) pour observer la prise en main du jeu.<br />
-			Ensuite seulement nous lui feront jouer des parties plus complexes.<br />
-			Dans tous les cas, nous devrons aider l'enfant s'il se retrouve bloqué à cause d'une difficultée causée par le jeu, et il nous appartiendra de modifier le jeu en conséquences. 
-		</p>
-		<h2>Questions à se poser</h2>
+		
+		<h2>Questions à poser</h2>
 		<ul>
-			<li>Le jeu ne va pas-t'il être trop lassant ? (peu de difficulté, pas de force contre le joueur, ...)</li>
-			<li>Le joueur va-t'il voir tous les détails pourtant importants pour le jeu (reconnaître une coccinelle ça devrait aller puisque c'est rouge, et pas si petit que ça, mais si c'était un puceron ?)</li>
+			<li>L'objectif est-il clair ? (Des déficients visuels peuvent avoir du mal à reconnaître un insecte, animal très petit dans la nature)</li>
+			<li>Le contrôle au clavier est-il convenable ?</li>
+			<li>Le briefing n'est-il pas trop long ? (Entendre une voix monotome d'ordinateur sur un roman peut ne pas être très excitant)</li>
+		<li>Le jeu ne va-t'il pas être trop lassant ? (peu de difficulté, pas de force contre le joueur…)</li>
+		<li>Le joueur va-t'il voir tous les détails pourtant importants pour le jeu (reconnaître une coccinelle ça devrait aller puisque c'est rouge, et pas si petit que ça, mais si c'était un puceron ?)</li>
 		</ul>
 
+		<h2>Scénario</h2>
+		<p>
+			Pour notre venue à Clément Ader, nous commencerons par expliquer à l'enfant l'histoire du jeu, son but. Un des deux étudiants de ce projet DeViNT communiquera avec l'enfant, l'autre observera et prendra des notes.<br />
+			On lui décrira alors comment jouer puis nous lui ferons essayer un ou deux niveaux (des tutoriaux ?) pour observer la prise en main du jeu.<br />
+			Ensuite seulement nous lui ferons jouer des parties plus complexes.<br />
+			Dans tous les cas, nous devrons aider l'enfant s'il se retrouve bloqué à cause d'une difficulté causée par le jeu, et il nous appartiendra de modifier le jeu en conséquence.
+		</p>
 	</body>
 </html>
