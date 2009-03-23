@@ -22,9 +22,6 @@ abstract public class Element {
     protected String name;
 	protected String description;
 	protected Map<String, List<BufferedImage>> assets;
-	/**The names of all assets nodes to load.
-	 *Designed to be overriden for specific needs by the inheriting classes.*/
-	protected String[] assetsNames;
 
 	private final static String EXPR_VERSION = "//id/../@version";
 	private final static String EXPR_ID = "//id";
@@ -54,6 +51,13 @@ abstract public class Element {
 	public boolean checkVersion(double version) {
 		return version == PARSER_VERSION;
 	}
+	
+	/**The names of all assets nodes to load.
+	 *Designed to be overriden for specific needs by the inheriting classes.
+	 *@see	loadAssets
+	 */
+	protected abstract String[] getAssetsNames();
+	
 	
 	/**Loads an Element file from its ID.
 	 *Just a gateway to loadFromXML(), hiding the file hierarchy to clients.
@@ -105,9 +109,10 @@ abstract public class Element {
 	 *This method populates the assets Map.
 	 *@param	xpath	the XPath to be used to parse the given XML document.
 	 *@param	XML		the XML document to be parsed.
+	 *@see		getAssetsNames
 	 */
 	protected void loadAssets(XPath xpath, Document XML) {
-		for (String nodeName : assetsNames) {
+		for (String nodeName : getAssetsNames()) {
 			NodeList imagesPaths = null;
 			String query = EXPR_ASSETS + "/" + nodeName + "/img";
 			try {

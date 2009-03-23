@@ -28,7 +28,8 @@ public class PlantTest extends ElementTest {
 		try {
 			subject = new Plant(TEST_FILE);
 		} catch (NullPointerException e) {
-			fail();
+			e.printStackTrace();
+			fail(e.toString());
 		}
 	}
 	

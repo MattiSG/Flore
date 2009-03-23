@@ -20,8 +20,6 @@ import element.Element;
 
 public class Plant extends Element {
 	
-	public static final String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
-	
     BufferedImage image;
     float health = 0;
     float anim = 0;
@@ -32,21 +30,20 @@ public class Plant extends Element {
     }
     
     public Plant(String ID, int xx, int yy) {
-		assetsNames = ASSETS_NAMES;
 		load(ID);
-        try {
-            image = ImageIO.read(new File("ressources/images/plant.png"));
-        } catch(java.io.IOException e) {
-            System.err.println("[erreur] " + e);
-			e.printStackTrace();
-        }
-        
+        image = seedImages().get(0);
+
         x = xx;
         y = yy;
     }
 
-	/**@name	Assets getters*/
+	/**@name	Assets*/
 	//@{
+	protected String[] getAssetsNames() {
+		String[] tmp = {"seed", "shaft", "leaves", "flowers"}; //w00t Java...
+		return tmp;
+	}
+	
 	public List<BufferedImage> seedImages() {
 		return assets.get("seed");
 	}
