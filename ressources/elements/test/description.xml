@@ -1,6 +1,6 @@
 <seed version="1">
-	<id>ID</id> <!--identifiant unique-->
-	<name lang="fr">Name</name> <!--nom affiché-->
+	<id>test</id> <!--identifiant unique-->
+	<name lang="fr">Testing plant file</name> <!--nom affiché-->
 	
 	<dimension direction="x">100</dimension> <!-- dimensions de la fleur (px)-->
 	<dimension direction="y">100</dimension>
@@ -13,22 +13,19 @@
 	
 	<assets type="standard">
 		<seed> <!-- graine ("icône")-->
-			<img></img>
+			<img>Seed.png</img>
 		</seed>
 		<shaft> <!-- tige -->
-			<img></img>
-			<img></img>
-			<img></img>
+			<img>Shaft1.png</img>
+			<img>Shaft2.png</img>
 		</shaft>
 		<leaves> <!-- feuilles (sélectionnées en random) -->
-			<img></img>
-			<img></img>
-			<img></img>
+			<img>Leaf1.png</img>
+			<img>Leaf2.png</img>
+			<img>Leaf3.png</img>
 		</leaves>
 		<flowers> <!-- fleurs (sélectionnées en random) -->
-			<img></img>
-			<img></img>
-			<img></img>
+			<img>Orange.png</img>
 		</flowers>
 	</assets>
 	
