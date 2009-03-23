@@ -1,10 +1,5 @@
 package game;
 
-import element.Element;
-import element.plant.Plant;
-import element.insect.Insect;
-import element.mission.Mission;
-
 import javax.swing.Timer;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -27,32 +22,22 @@ import java.awt.CardLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.util.ArrayList;
 
 public class MainWindow extends JFrame {
-    private JMenuBar         menuBar       = new JMenuBar();
-    private JLabel           statusBar     = new JLabel("Initialisation");
-    private JProgressBar     levelBar      = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
-    private GameView         gameView      = new GameView();
-    private DocView          docView       = new DocView();
-    private MissionView      missionView   = new MissionView();
-    private JToggleButton    docButton     = new JToggleButton("Documentation", new ImageIcon("../ressources/images/doc.png"));
-    private JToggleButton    missionButton = new JToggleButton("Mission", new ImageIcon("../ressources/images/doc.png"));
-    private DefaultListModel seedList      = new DefaultListModel();
-    private JList            seedListView  = new JList(seedList);
-    private JPanel           centerPanel   = new JPanel();
-    private CardLayout       centerLayout  = new CardLayout();
-
-    private ArrayList<Plant>   plants   = new ArrayList<Plant>();
-    private ArrayList<Insect>  insects  = new ArrayList<Insect>();
-    private ArrayList<Mission> missions = new ArrayList<Mission>();
+    private JMenuBar     menuBar   = new JMenuBar();
+    private JLabel       statusBar = new JLabel("Initialisation");
+    private JProgressBar levelBar  = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
+    private GameView     gameView  = new GameView();
+    private DocView      docView   = new DocView();
+    private JToggleButton    docButton    = new JToggleButton("Documentation", new ImageIcon("../ressources/images/doc.png"));
+    private DefaultListModel seedList     = new DefaultListModel();
+    private JList            seedListView = new JList(seedList);
+    private JPanel           centerPanel  = new JPanel();
+    private CardLayout       centerLayout = new CardLayout();
+    private ArrayList<Dimension> trous = new ArrayList<Dimension>();
 
     public MainWindow() {
-        loadPlants();
-        loadInsects();
-        loadMissions();
-
         setMenu();
         setSeedList();
 
@@ -60,40 +45,15 @@ public class MainWindow extends JFrame {
         docButton.setHorizontalTextPosition(JToggleButton.CENTER);
         docButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (docButton.isSelected())
-                {
-                    missionButton.setSelected(false);
-                    centerLayout.show(centerPanel, "doc");
-                    docView.display((Element) seedListView.getSelectedValue());
-                }
-                else
-                    centerLayout.show(centerPanel, "game");
-            }
-        });
-
-        missionButton.setVerticalTextPosition(JToggleButton.BOTTOM);
-        missionButton.setHorizontalTextPosition(JToggleButton.CENTER);
-        missionButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (missionButton.isSelected())
-                {
-                    docButton.setSelected(false);
-                    centerLayout.show(centerPanel, "mission");
-                    missionView.display((Element) seedListView.getSelectedValue());
-                }
-                else
-                    centerLayout.show(centerPanel, "game");
+                centerLayout.next(centerPanel);
             }
         });
 
         levelBar.setValue(50);
-        levelBar.setStringPainted(true);
-        levelBar.setString("Moitié du niveau !");
 
         centerPanel.setLayout(centerLayout);
-        centerPanel.add(gameView,     "game");
-        centerPanel.add(docView,      "doc");
-        centerPanel.add(missionView,  "mission");
+        centerPanel.add(gameView, "game");
+        centerPanel.add(docView,  "doc");
 
 
         GridBagLayout layout = new GridBagLayout();
@@ -109,14 +69,14 @@ public class MainWindow extends JFrame {
         getContentPane().add(docButton);
 
         c.gridwidth  = 2;
-        c.gridheight = 4;
+        c.gridheight = 3;
         c.weightx = 1;
         c.weighty = 1;
         layout.setConstraints(centerPanel, c);
         getContentPane().add(centerPanel);
 
         c.gridwidth  = GridBagConstraints.REMAINDER;
-        c.gridheight = 4;
+        c.gridheight = 3;
         c.weightx = 0;
         c.weighty = 0;
         JScrollPane s = new JScrollPane(seedListView);
@@ -126,18 +86,11 @@ public class MainWindow extends JFrame {
         c.gridy = 1;
         c.gridx = 0;
         c.gridwidth  = 1;
-        c.gridheight = 1;
-        layout.setConstraints(missionButton, c);
-        getContentPane().add(missionButton);
-
-        c.gridy = 2;
-        c.gridx = 0;
-        c.gridwidth  = 1;
         c.gridheight = 2;
         layout.setConstraints(levelBar, c);
         getContentPane().add(levelBar);
 
-        c.gridy = 4;
+        c.gridy = 3;
         c.gridwidth  = GridBagConstraints.REMAINDER;
         c.gridheight = 1;
         layout.setConstraints(statusBar, c);
@@ -152,33 +105,22 @@ public class MainWindow extends JFrame {
     }
 
     private void run() {
-        int delay = 10000;
+        int delay = 100;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // fait grandir ta plante ici !
-                //statusBar.setText("tick: " + e.getWhen());
-                //gameView.grow();
-                //gameView.repaint();
+                statusBar.setText("tick: " + e.getWhen());
+                gameView.grow();
+                gameView.repaint();
             }
         };
         new Timer(delay, taskPerformer).start();
     }
 
-    private void loadPlants() {
-        plants.add(new Plant("rosa"));
-    }
-
-    private void loadInsects() {
-    }
-
-    private void loadMissions() {
-        missions.add(new Mission());
-    }
-
     private void setSeedList() {
         seedListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        for (Plant p : plants)
-            seedList.addElement(p);
+        seedList.addElement("Graîne de rosier");
+        seedList.addElement("Graîne de mimosa");
     }
 
     private void setMenu() {

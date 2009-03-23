@@ -1,7 +1,5 @@
 package game;
 
-import element.plant.Plant;
-
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -9,15 +7,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Dimension;
 import java.awt.image.BufferedImage;
-
-import java.util.ArrayList;
+import element.plant.Plant;
 
 public class GameView extends JPanel {
-    private Plant plant = new Plant("rosa");
-    private BufferedImage im;
-    private ArrayList<Dimension> trous = new ArrayList<Dimension>();
+    Plant plant = new Plant("rosa");
+    BufferedImage im;
 
     public GameView() {
         plant.set(100.0f);
@@ -34,6 +29,7 @@ public class GameView extends JPanel {
 
     public void paintComponent(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
+
         Rectangle rect = g2d.getClipBounds();
 
         // ciel
@@ -51,9 +47,10 @@ public class GameView extends JPanel {
         int nbH = (rect.height / h) + 1;
         for (int x = 0; x < nbW; ++x)
             for (int y = 0; y < nbH; ++y)
+            {
                 g2d.drawImage(im, null, x * w, (rect.height * 2 / 3) + y * h);
+            }
 
-        // plante
         plant.paint(g);
     }
 }

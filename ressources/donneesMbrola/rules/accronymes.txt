@@ -1,4 +1,5 @@
-## les acronymes avec un c et pas deux
+## les accronymes
+
 CLASSES
 
 CLASS T [_]					# terminal :_
@@ -6,7 +7,7 @@ CLASS D (T|')					# début mot : _ ou '
 
 RULES
 
-## acronymes
+## accronymes
 T [[ onu ]] T -> O E n y 
 T [[ edf ]] T -> 2 d e E f
 T [[ etc ]] T -> E k s e t e R a 
