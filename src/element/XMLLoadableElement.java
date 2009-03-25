@@ -14,20 +14,34 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
+/**Generic class to handle XML parsing for every distinct element of the game.
+ *For example, insects, plants and so on are stored through XML files, and inherit this class to get free XML parsing and assets loading.
+ *@author <a href="mailto:alcmene.gs@gmail.com">Matti Schneider-Ghibaudo</a>
+ *@version 0.2
+ */
 abstract public class XMLLoadableElement {
 	/**Version check. If the version of the parser is not compatible with the version the file asks for, the file won't be parsed.*/
 	public final static double PARSER_VERSION = 0.2;
 	
-	protected String ID;
-    protected String name;
-	protected String description;
-	protected Map<String, List<BufferedImage>> assets;
+	/**@name	Element description*/
+	//@{
+	private String ID;
+    private String name;
+	private String description;
+	private Map<String, List<BufferedImage>> assets;
+	//@}
 
+	/**@name	Xpath expressions
+	 *These expressions are used to parse the XML files.
+	 *They represent the common data shared by all game elements represented by XML files.
+	 */
+	//@{
 	private final static String EXPR_VERSION = "//id/../@version";
 	private final static String EXPR_ID = "//id";
 	private final static String EXPR_NAME = "//name[@lang='fr']";
 	private final static String EXPR_ASSETS = "//assets[@type='standard']";
 	private final static String EXPR_DESCRIPTION = "//description";
+	//@}
 	
 	/**@name	Getters*/
 	//@{
@@ -43,6 +57,15 @@ abstract public class XMLLoadableElement {
 		return description;
 	}
 	
+	/**The names of all assets nodes to load.
+	 *Designed to be overriden for specific needs by the inheriting classes.
+	 *@see	loadAssets
+	 */
+	public abstract String[] getAssetsNames();
+	
+	/**The key has to be one from the String array returned by getAssetsNames.
+	 *@see	getAssetsNames
+	 */
 	public List<BufferedImage> getAssets(String key) {
 		return assets.get(key);
 	}
@@ -54,14 +77,7 @@ abstract public class XMLLoadableElement {
 	/**Tells whether the given file format version is parsable or not.*/
 	public boolean checkVersion(double version) {
 		return version == PARSER_VERSION;
-	}
-	
-	/**The names of all assets nodes to load.
-	 *Designed to be overriden for specific needs by the inheriting classes.
-	 *@see	loadAssets
-	 */
-	protected abstract String[] getAssetsNames();
-	
+	}	
 	
 	/**Loads an Element file from its ID.
 	 *Just a gateway to loadFromXML(), hiding the file hierarchy to clients.
@@ -70,6 +86,8 @@ abstract public class XMLLoadableElement {
 	 */
 	protected void load(String ID) {
 		loadFromXML("ressources/elements/" + ID + "/description.xml");
+		if (! ID.equals(ID()))
+			throw new RuntimeException("Folder ID (" + ID + ") and parsed inner ID (" + ID() + ") do not match !");
 	}
 	
 	/**Tries to initialize a new Element from an XML description file.
@@ -113,6 +131,7 @@ abstract public class XMLLoadableElement {
 	 *This method populates the assets Map.
 	 *@param	xpath	the XPath to be used to parse the given XML document.
 	 *@param	XML		the XML document to be parsed.
+	 *@throws	RuntimeException	if the parsing of the XML file, or the loading of an image, threw an exception.
 	 *@see		getAssetsNames
 	 */
 	private void loadAssets(XPath xpath, Document XML) {
@@ -122,8 +141,7 @@ abstract public class XMLLoadableElement {
 			try {
 				imagesPaths = ((NodeList) xpath.evaluate(query, XML, XPathConstants.NODESET));
 			} catch (javax.xml.xpath.XPathExpressionException e) {
-				System.err.println("Erreur (" + e + ") à l'analyse d'un fichier d'élément (insecte ou plante) !\nRequête Xpath : " + query);
-				e.printStackTrace();
+				throw new RuntimeException("Erreur (" + e + ") à l'analyse d'un fichier d'élément (insecte ou plante) !\nRequête Xpath : " + query);
 			}
 			
 			List<BufferedImage> images = new ArrayList<BufferedImage>(imagesPaths.getLength());
@@ -132,8 +150,7 @@ abstract public class XMLLoadableElement {
 				try {
 					images.add(ImageIO.read(new File(file)));
 				} catch(java.io.IOException e) {
-					System.err.println("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + file);
-					e.printStackTrace();
+					throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + file);
 				}
 			}
 			assets.put(nodeName, images);

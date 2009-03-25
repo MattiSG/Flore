@@ -8,7 +8,7 @@ public class Mission extends XMLLoadableElement {
     public Mission() {
     }
 	
-	protected String[] getAssetsNames() {
+	public String[] getAssetsNames() {
 		return ASSETS_NAMES;
 	}
 }

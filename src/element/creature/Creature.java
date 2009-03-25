@@ -1,15 +1,15 @@
-package element.insect;
+package element.creature;
 
 import element.XMLLoadableElement;
 
-public class Insect extends XMLLoadableElement {
+public class Creature extends XMLLoadableElement {
 	private final static String[] ASSETS_NAMES = {"still", "left", "right", "up", "down"};
 	
-    public Insect(String ID) {
+    public Creature(String ID) {
 		load(ID);
     }
 
-	protected String[] getAssetsNames() {
+	public String[] getAssetsNames() {
         return ASSETS_NAMES;
     }
 }

@@ -41,7 +41,7 @@ public class Plant extends XMLLoadableElement {
 
 	/**@name	Assets*/
 	//@{
-	protected String[] getAssetsNames() {
+	public String[] getAssetsNames() {
 		return ASSETS_NAMES;
 	}
 	

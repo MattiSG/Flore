@@ -1,6 +1,6 @@
 <creature version="0.2">
 	<id>creature_test</id>
-	<name lang="fr">Creature test file</name>
+	<name lang="fr">Creature testing file</name>
 	
 	<dimension direction="x">100</dimension>
 	<dimension direction="y">100</dimension>

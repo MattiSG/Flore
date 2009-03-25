@@ -16,8 +16,8 @@
 			<img>Seed.png</img>
 		</seed>
 		<shaft> <!-- tige -->
-			<img>Shaft1.png</img>
-			<img>Shaft2.png</img>
+			<img>Shaft1.jpg</img>
+			<img>Shaft2.jpg</img>
 		</shaft>
 		<leaves> <!-- feuilles (sélectionnées en random) -->
 			<img>Leaf1.png</img>

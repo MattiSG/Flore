@@ -3,7 +3,7 @@
  *@version 0.1
  */
 
-package test.element.plant;
+package test.element.creature;
 
 import static org.junit.Assert.*;
 import org.junit.After;
@@ -20,20 +20,17 @@ import element.plant.Plant;
 
 public class PlantTest extends XMLLoadableElementTest {
 	
-	public static final String TEST_FILE = "test";
-	
-	
 	@Before
 	public void setUp() {
+		EXPECTED_ID = "test";
+		EXPECTED_NAME = "Testing plant file";
+		EXPECTED_DESCRIPTION = "Lorem ipsum dolor sit amet.";
+		
 		try {
-			subject = new Plant(TEST_FILE);
+			subject = new Plant(EXPECTED_ID);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}
-	}
-	
-	@Test
-	public void assetsLoading() {
 	}
 }
