@@ -1,13 +1,14 @@
 package element.mission;
 
-import element.Element;
+import element.XMLLoadableElement;
 
-public class Mission extends Element {
+public class Mission extends XMLLoadableElement {
+	private final static String[] ASSETS_NAMES = new String[0];
+	
     public Mission() {
     }
 	
 	protected String[] getAssetsNames() {
-		String[] tmp = {"", ""}; //w00t Java...
-		return tmp;
+		return ASSETS_NAMES;
 	}
 }

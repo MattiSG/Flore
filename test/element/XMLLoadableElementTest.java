@@ -13,18 +13,18 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import element.Element;
+import element.XMLLoadableElement;
 import element.plant.Plant;
 
 
-public class ElementTest {
+public class XMLLoadableElementTest {
 	
 	public final static String TEST_FILE = "test";
 	public final static String EXPECTED_ID = "test";
 	public final static String EXPECTED_NAME = "Testing plant file";
 	public final static String EXPECTED_DESCRIPTION = "Lorem ipsum dolor sit amet.";
 	
-	protected Element subject;
+	protected XMLLoadableElement subject;
 	
 	@Test
 	public void parsingTest() {

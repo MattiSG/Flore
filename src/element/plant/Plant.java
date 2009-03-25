@@ -16,16 +16,19 @@ import javax.xml.xpath.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.Document;
 
-import element.Element;
+import element.XMLLoadableElement;
 
-public class Plant extends Element {
-    BufferedImage image;
-    float health = 0;
-    float anim = 0;
-    int x, y;
+public class Plant extends XMLLoadableElement {
+	private final static String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
+	
+    private BufferedImage image;
+    private float health = 0;
+    private float anim = 0;
+    private int x, y;
+	
 
-    public Plant(String file) {
-        this(file, 512, 777);
+    public Plant(String ID) {
+        this(ID, 512, 777);
     }
     
     public Plant(String ID, int xx, int yy) {
@@ -39,24 +42,23 @@ public class Plant extends Element {
 	/**@name	Assets*/
 	//@{
 	protected String[] getAssetsNames() {
-		String[] tmp = {"seed", "shaft", "leaves", "flowers"}; //w00t Java...
-		return tmp;
+		return ASSETS_NAMES;
 	}
 	
 	public List<BufferedImage> seedImages() {
-		return assets.get("seed");
+		return getAssets("seed");
 	}
 	
 	public List<BufferedImage> shaftImages() {
-		return assets.get("shaft");
+		return getAssets("shaft");
 	}
 	
 	public List<BufferedImage> leavesImages() {
-		return assets.get("leaves");
+		return getAssets("leaves");
 	}
 	
 	public List<BufferedImage> flowersImages() {
-		return assets.get("flowers");
+		return getAssets("flowers");
 	}
 	//@}
 

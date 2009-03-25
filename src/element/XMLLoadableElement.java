@@ -14,9 +14,9 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
-abstract public class Element {
+abstract public class XMLLoadableElement {
 	/**Version check. If the version of the parser is not compatible with the version the file asks for, the file won't be parsed.*/
-	public final static double PARSER_VERSION = 1;
+	public final static double PARSER_VERSION = 0.2;
 	
 	protected String ID;
     protected String name;
@@ -41,6 +41,10 @@ abstract public class Element {
 	
 	public String description() {
 		return description;
+	}
+	
+	public List<BufferedImage> getAssets(String key) {
+		return assets.get(key);
 	}
 	//@}
 	
@@ -111,7 +115,7 @@ abstract public class Element {
 	 *@param	XML		the XML document to be parsed.
 	 *@see		getAssetsNames
 	 */
-	protected void loadAssets(XPath xpath, Document XML) {
+	private void loadAssets(XPath xpath, Document XML) {
 		for (String nodeName : getAssetsNames()) {
 			NodeList imagesPaths = null;
 			String query = EXPR_ASSETS + "/" + nodeName + "/img";

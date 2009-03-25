@@ -1,6 +1,6 @@
-<creature version="1">
-	<id>ID</id>
-	<name lang="fr">Name</name>
+<creature version="0.2">
+	<id>creature_test</id>
+	<name lang="fr">Creature test file</name>
 	
 	<dimension direction="x">100</dimension>
 	<dimension direction="y">100</dimension>
@@ -8,33 +8,33 @@
 	<description lang="fr">Lorem ipsum dolor sit amet.</description>
 	
 	<assets type="standard">
-		<standing> <!--insecte immobile-->
+		<still> <!--insecte immobile-->
 			<img></img>
-		</standing>
-		<moving direction="left"> <!-- images pour créer une animation de déplacement à gauche -->
-			<img></img>
-			<img></img>
-			<img></img>
-			<img></img>
-		</moving>
-		<moving direction="right"> <!-- images pour créer une animation de déplacement à droite -->
+		</still>
+		<left> <!-- images pour créer une animation de déplacement à gauche -->
 			<img></img>
 			<img></img>
 			<img></img>
 			<img></img>
-		</moving>
-		<moving direction="down"> <!-- images pour créer une animation de déplacement à bas -->
+		</left>
+		<right> <!-- images pour créer une animation de déplacement à droite -->
 			<img></img>
 			<img></img>
 			<img></img>
 			<img></img>
-		</moving>
-		<moving direction="up"> <!-- images pour créer une animation de déplacement en haut -->
+		</right>
+		<down> <!-- images pour créer une animation de déplacement à bas -->
 			<img></img>
 			<img></img>
 			<img></img>
 			<img></img>
-		</moving>
+		</down>
+		<up> <!-- images pour créer une animation de déplacement en haut -->
+			<img></img>
+			<img></img>
+			<img></img>
+			<img></img>
+		</up>
 	</assets>
 	
 	<preys>

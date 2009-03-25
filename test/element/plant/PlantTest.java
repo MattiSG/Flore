@@ -13,12 +13,12 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import test.element.ElementTest;
-import element.Element;
+import test.element.XMLLoadableElementTest;
+import element.XMLLoadableElement;
 import element.plant.Plant;
 
 
-public class PlantTest extends ElementTest {
+public class PlantTest extends XMLLoadableElementTest {
 	
 	public static final String TEST_FILE = "test";
 	

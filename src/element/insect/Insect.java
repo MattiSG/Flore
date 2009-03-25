@@ -1,12 +1,15 @@
 package element.insect;
 
-import element.Element;
+import element.XMLLoadableElement;
 
-public class Insect extends Element {
-    public Insect() {
+public class Insect extends XMLLoadableElement {
+	private final static String[] ASSETS_NAMES = {"still", "left", "right", "up", "down"};
+	
+    public Insect(String ID) {
+		load(ID);
     }
 
 	protected String[] getAssetsNames() {
-        return new String[0];
+        return ASSETS_NAMES;
     }
 }
