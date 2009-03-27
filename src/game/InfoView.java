@@ -1,6 +1,6 @@
 package game;
 
-import element.Element;
+import element.XMLLoadableElement;
 
 import t2s.SIVOXDevint;
 
@@ -15,5 +15,5 @@ abstract public class InfoView extends JPanel {
         player.playText(description);
     }
 
-    abstract public void display(Element e);
+    abstract public void display(XMLLoadableElement e);
 }

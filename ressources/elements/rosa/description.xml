@@ -13,7 +13,7 @@
 	
 	<assets>
 		<seed>
-			<img></img>
+			<img>seed.png</img>
 		</seed>
 		<shaft>
 			<img></img>

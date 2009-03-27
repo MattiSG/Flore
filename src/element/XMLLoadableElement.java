@@ -85,7 +85,7 @@ abstract public class XMLLoadableElement {
 	 *@throws	IllegalArgumentException	if the given file isn't parsable or doesn't exist.
 	 */
 	protected void load(String ID) {
-		loadFromXML("ressources/elements/" + ID + "/description.xml");
+		loadFromXML("../ressources/elements/" + ID + "/description.xml");
 		if (! ID.equals(ID()))
 			throw new RuntimeException("Folder ID (" + ID + ") and parsed inner ID (" + ID() + ") do not match !");
 	}
@@ -147,6 +147,7 @@ abstract public class XMLLoadableElement {
 			List<BufferedImage> images = new ArrayList<BufferedImage>(imagesPaths.getLength());
 			for (int i = 0; i < imagesPaths.getLength(); i++) {
 				String file = "ressources/elements/" + ID + "/" + imagesPaths.item(i).getTextContent();
+                System.out.println("  => " + i + ", " + file);
 				try {
 					images.add(ImageIO.read(new File(file)));
 				} catch(java.io.IOException e) {

@@ -33,6 +33,7 @@ public class Plant extends XMLLoadableElement {
     
     public Plant(String ID, int xx, int yy) {
 		load(ID);
+        System.out.println(" => " + seedImages().size());
         image = seedImages().get(0);
 
         x = xx;

@@ -1,6 +1,6 @@
 package game;
 
-import element.Element;
+import element.XMLLoadableElement;
 
 import javax.swing.JLabel;
 
@@ -13,7 +13,7 @@ public class MissionView extends InfoView {
         add(mission);
     }
 
-    public void display(Element e) {
+    public void display(XMLLoadableElement e) {
         description = "Votre mission est " + e.description();
         mission.setText(description);
         play();

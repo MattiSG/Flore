@@ -3,7 +3,7 @@
  *@version 0.1
  */
 
-package test.element.creature;
+package test.element.plant;
 
 import static org.junit.Assert.*;
 import org.junit.After;

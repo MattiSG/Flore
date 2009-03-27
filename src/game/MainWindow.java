@@ -1,8 +1,8 @@
 package game;
 
-import element.Element;
+import element.XMLLoadableElement;
 import element.plant.Plant;
-import element.insect.Insect;
+import element.creature.Creature;
 import element.mission.Mission;
 
 import javax.swing.Timer;
@@ -44,9 +44,9 @@ public class MainWindow extends JFrame {
     private JPanel           centerPanel   = new JPanel();
     private CardLayout       centerLayout  = new CardLayout();
 
-    private ArrayList<Plant>   plants   = new ArrayList<Plant>();
-    private ArrayList<Insect>  insects  = new ArrayList<Insect>();
-    private ArrayList<Mission> missions = new ArrayList<Mission>();
+    private ArrayList<Plant>    plants   = new ArrayList<Plant>();
+    private ArrayList<Creature> insects  = new ArrayList<Creature>();
+    private ArrayList<Mission>  missions = new ArrayList<Mission>();
 
     public MainWindow() {
         loadPlants();
@@ -64,7 +64,7 @@ public class MainWindow extends JFrame {
                 {
                     missionButton.setSelected(false);
                     centerLayout.show(centerPanel, "doc");
-                    docView.display((Element) seedListView.getSelectedValue());
+                    docView.display((XMLLoadableElement) seedListView.getSelectedValue());
                 }
                 else
                     centerLayout.show(centerPanel, "game");
@@ -79,7 +79,7 @@ public class MainWindow extends JFrame {
                 {
                     docButton.setSelected(false);
                     centerLayout.show(centerPanel, "mission");
-                    missionView.display((Element) seedListView.getSelectedValue());
+                    missionView.display((XMLLoadableElement) seedListView.getSelectedValue());
                 }
                 else
                     centerLayout.show(centerPanel, "game");
