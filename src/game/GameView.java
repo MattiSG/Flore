@@ -1,7 +1,6 @@
 package game;
 
 import element.plant.Plant;
-import element.creature.Creature;
 
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 
 public class GameView extends JPanel {
     private Plant plant = new Plant("rosa");
-    private Creature creature = new Creature("aphidoidea");
     private BufferedImage im;
     private ArrayList<Dimension> trous = new ArrayList<Dimension>();
 
