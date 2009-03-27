@@ -10,6 +10,7 @@ import javax.xml.xpath.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*; 
 import java.io.File;
+import java.net.URI;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -145,11 +146,15 @@ abstract public class XMLLoadableElement {
 			
 			List<BufferedImage> images = new ArrayList<BufferedImage>(imagesPaths.getLength());
 			for (int i = 0; i < imagesPaths.getLength(); i++) {
-				String file = "ressources/elements/" + ID + "/" + imagesPaths.item(i).getTextContent();
+				URI imageURI = null;
 				try {
-					images.add(ImageIO.read(new File(file)));
+					imageURI = new URI(XML.getDocumentURI());
+					imageURI = imageURI.normalize().resolve(imagesPaths.item(i).getTextContent());
+					images.add(ImageIO.read(new File(imageURI)));
 				} catch(java.io.IOException e) {
-					throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + file);
+					throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + imageURI);
+				} catch (java.net.URISyntaxException e) {
+					throw new RuntimeException("Erreur au chargement d'un fichier d'élément (insecte ou plante) !\n" + e);
 				}
 			}
 			assets.put(nodeName, images);
