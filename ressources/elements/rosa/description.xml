@@ -16,19 +16,13 @@
 			<img>seed.png</img>
 		</seed>
 		<shaft>
-			<img></img>
-			<img></img>
-			<img></img>
+			<img>seed.png</img>
 		</shaft>
 		<leaves>
-			<img></img>
-			<img></img>
-			<img></img>
+			<img>seed.png</img>
 		</leaves>
 		<flowers>
-			<img></img>
-			<img></img>
-			<img></img>
+			<img>seed.png</img>
 		</flowers>
 	</assets>
 	
