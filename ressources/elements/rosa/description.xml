@@ -11,7 +11,7 @@
 	<sun>10</sun> <!-- quantité de soleil nécessaire -->
 	<time>10</time> <!-- nombre de jours avant la floraison (à voir par rapport au soleil ?) -->
 	
-	<assets>
+	<assets type="standard">
 		<seed>
 			<img>seed.png</img>
 		</seed>
