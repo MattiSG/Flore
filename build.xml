@@ -58,6 +58,7 @@
 
   <target name="junit" depends="jar_tests" description="Try to test">
     <junit fork="yes" haltonfailure="yes">
+      <jvmarg value="-Duser.dir=${dir.bin}"/>
       <formatter type="plain" usefile="false"/>
       <test name="${class.test}"/>
       <classpath>
