@@ -140,6 +140,9 @@ abstract public class XMLLoadableElement {
 				throw new RuntimeException("Erreur (" + e + ") à l'analyse d'un fichier d'élément (insecte ou plante) !\nRequête Xpath : " + query);
 			}
 			
+			if (imagesPaths.getLength() == 0)
+				throw new RuntimeException("Erreur à l'initialisation de l'élément " + ID() + " (\"" + name() + "\") : aucune image n'a pu être chargée !\nRequête effectuée : " + query);
+			
 			List<BufferedImage> images = new ArrayList<BufferedImage>(imagesPaths.getLength());
 			for (int i = 0; i < imagesPaths.getLength(); i++) {
 				String file = "ressources/elements/" + ID + "/" + imagesPaths.item(i).getTextContent();
