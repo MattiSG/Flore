@@ -112,17 +112,13 @@ abstract public class XMLLoadableElement {
 			loadAssets(xpath, XML);
 			
 		} catch (javax.xml.parsers.ParserConfigurationException e) {
-			System.err.println("Erreur au chargement d'un fichier d'élément (insecte ou plante) !\n" + e);
-			e.printStackTrace();
+			throw new RuntimeException("Erreur au chargement d'un fichier d'élément (insecte ou plante) !\n" + e);
 		} catch (java.io.IOException e) {
-			System.err.println("Erreur à la lecture d'un fichier d'élément (insecte ou plante) !\n" + e);
-			e.printStackTrace();
+			throw new RuntimeException("Erreur au chargement d'un fichier d'élément (insecte ou plante) !\n" + e);
 		} catch (org.xml.sax.SAXException e) {
-			System.err.println("Erreur au chargement d'un fichier d'élément (insecte ou plante) !\n" + e);
-			e.printStackTrace();
+			throw new RuntimeException("Erreur au chargement d'un fichier d'élément (insecte ou plante) !\n" + e);
 		} catch (javax.xml.xpath.XPathExpressionException e) {
-			System.err.println("Erreur à l'analyse d'un fichier d'élément (insecte ou plante) !\n" + e);
-			e.printStackTrace();
+			throw new RuntimeException("Erreur au chargement d'un fichier d'élément (insecte ou plante) !\n" + e);
 		}
 	}
 	

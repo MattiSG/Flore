@@ -9,8 +9,8 @@ import test.element.creature.CreatureTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-//	PlantTest.class
-//	CreatureTest.class //add when creature_test will have its assets
+	PlantTest.class,
+	CreatureTest.class
 })
 
 public class RunAndPray {}

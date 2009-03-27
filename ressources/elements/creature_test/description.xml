@@ -9,31 +9,25 @@
 	
 	<assets type="standard">
 		<still> <!--insecte immobile-->
-			<img></img>
+			<img>blank.gif</img>
 		</still>
 		<left> <!-- images pour créer une animation de déplacement à gauche -->
-			<img></img>
-			<img></img>
-			<img></img>
-			<img></img>
+			<img>blank.gif</img>
+			<img>blank.gif</img>
 		</left>
 		<right> <!-- images pour créer une animation de déplacement à droite -->
-			<img></img>
-			<img></img>
-			<img></img>
-			<img></img>
+			<img>blank.gif</img>
+			<img>blank.gif</img>
+			<img>blank.gif</img>
+			<img>blank.gif</img>
 		</right>
 		<down> <!-- images pour créer une animation de déplacement à bas -->
-			<img></img>
-			<img></img>
-			<img></img>
-			<img></img>
+			<img>blank.gif</img>
+			<img>blank.gif</img>
 		</down>
 		<up> <!-- images pour créer une animation de déplacement en haut -->
-			<img></img>
-			<img></img>
-			<img></img>
-			<img></img>
+			<img>blank.gif</img>
+			<img>blank.gif</img>
 		</up>
 	</assets>
 	
