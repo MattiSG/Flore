@@ -33,7 +33,9 @@ public class Plant extends XMLLoadableElement {
     
     public Plant(String ID, int xx, int yy) {
 		load(ID);
-        image = seedImages().get(0);
+        //image = seedImages().get(0);
+        try { image = ImageIO.read(new File("../ressources/elements/rosa/seed.png")); }
+        catch(Exception e) {}
 
         x = xx;
         y = yy;

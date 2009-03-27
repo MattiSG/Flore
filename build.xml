@@ -58,6 +58,7 @@
 
   <target name="junit" depends="jar_tests" description="Try to test">
     <junit fork="yes" haltonfailure="yes">
+      <jvmarg value="-Duser.dir=${dir.bin}"/>
       <formatter type="plain" usefile="false"/>
       <test name="${class.test}"/>
       <classpath>
@@ -82,7 +83,7 @@
   </target>
 
   <target name="run" depends="install" description="Run, run and run!">
-    <java outputproperty="out" errorproperty="err" classpath="${bin}" classname="${class.main}" fork="true"/>
+    <java outputproperty="out" errorproperty="err" classpath="${dir.bin}" classname="${class.main}" fork="true"/>
     <echo>Output: '${out}'</echo>
     <echo>Error : '${err}'</echo> 
   </target>
