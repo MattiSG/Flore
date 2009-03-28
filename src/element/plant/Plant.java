@@ -23,20 +23,42 @@ public class Plant extends XMLLoadableElement {
 	
     private BufferedImage image;
     private float health = 0;
-    private float anim = 0;
-    private int x, y;
+    private float anim   = 0;
+    private int   x      = 0,
+                  y      = 0;
 	
-
     public Plant(String ID) {
         this(ID, 512, 777);
     }
     
     public Plant(String ID, int xx, int yy) {
 		load(ID);
-        image = seedImages().get(0);
+        //image = seedImages().get(0);
+        try {
+            image = ImageIO.read(new File("../ressources/images/plant.png"));
+        } catch(java.io.IOException e) {
+            System.err.println("[erreur] " + e);
+        }
 
         x = xx;
         y = yy;
+
+        setHealth(100.0f);
+    }
+
+    public float get() { return anim; }
+
+    public void setX(int xx) {
+        x = xx;
+    }
+
+    public void setY(int yy) {
+        y = yy;
+    }
+
+    public void setHealth(float h) {
+        if(h >= 0 && h <= 100)
+            health = h;
     }
 
 	/**@name	Assets*/
@@ -62,15 +84,10 @@ public class Plant extends XMLLoadableElement {
 	}
 	//@}
 
-    public void set(float h) {
-        if(h >= 0 && h <= 100)
-            health = h;
-    }
-
     public void grow() {
-        if(anim < health)
+        if (anim < health)
             anim += health > anim ? 1 : -1;
-        if(anim > health)
+        if (anim > health)
             anim = health;
     }
 

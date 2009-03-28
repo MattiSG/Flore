@@ -17,17 +17,15 @@ import java.awt.event.ComponentAdapter;
 import java.util.ArrayList;
 
 public class GameView extends JPanel {
-    private Plant plant = new Plant("rosa");
-    private BufferedImage im;
+    private BufferedImage    grass;
     private ArrayList<Point> holes = new ArrayList<Point>();
-    private Point selectedHole;
+    private Point            selectedHole;
 
-    private final int HOLES_NUMBER = 4;
+    public static final int HOLES_NUMBER = 4;
 
     public GameView() {
-        plant.set(100.0f);
         try {
-            im = ImageIO.read(new File("../ressources/images/grass.jpg"));
+            grass = ImageIO.read(new File("../ressources/images/grass.jpg"));
         } catch (java.io.IOException e) {
             System.err.println("[erreur] " + e);
         }
@@ -39,14 +37,18 @@ public class GameView extends JPanel {
         });
     }
 
+    public int getSelectedHoleIndex() {
+        return holes.indexOf(selectedHole);
+    }
+
     public void setSelectedHoleNext() {
-        int i = holes.indexOf(selectedHole);
+        int i = getSelectedHoleIndex();
         selectedHole = holes.get(holes.size() == i+1 ? 0 : i+1);
         repaint();
     }
 
     public void setSelectedHolePrevious() {
-        int i = holes.indexOf(selectedHole);
+        int i = getSelectedHoleIndex();
         selectedHole = holes.get(i == 0 ? holes.size()-1 : i-1);
         repaint();
     }
@@ -66,10 +68,6 @@ public class GameView extends JPanel {
         selectedHole = holes.get(0);
     }
 
-    public void grow() {
-        plant.grow();
-    }
-
     public void paintComponent(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         Rectangle rect = g2d.getClipBounds();
@@ -83,16 +81,13 @@ public class GameView extends JPanel {
         g2d.fillOval(20, 20, 75, 75);
 
         // herbe
-        int w = im.getWidth();
-        int h = im.getHeight();
+        int w = grass.getWidth();
+        int h = grass.getHeight();
         int nbW = (rect.width / w) + 1;
         int nbH = (rect.height / h) + 1;
         for (int x = 0; x < nbW; ++x)
             for (int y = 0; y < nbH; ++y)
-                g2d.drawImage(im, null, x * w, (rect.height * 2 / 3) + y * h);
-
-        // plante
-        plant.paint(g);
+                g2d.drawImage(grass, null, x * w, (rect.height * 2 / 3) + y * h);
 
         // trous
         g2d.setColor(Color.BLACK);
@@ -104,6 +99,22 @@ public class GameView extends JPanel {
                 g2d.setColor(Color.BLACK);
             }
             g2d.fillOval(p.x-25, p.y-25, 50, 50);
+        }
+
+        // plantes
+        MainWindow m = (MainWindow) getParent().getParent().getParent().getParent(); // immonde => ajouter un param au constructeur
+        //for (Plant p : m.getPlantedPlants())
+        for (int i = 0; i < m.getPlantedPlants().size(); ++i)
+        {
+            Plant p = m.getPlantedPlants().get(i);
+            if (p != null)
+            {
+                Point pos = holes.get(i);
+                p.setX(pos.x);
+                p.setY(pos.y);
+                System.out.println(" => " + i + " : " + p.get());
+                p.paint(g);
+            }
         }
     }
 }

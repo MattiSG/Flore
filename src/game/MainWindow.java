@@ -44,9 +44,13 @@ public class MainWindow extends JFrame {
     private ArrayList<Creature> insects  = new ArrayList<Creature>();
     private ArrayList<Mission>  missions = new ArrayList<Mission>();
 
-    private Mission currentMission;
+    private ArrayList<Plant> plantedPlants = new ArrayList<Plant>(gameView.HOLES_NUMBER);
+    private Mission          currentMission;
 
     public MainWindow() {
+        for (int i = 0; i < gameView.HOLES_NUMBER; ++i)
+            plantedPlants.add(null);
+
         loadPlants();
         loadInsects();
         loadMissions();
@@ -60,7 +64,11 @@ public class MainWindow extends JFrame {
 
         seedListView.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
-                if (KeyEvent.VK_RIGHT == e.getKeyCode()) {
+                if (KeyEvent.VK_ENTER == e.getKeyCode()) {
+                    int i = gameView.getSelectedHoleIndex();
+                    plantedPlants.set(i, new Plant(((Plant) seedListView.getSelectedValue()).ID()));
+                    gameView.repaint();
+                } else if (KeyEvent.VK_RIGHT == e.getKeyCode()) {
                     gameView.setSelectedHoleNext();
                 } else if (KeyEvent.VK_LEFT == e.getKeyCode()) {
                     gameView.setSelectedHolePrevious();
@@ -100,13 +108,15 @@ public class MainWindow extends JFrame {
         seedListView.requestFocus();
         seedListView.setSelectedIndex(0);
 
-        int delay = 10000;
+        int delay = 100;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // fait grandir ta plante ici !
                 //statusBar.setText("tick: " + e.getWhen());
-                //gameView.grow();
-                //gameView.repaint();
+                for (Plant p : plantedPlants)
+                    if (p != null)
+                        p.grow();
+                gameView.repaint();
             }
         };
         new Timer(delay, taskPerformer).start();
@@ -162,5 +172,9 @@ public class MainWindow extends JFrame {
 
             return this;
         }
+    }
+
+    public ArrayList<Plant> getPlantedPlants() {
+        return plantedPlants;
     }
 }
