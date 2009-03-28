@@ -60,7 +60,11 @@ public class MainWindow extends JFrame {
 
         seedListView.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
-                if (KeyEvent.VK_ESCAPE == e.getKeyCode()) {
+                if (KeyEvent.VK_RIGHT == e.getKeyCode()) {
+                    gameView.setSelectedHoleNext();
+                } else if (KeyEvent.VK_LEFT == e.getKeyCode()) {
+                    gameView.setSelectedHolePrevious();
+                } else if (KeyEvent.VK_ESCAPE == e.getKeyCode()) {
                     statusBar.setText("Au revoir !");
                     dispose();
                 }
