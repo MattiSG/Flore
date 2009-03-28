@@ -77,6 +77,10 @@ abstract public class XMLLoadableElement {
 	//@{
 	/**Tells whether the given file format version is parsable or not.*/
 	public boolean checkVersion(double version) {
+		if (version == 0.3) {
+			System.err.println("Temporary compatibility for development. This is not a real compatible parser, and won't parse 0.3-specific features.");
+			return true;
+		}
 		return version == PARSER_VERSION;
 	}	
 	

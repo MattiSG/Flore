@@ -1,5 +1,5 @@
 <seed version="0.3" author="devint">
-	<id>test</id> <!--identifiant unique-->
+	<id>specs_seed</id> <!--identifiant unique-->
 	<name lang="fr">Testing plant file</name> <!--nom affiché-->
 	
 	<description lang="fr">Lorem ipsum dolor sit amet.</description>

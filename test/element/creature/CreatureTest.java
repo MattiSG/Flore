@@ -22,7 +22,7 @@ public class CreatureTest extends XMLLoadableElementTest {
 	
 	@Before
 	public void setUp() {
-		EXPECTED_ID = "creature_test";
+		EXPECTED_ID = "specs_creature";
 		EXPECTED_NAME = "Creature testing file";
 		EXPECTED_DESCRIPTION = "Lorem ipsum dolor sit amet.";
 		
