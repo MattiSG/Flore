@@ -108,14 +108,17 @@ public class MainWindow extends JFrame {
         seedListView.requestFocus();
         seedListView.setSelectedIndex(0);
 
-        int delay = 10000;
+        int delay = 100;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // fait grandir ta plante ici !
                 //statusBar.setText("tick: " + e.getWhen());
                 for (Plant p : plantedPlants)
                     if (p != null)
+                    {
                         p.grow();
+                        System.out.println(p.name());
+                    }
                 gameView.repaint();
             }
         };
@@ -129,6 +132,7 @@ public class MainWindow extends JFrame {
 
     private void loadPlants() {
         plants.add(new Plant("rosa"));
+        plants.add(new Plant("specs_seed"));
         plants.add(new Plant("mimosa"));
     }
 
@@ -136,7 +140,7 @@ public class MainWindow extends JFrame {
     }
 
     private void loadMissions() {
-        Mission temp = new Mission("mission_01");
+        Mission temp = new Mission("specs_mission");
         missions.add(temp);
     }
 
