@@ -1,0 +1,29 @@
+<seed version="0.2">
+	<id>mimosa</id>
+	<name lang="fr">Mimosa</name>
+	
+	<dimension direction="x">100</dimension> <!-- dimensions de la fleur -->
+	<dimension direction="y">100</dimension>
+	
+	<description lang="fr">Genre d'arbres de la famille des Mimosaceae ou selon la classification phylogénétique, de la grande famille des Fabaceae et de la sous-famille des Mimosoideae. Il comprend près de 400 espèces.</description>
+	
+	<water>10</water> <!-- quantité d'eau nécessaire -->
+	<sun>10</sun> <!-- quantité de soleil nécessaire -->
+	<time>10</time> <!-- nombre de jours avant la floraison (à voir par rapport au soleil ?) -->
+	
+	<assets type="standard">
+		<seed>
+			<img>seed.png</img>
+		</seed>
+		<shaft>
+			<img>seed.png</img>
+		</shaft>
+		<leaves>
+			<img>seed.png</img>
+		</leaves>
+		<flowers>
+			<img>seed.png</img>
+		</flowers>
+	</assets>
+	
+</seed>

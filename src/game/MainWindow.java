@@ -18,9 +18,11 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JOptionPane;
 import java.awt.Insets;
 import java.awt.Dimension;
+import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.CardLayout;
@@ -48,6 +50,8 @@ public class MainWindow extends JFrame {
     private ArrayList<Creature> insects  = new ArrayList<Creature>();
     private ArrayList<Mission>  missions = new ArrayList<Mission>();
 
+    private Mission currentMission;
+
     public MainWindow() {
         loadPlants();
         loadInsects();
@@ -64,7 +68,8 @@ public class MainWindow extends JFrame {
                 {
                     missionButton.setSelected(false);
                     centerLayout.show(centerPanel, "doc");
-                    docView.display((XMLLoadableElement) seedListView.getSelectedValue());
+                    if (seedListView.getSelectedValue() != null)
+                        docView.display((XMLLoadableElement) seedListView.getSelectedValue());
                 }
                 else
                     centerLayout.show(centerPanel, "game");
@@ -79,7 +84,7 @@ public class MainWindow extends JFrame {
                 {
                     docButton.setSelected(false);
                     centerLayout.show(centerPanel, "mission");
-                    missionView.display((XMLLoadableElement) seedListView.getSelectedValue());
+                    missionView.display(currentMission);
                 }
                 else
                     centerLayout.show(centerPanel, "game");
@@ -120,6 +125,7 @@ public class MainWindow extends JFrame {
         c.weightx = 0;
         c.weighty = 0;
         JScrollPane s = new JScrollPane(seedListView);
+        s.setPreferredSize(new Dimension(200, 400));
         layout.setConstraints(s, c);
         getContentPane().add(s);
 
@@ -152,6 +158,7 @@ public class MainWindow extends JFrame {
     }
 
     private void run() {
+        currentMission = missions.get(0);
         int delay = 10000;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -166,19 +173,40 @@ public class MainWindow extends JFrame {
 
     private void loadPlants() {
         plants.add(new Plant("rosa"));
+        plants.add(new Plant("mimosa"));
     }
 
     private void loadInsects() {
     }
 
     private void loadMissions() {
-        missions.add(new Mission());
+        Mission temp = new Mission("mission_01");
+        missions.add(temp);
+        System.out.println(temp);
     }
 
     private void setSeedList() {
+        seedListView.setCellRenderer(new CustomCellRenderer());
         seedListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         for (Plant p : plants)
             seedList.addElement(p);
+    }
+
+    class CustomCellRenderer extends DefaultListCellRenderer {
+        public Component getListCellRendererComponent(
+            JList list,
+            Object value,   // value to display
+            int index,      // cell index
+            boolean iss,    // is the cell selected
+            boolean chf)    // the list and the cell have the focus
+        {
+            super.getListCellRendererComponent(list, value, index, iss, chf);
+
+            setIcon(new ImageIcon(((Plant) value).seedImages().get(0)));
+            setText("");
+
+            return this;
+        }
     }
 
     private void setMenu() {
