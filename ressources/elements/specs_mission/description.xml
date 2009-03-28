@@ -1,0 +1,33 @@
+<mission version="0.3" author="devint">
+	<id>mission_01</id>
+	<name lang="fr">Mission 1</name>
+	
+	<description lang="fr">Mission d'essai</description>
+
+  <hints>
+    <hint level="0"></hint> <!-- level : degré d'aide de l'indice (0 => solution) -->
+  </hints>
+
+  <difficulty>0</difficulty> <!-- entier à partir de 0 (facile) -->
+
+  <time_limit>120</time_limit> <!-- temps limite en secondes -->
+
+  <holes>5</holes>
+
+  <backgrounds>
+    <sky></sky>
+    <grass></grass>
+    <sun></sun>
+    <hole></hole>
+  </backgrounds>
+
+  <seeds>
+    <seed id="rosa">4</seed>
+  </seeds>
+
+  <goal>
+    <creature id="coccinelle">3</creature>
+    <creature id="aphidoidea">1</creature>
+  </goal>
+	
+</mission>

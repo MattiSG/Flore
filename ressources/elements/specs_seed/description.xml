@@ -1,9 +1,6 @@
-<seed version="0.2">
+<seed version="0.3" author="devint">
 	<id>test</id> <!--identifiant unique-->
 	<name lang="fr">Testing plant file</name> <!--nom affiché-->
-	
-	<dimension direction="x">100</dimension> <!-- dimensions de la fleur (px)-->
-	<dimension direction="y">100</dimension>
 	
 	<description lang="fr">Lorem ipsum dolor sit amet.</description>
 	
@@ -13,19 +10,19 @@
 	
 	<assets type="standard">
 		<seed> <!-- graine ("icône")-->
-			<img>Seed.png</img>
+      <img width="100" height="100">Seed.png</img>
 		</seed>
 		<shaft> <!-- tige -->
-			<img>Shaft1.jpg</img>
-			<img>Shaft2.jpg</img>
+			<img width="100" height="100">Shaft1.jpg</img>
+			<img width="100" height="100">Shaft2.jpg</img>
 		</shaft>
 		<leaves> <!-- feuilles (sélectionnées en random) -->
-			<img>Leaf1.png</img>
-			<img>Leaf2.png</img>
-			<img>Leaf3.png</img>
+			<img width="100" height="100">Leaf1.png</img>
+			<img width="100" height="100">Leaf2.png</img>
+			<img width="100" height="100">Leaf3.png</img>
 		</leaves>
 		<flowers> <!-- fleurs (sélectionnées en random) -->
-			<img>Orange.png</img>
+			<img width="100" height="100">Orange.png</img>
 		</flowers>
 	</assets>
 	

@@ -1,4 +1,4 @@
-<creature version="0.2">
+<creature version="0.3" author="devint">
 	<id>creature_test</id>
 	<name lang="fr">Creature testing file</name>
 	
@@ -21,7 +21,7 @@
 			<img>blank.gif</img>
 			<img>blank.gif</img>
 		</right>
-		<down> <!-- images pour créer une animation de déplacement à bas -->
+		<down> <!-- images pour créer une animation de déplacement en bas -->
 			<img>blank.gif</img>
 			<img>blank.gif</img>
 		</down>

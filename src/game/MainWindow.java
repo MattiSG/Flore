@@ -108,7 +108,7 @@ public class MainWindow extends JFrame {
         seedListView.requestFocus();
         seedListView.setSelectedIndex(0);
 
-        int delay = 100;
+        int delay = 10000;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // fait grandir ta plante ici !
