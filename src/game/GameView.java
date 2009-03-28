@@ -111,8 +111,8 @@ public class GameView extends JPanel {
             {
                 Point pos = holes.get(i);
                 p.setX(pos.x);
-                p.setY(pos.y);
-                System.out.println(" => " + i + " : " + p.get());
+                p.setY(pos.y+50);
+                //System.out.println(" => " + i + " : " + p.get());
                 p.paint(g);
             }
         }
