@@ -1,33 +1,46 @@
-<mission version="0.3" author="devint">
+<?xml version="1.0" encoding="UTF-8"?>
+<mission version="0.2" author="devint">
+	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des missions -->
 	<id>specs_mission</id>
-	<name lang="fr">Mission 1</name>
+	<name lang="fr">Specifications Mission</name>
 	
-	<description lang="fr">Mission d'essai</description>
+	<description lang="fr">Ce fichier sert de specifications pour les fichiers decrivant des missions</description>
 
-  <hints>
-    <hint level="0"></hint> <!-- level : degré d'aide de l'indice (0 => solution) -->
-  </hints>
+	<hints>
+		<hint level="0">Solution</hint> <!-- level : degré d'aide de l'indice (par ordre décroissant de niveau d'aide, i.e. 0 = solution exacte) -->
+		<hint level="1">Quasiment la solution</hint>
+		<hint level="10">Quelque chose de très vague</hint>
+	</hints>
+	
+	<difficulty>0</difficulty> <!-- entier à partir de 0 (par ordre croissant de difficulté) -->
+	
+	<time_limit>120</time_limit> <!-- temps limite d'accomplissement du niveau en secondes -->
+	
+	<holes>5</holes> <!-- nombre de trous disponibles -->
+	
+	<assets type="standard">
+		<icon>blank.gif</icon>
+		<sky>blank.gif</sky>
+		<grass>blank.gif</grass>
+		<sun>blank.gif</sun>
+		<hole>blank.gif</hole>
+	</assets>
 
-  <difficulty>0</difficulty> <!-- entier à partir de 0 (facile) -->
-
-  <time_limit>120</time_limit> <!-- temps limite en secondes -->
-
-  <holes>5</holes>
-
-  <backgrounds>
-    <sky></sky>
-    <grass></grass>
-    <sun></sun>
-    <hole></hole>
-  </backgrounds>
-
-  <seeds>
-    <seed id="rosa">4</seed>
-  </seeds>
-
-  <goal>
-    <creature id="coccinelle">3</creature>
-    <creature id="aphidoidea">1</creature>
-  </goal>
+	<assets type="high_contrast">
+		<icon>blank.gif</icon>
+		<sky>blank.gif</sky>
+		<grass>blank.gif</grass>
+		<sun>blank.gif</sun>
+		<hole>blank.gif</hole>
+	</assets>
+	
+	<plants>
+		<plant id="rosa">4</plant>
+	</plants>
+	
+	<goal> <!-- nombre et type des créatures nécesaires pour gagner la mission -->
+		<creature id="coccinelle">3</creature>
+		<creature id="aphidoidea">1</creature>
+	</goal>
 	
 </mission>

@@ -1,11 +1,13 @@
-<creature version="0.3" author="devint">
+<?xml version="1.0" encoding="UTF-8"?>
+<creature version="0.4" author="devint">
+	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des créatures -->
 	<id>specs_creature</id>
-	<name lang="fr">Creature testing file</name>
+	<name lang="fr">Specifications Creature</name>
+	
+	<description lang="fr">Ce fichier sert de specifications pour les fichiers decrivant des creatures.</description>
 	
 	<dimension direction="x">100</dimension>
 	<dimension direction="y">100</dimension>
-	
-	<description lang="fr">Lorem ipsum dolor sit amet.</description>
 	
 	<assets type="standard">
 		<still> <!--insecte immobile-->
@@ -31,16 +33,13 @@
 		</up>
 	</assets>
 	
-	<preys>
-		<creature>ID</creature>
-		<creature>ID</creature>
-		<creature>ID</creature>
-	</preys>
-	
 	<eats>
-		<seed>ID</seed>
-		<seed>ID</seed>
-		<seed>ID</seed>
+		<plant>ID</plant>
+		<plant>ID</plant>
+		<plant>ID</plant>
+		<creature>ID</creature> <!-- peut ne contenir aucune créature (ou aucune plante d'ailleurs) -->
+		<creature>ID</creature>
+		<creature>ID</creature>
 	</eats>
 	
 </creature>

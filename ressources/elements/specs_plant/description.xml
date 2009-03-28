@@ -1,8 +1,10 @@
-<seed version="0.3" author="devint">
-	<id>specs_seed</id> <!--identifiant unique-->
-	<name lang="fr">Testing plant file</name> <!--nom affiché-->
+<?xml version="1.0" encoding="UTF-8"?>
+<plant version="0.3" author="devint">
+	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des plantes -->
+	<id>specs_plant</id> <!--identifiant unique-->
+	<name lang="fr">Specifications Plante</name> <!--nom affiché-->
 	
-	<description lang="fr">Lorem ipsum dolor sit amet.</description>
+	<description lang="fr">Ce fichier sert de specifications pour les fichiers decrivant des plantes.</description>
 	
 	<water>10</water> <!-- quantité d'eau nécessaire -->
 	<sun>10</sun> <!-- quantité de soleil nécessaire -->
@@ -10,19 +12,19 @@
 	
 	<assets type="standard">
 		<seed> <!-- graine ("icône")-->
-      <img width="100" height="100">Seed.png</img>
+      <img width="100" height="100">blank.gif</img>
 		</seed>
 		<shaft> <!-- tige -->
-			<img width="100" height="100">Shaft1.jpg</img>
-			<img width="100" height="100">Shaft2.jpg</img>
+			<img width="100" height="100">blank.gif</img>
+			<img width="100" height="100">blank.gif</img>
 		</shaft>
 		<leaves> <!-- feuilles (sélectionnées en random) -->
-			<img width="100" height="100">Leaf1.png</img>
-			<img width="100" height="100">Leaf2.png</img>
-			<img width="100" height="100">Leaf3.png</img>
+			<img width="100" height="100">blank.gif</img>
+			<img width="100" height="100">blank.gif</img>
+			<img width="100" height="100">blank.gif</img>
 		</leaves>
 		<flowers> <!-- fleurs (sélectionnées en random) -->
-			<img width="100" height="100">Orange.png</img>
+			<img width="100" height="100">blank.gif</img>
 		</flowers>
 	</assets>
 	
@@ -47,4 +49,4 @@
 		</flowers>
 	</assets>
 	
-</seed>
+</plant>
