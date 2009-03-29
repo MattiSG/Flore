@@ -22,9 +22,9 @@ public class PlantTest extends XMLLoadableElementTest {
 	
 	@Before
 	public void setUp() {
-		EXPECTED_ID = "specs_seed";
-		EXPECTED_NAME = "Testing plant file";
-		EXPECTED_DESCRIPTION = "Lorem ipsum dolor sit amet.";
+		EXPECTED_ID = "specs_plant";
+		EXPECTED_NAME = "Specifications Plante";
+		EXPECTED_DESCRIPTION = "Ce fichier sert de specifications pour les fichiers decrivant des plantes.";
 		
 		try {
 			subject = new Plant(EXPECTED_ID);

@@ -22,7 +22,7 @@ import java.awt.image.BufferedImage;
  */
 abstract public class XMLLoadableElement {
 	/**Version check. If the version of the parser is not compatible with the version the file asks for, the file won't be parsed.*/
-	public final static double PARSER_VERSION = 0.2;
+	protected final double PARSER_VERSION = 0.2;
 	
 	/**@name	Element description*/
 	//@{
@@ -77,8 +77,8 @@ abstract public class XMLLoadableElement {
 	//@{
 	/**Tells whether the given file format version is parsable or not.*/
 	public boolean checkVersion(double version) {
-		if (version == 0.3) {
-			System.err.println("Temporary compatibility for development. This is not a real compatible parser, and won't parse 0.3-specific features.");
+		if (version > PARSER_VERSION) {
+			System.err.println("The given file's version (" + version + ") is newer than this parser (" + PARSER_VERSION + ").\nI'll try to read it, but be aware that you may get errors ! You should update this software.");
 			return true;
 		}
 		return version == PARSER_VERSION;

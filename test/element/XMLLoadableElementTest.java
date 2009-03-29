@@ -19,9 +19,9 @@ import element.plant.Plant;
 
 public abstract class XMLLoadableElementTest {
 	
-	protected String EXPECTED_ID;
-	protected String EXPECTED_NAME;
-	protected String EXPECTED_DESCRIPTION;
+	public String EXPECTED_ID;
+	public String EXPECTED_NAME;
+	public String EXPECTED_DESCRIPTION;
 	
 	protected XMLLoadableElement subject;
 	

@@ -23,8 +23,8 @@ public class CreatureTest extends XMLLoadableElementTest {
 	@Before
 	public void setUp() {
 		EXPECTED_ID = "specs_creature";
-		EXPECTED_NAME = "Creature testing file";
-		EXPECTED_DESCRIPTION = "Lorem ipsum dolor sit amet.";
+		EXPECTED_NAME = "Specifications Creature";
+		EXPECTED_DESCRIPTION = "Ce fichier sert de specifications pour les fichiers decrivant des creatures.";
 		
 		try {
 			subject = new Creature(EXPECTED_ID);
