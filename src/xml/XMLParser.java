@@ -105,21 +105,6 @@ public class XMLParser {
 	 *@param	query	an Xpath expression targeting one node whose children will be used as values in the list (as opposed to the children themselves)
 	 */
 	public List<String> getValues(String query) {
-//		NodeList nodes = null;
-//		try {
-//			nodes = ((NodeList) xpath.evaluate(query, XML, XPathConstants.NODE));
-//		} catch (javax.xml.xpath.XPathExpressionException e) {
-//			throw new RuntimeException("Erreur (" + e + ") à l'analyse d'un fichier de description XML !\nRequête Xpath : " + query);
-//		}
-//		
-//		List<String> values = new ArrayList<String>(nodes.getLength());
-//		for (int i = 0; i < nodes.getLength(); i++) {
-//			Node node = nodes.item(i);
-//			if (node.getNodeType() == Node.ELEMENT_NODE) //otherwise we load everything, including comments and pure text
-//				values.add(node.getTextContent());
-//		}
-//		
-//		return values;
 		List<Node> nodes = getNodes(query + "/*");
 		List<String> values = new ArrayList<String>(nodes.size());
 		for (Node node : nodes) {
@@ -139,14 +124,9 @@ public class XMLParser {
 		Map<String, List<String>> result = new HashMap<String, List<String>>();
 		List<Node> keys = getNodes(query + "/*");
 		
-//		System.out.println("getListsMap(" + query + ") -> size of first-level parsing is " + keys.size());
-		
 		for (Node key : keys) {
-//			System.out.println("\"" + key.getTextContent() + "\" is of type " + key.getNodeType());
 			if (! key.hasChildNodes())
 				throw new RuntimeException("The node \"" + key.getNodeName() + "\" has no children !");
-			
-//			System.out.println("getListsMap(" + query + ") -> getValues(" + query + "/" + key.getLocalName() + "/* )");
 			
 			result.put(key.getNodeName(), getValues(query + "/" + key.getNodeName()));
 		}
