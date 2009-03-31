@@ -4,7 +4,7 @@
 	<id>specs_mission</id>
 	<name lang="fr">Specifications Mission</name>
 	
-	<description lang="fr">Ce fichier sert de specifications pour les fichiers decrivant des missions</description>
+	<description lang="fr">Ce fichier sert de specifications pour les fichiers decrivant des missions.</description>
 
 	<hints>
 		<hint level="0">Solution</hint> <!-- level : degré d'aide de l'indice (par ordre décroissant de niveau d'aide, i.e. 0 = solution exacte) -->

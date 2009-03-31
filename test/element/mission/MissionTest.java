@@ -3,7 +3,7 @@
  *@version 0.1
  */
 
-package test.element.plant;
+package test.element.mission;
 
 import static org.junit.Assert.*;
 import org.junit.After;
@@ -14,19 +14,19 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import test.element.XMLLoadableElementTest;
-import element.plant.Plant;
+import element.mission.Mission;
 
 
-public class PlantTest extends XMLLoadableElementTest {
+public class MissionTest extends XMLLoadableElementTest {
 	
 	@Before
 	public void setUp() {
-		EXPECTED_ID = "specs_plant";
-		EXPECTED_NAME = "Specifications Plante";
-		EXPECTED_DESCRIPTION = "Ce fichier sert de specifications pour les fichiers decrivant des plantes.";
+		EXPECTED_ID = "specs_mission";
+		EXPECTED_NAME = "Specifications Mission";
+		EXPECTED_DESCRIPTION = "Ce fichier sert de specifications pour les fichiers decrivant des missions.";
 		
 		try {
-			subject = new Plant(EXPECTED_ID);
+			subject = new Mission(EXPECTED_ID);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			fail(e.toString());

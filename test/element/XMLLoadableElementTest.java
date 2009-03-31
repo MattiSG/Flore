@@ -14,8 +14,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import element.XMLLoadableElement;
-import element.plant.Plant;
-
 
 public abstract class XMLLoadableElementTest {
 	
@@ -45,5 +43,13 @@ public abstract class XMLLoadableElementTest {
 			assertNotNull("The assets list \"" + key + "\" was null.", subject.getAssets(key));
 			assertFalse("The assets list \"" + key + "\" was empty.", subject.getAssets(key).isEmpty());
 		}
+	}
+	
+	@Test
+	public void assetsKeysCheck() {
+		String[] assetsKeys = subject.getAssetsNames();
+		for (int i = 0; i < assetsKeys.length; i++)
+			assertTrue("A valid key (" + assetsKeys[i] + ") wasn't recognized as such !", subject.isAssetKey(assetsKeys[i]));
+		assertFalse("An empty key was recognized as valid !", subject.isAssetKey(""));
 	}
 }

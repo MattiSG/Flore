@@ -14,7 +14,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import test.element.XMLLoadableElementTest;
-import element.XMLLoadableElement;
 import element.creature.Creature;
 
 

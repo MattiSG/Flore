@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import javax.xml.xpath.*;
 import javax.xml.parsers.*;
-import org.w3c.dom.*; 
+import org.w3c.dom.*;
 import java.io.File;
 import java.net.URI;
 
@@ -98,6 +98,17 @@ public class XMLParser {
 			values.add(nodes.item(i));
 		
 		return values;
+	}
+	
+	/**Returns the result of the evaluation of an Xpath query as a list of NodeNames.
+	 *Every entry of the list will be one of the tag of the nodes described in the query parameter.
+	 */	
+	public List<String> getTags(String query) {
+		List<Node> nodes = getNodes(query);
+		List<String> result = new ArrayList<String>(nodes.size());
+		for (Node node : nodes)
+			result.add(node.getNodeName());
+		return result;
 	}
 	
 	/**Returns the result of the evaluation of an Xpath query as a list of Strings.

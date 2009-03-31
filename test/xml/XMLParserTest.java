@@ -77,7 +77,7 @@ public class XMLParserTest {
 	public void checkList(List<String> list) {
 		assertFalse(list.isEmpty());
 		for (String s : list) {
-			System.out.println("\"" + s + "\"");
+//			System.out.println("\"" + s + "\"");
 			assertNotNull(s);
 			assertFalse("Parsed string is empty !", s.length() == 0);
 		}

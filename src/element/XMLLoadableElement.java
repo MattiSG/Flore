@@ -78,6 +78,42 @@ abstract public class XMLLoadableElement {
 	//@}
 	
 	
+	/**@name	Assets (images) management*/
+	//@{
+	/**Returns a list of images from a list of their paths, relative to the XML document of this element.
+	 */
+	public List<BufferedImage> loadImages(List<String> paths) {
+		List<BufferedImage> result = new ArrayList<BufferedImage>(paths.size());
+		for (String path : paths) {
+			URI imageURI = parser.getDocumentURI();
+			try {
+				imageURI = imageURI.normalize().resolve(new URI(path));
+				File image = new File(imageURI);
+				if (! image.exists())
+					throw new java.io.IOException();
+				result.add(ImageIO.read(image));
+			} catch(java.io.IOException e) {
+				throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + imageURI);
+			} catch(java.net.URISyntaxException e) {
+				throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + imageURI);
+			}
+		}
+		return result;
+	}
+	
+	/**Tells whether the given String is a valid key for an asset or not.
+	 *I.e., tells if getAssets().contains(key);
+	 */
+	public boolean isAssetKey(String key) {
+		String[] assetsKeys = getAssetsNames();
+		for (int i = 0; i < assetsKeys.length; i++)
+			if (key.equals(assetsKeys[i]))
+				return true;
+		return false;
+	}
+	//@}
+	
+	
 	/**@name	XML parsing*/
 	//@{
 	/**Tells whether the given file format version is parsable or not.
@@ -125,23 +161,11 @@ abstract public class XMLLoadableElement {
 		Map<String, List<BufferedImage>> assets = new HashMap<String, List<BufferedImage>>();
 		for (String key : map.keySet()) {
 			List<String> imagesPaths = map.get(key);
+			
 			if (imagesPaths.size() == 0)
 				throw new RuntimeException("Erreur à l'initialisation de l'élément " + ID() + " (\"" + name() + "\") : aucune image n'a pu être chargée !\nClé recherchée : " + key);
 			
-			List<BufferedImage> images = new ArrayList<BufferedImage>(imagesPaths.size());
-			for (int i = 0; i < imagesPaths.size(); i++) {
-				URI imageURI = null;
-				try {
-					imageURI = parser.getDocumentURI();
-					imageURI = imageURI.normalize().resolve(imagesPaths.get(i));
-					images.add(ImageIO.read(new File(imageURI)));
-					if (! new File(imageURI).exists())
-						throw new java.io.IOException();
-				} catch(java.io.IOException e) {
-					throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + imageURI);
-				}
-			}
-			assets.put(key, images);
+			assets.put(key, loadImages(imagesPaths));
 		}
 		return assets;
 	}
