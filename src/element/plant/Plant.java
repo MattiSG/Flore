@@ -19,6 +19,7 @@ import org.w3c.dom.Document;
 import element.XMLLoadableElement;
 
 public class Plant extends XMLLoadableElement {
+	private final static double PARSER_VERSION = 0;
 	private final static String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
 	
     private BufferedImage image;
@@ -65,6 +66,10 @@ public class Plant extends XMLLoadableElement {
 	//@{
 	public String[] getAssetsNames() {
 		return ASSETS_NAMES;
+	}
+	
+	public double parserVersion() {
+		return PARSER_VERSION;
 	}
 	
 	public List<BufferedImage> seedImages() {

@@ -6,14 +6,13 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.ArrayList;
 
-import javax.xml.xpath.*;
-import javax.xml.parsers.*;
-import org.w3c.dom.*; 
 import java.io.File;
 import java.net.URI;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+
+import xml.XMLParser;
 
 /**Generic class to handle XML parsing for every distinct element of the game.
  *For example, insects, plants and so on are stored through XML files, and inherit this class to get free XML parsing and assets loading.
@@ -21,8 +20,8 @@ import java.awt.image.BufferedImage;
  *@version 0.2
  */
 abstract public class XMLLoadableElement {
-	/**Version check. If the version of the parser is not compatible with the version the file asks for, the file won't be parsed.*/
-	protected final double PARSER_VERSION = 0.2;
+	
+	protected XMLParser parser;
 	
 	/**@name	Element description*/
 	//@{
@@ -58,6 +57,12 @@ abstract public class XMLLoadableElement {
 		return description;
 	}
 	
+	/**Version check.
+	 *Since the parsing work is different for every file type, this value has to be redefined for every class wanting to parse an XML file.
+	 *@see	checkVersion
+	 */
+	public abstract double parserVersion();
+	
 	/**The names of all assets nodes to load.
 	 *Designed to be overriden for specific needs by the inheriting classes.
 	 *@see	loadAssets
@@ -75,13 +80,19 @@ abstract public class XMLLoadableElement {
 	
 	/**@name	XML parsing*/
 	//@{
-	/**Tells whether the given file format version is parsable or not.*/
+	/**Tells whether the given file format version is parsable or not.
+ 	 *@see	parserVersion
+	 */
 	public boolean checkVersion(double version) {
-		if (version > PARSER_VERSION) {
-			System.err.println("The given file's version (" + version + ") is newer than this parser (" + PARSER_VERSION + ").\nI'll try to read it, but be aware that you may get errors ! You should update this software.");
+		double parserVersion = parserVersion();
+		if (version > parserVersion) {
+			System.err.println("The given file's version (" + version + ") is newer than this parser (" + parserVersion + ").\nI'll try to read it, but be aware that you may get errors ! You should update this software.");
+			return true;
+		} else if (version < parserVersion) {
+			System.err.println("Parser version check temporarily disabled for developement, but be aware that this file uses an obsolete syntax.");
 			return true;
 		}
-		return version == PARSER_VERSION;
+		return version == parserVersion;
 	}	
 	
 	/**Loads an Element file from its ID.
@@ -100,69 +111,39 @@ abstract public class XMLLoadableElement {
 	 *@throws	IllegalArgumentException	if the given file isn't parsable by this version of the parser.
 	 */
     private void loadFromXML(String file) {
-		try {
-			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document XML = builder.parse(new File(file));
-			XPath xpath = XPathFactory.newInstance().newXPath();
-			
-			if (! checkVersion((Double) xpath.evaluate(EXPR_VERSION, XML, XPathConstants.NUMBER)))
-				throw new IllegalArgumentException("File version is newer than parser ! Please update this software.");
-			
-			ID = xpath.evaluate(EXPR_ID, XML);
-			name = xpath.evaluate(EXPR_NAME, XML);
-			description = xpath.evaluate(EXPR_DESCRIPTION, XML);
-			
-			assets = new HashMap<String, List<BufferedImage>>();
-			
-			loadAssets(xpath, XML);
-			
-		} catch (javax.xml.parsers.ParserConfigurationException e) {
-			throw new RuntimeException("Erreur au chargement d'un fichier d'élément (insecte ou plante) !\n" + e);
-		} catch (java.io.IOException e) {
-			throw new RuntimeException("Erreur au chargement d'un fichier d'élément (insecte ou plante) !\n" + e);
-		} catch (org.xml.sax.SAXException e) {
-			throw new RuntimeException("Erreur au chargement d'un fichier d'élément (insecte ou plante) !\n" + e);
-		} catch (javax.xml.xpath.XPathExpressionException e) {
-			throw new RuntimeException("Erreur au chargement d'un fichier d'élément (insecte ou plante) !\n" + e);
-		}
+		parser = new XMLParser(file);
+		
+		ID = parser.get(EXPR_ID);
+		name = parser.get(EXPR_NAME);
+		description = parser.get(EXPR_DESCRIPTION);
+		
+		assets = loadAssets(EXPR_ASSETS);
 	}
 	
-	/**Generic method to load assets from the assetsNames attribute, to be defined in inheriting classes.
-	 *While they share a lot of common attributes, the inner assets organisation is completely different, hence the need to redefine some details in the inheriting classes.
-	 *This method populates the assets Map.
-	 *@param	xpath	the XPath to be used to parse the given XML document.
-	 *@param	XML		the XML document to be parsed.
-	 *@throws	RuntimeException	if the parsing of the XML file, or the loading of an image, threw an exception.
-	 *@see		getAssetsNames
-	 */
-	private void loadAssets(XPath xpath, Document XML) {
-		for (String nodeName : getAssetsNames()) {
-			NodeList imagesPaths = null;
-			String query = EXPR_ASSETS + "/" + nodeName + "/img";
-			try {
-				imagesPaths = ((NodeList) xpath.evaluate(query, XML, XPathConstants.NODESET));
-			} catch (javax.xml.xpath.XPathExpressionException e) {
-				throw new RuntimeException("Erreur (" + e + ") à l'analyse d'un fichier d'élément (insecte ou plante) !\nRequête Xpath : " + query);
-			}
+	protected Map<String, List<BufferedImage>> loadAssets(String query) {
+		Map<String, List<String>> map = parser.getListsMap(query);
+		Map<String, List<BufferedImage>> assets = new HashMap<String, List<BufferedImage>>();
+		for (String key : map.keySet()) {
+			List<String> imagesPaths = map.get(key);
+			if (imagesPaths.size() == 0)
+				throw new RuntimeException("Erreur à l'initialisation de l'élément " + ID() + " (\"" + name() + "\") : aucune image n'a pu être chargée !\nClé recherchée : " + key);
 			
-			if (imagesPaths.getLength() == 0)
-				throw new RuntimeException("Erreur à l'initialisation de l'élément " + ID() + " (\"" + name() + "\") : aucune image n'a pu être chargée !\nRequête effectuée : " + query);
-			
-			List<BufferedImage> images = new ArrayList<BufferedImage>(imagesPaths.getLength());
-			for (int i = 0; i < imagesPaths.getLength(); i++) {
+			List<BufferedImage> images = new ArrayList<BufferedImage>(imagesPaths.size());
+			for (int i = 0; i < imagesPaths.size(); i++) {
 				URI imageURI = null;
 				try {
-					imageURI = new URI(XML.getDocumentURI());
-					imageURI = imageURI.normalize().resolve(imagesPaths.item(i).getTextContent());
+					imageURI = parser.getDocumentURI();
+					imageURI = imageURI.normalize().resolve(imagesPaths.get(i));
 					images.add(ImageIO.read(new File(imageURI)));
+					if (! new File(imageURI).exists())
+						throw new java.io.IOException();
 				} catch(java.io.IOException e) {
 					throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + imageURI);
-				} catch (java.net.URISyntaxException e) {
-					throw new RuntimeException("Erreur au chargement d'un fichier d'élément (insecte ou plante) !\n" + e);
 				}
 			}
-			assets.put(nodeName, images);
+			assets.put(key, images);
 		}
+		return assets;
 	}
 	//@}
 }

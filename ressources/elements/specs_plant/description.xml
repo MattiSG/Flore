@@ -12,7 +12,7 @@
 	
 	<assets type="standard">
 		<seed> <!-- graine ("icône")-->
-      <img width="100" height="100">blank.gif</img>
+			<img width="100" height="100">blank.gif</img>
 		</seed>
 		<shaft> <!-- tige -->
 			<img width="100" height="100">blank.gif</img>

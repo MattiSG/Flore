@@ -25,9 +25,10 @@ public abstract class XMLLoadableElementTest {
 	
 	protected XMLLoadableElement subject;
 	
+	public abstract void setUp();
+	
 	@Test
 	public void initTest() {
-//		System.out.println("ID : " + EXPECTED_ID + "\nName : " + EXPECTED_NAME + "\nsubject : " + subject);
 		assertNotNull("Constructor created a null object !", subject);
 	}
 	
@@ -40,7 +41,9 @@ public abstract class XMLLoadableElementTest {
 	
 	@Test
 	public void assetsLoading() {
-		for (String key : subject.getAssetsNames())
-			assertFalse("An empty assets list was detected.", subject.getAssets(key).isEmpty());
+		for (String key : subject.getAssetsNames()) {
+			assertNotNull("The assets list \"" + key + "\" was null.", subject.getAssets(key));
+			assertFalse("The assets list \"" + key + "\" was empty.", subject.getAssets(key).isEmpty());
+		}
 	}
 }
