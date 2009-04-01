@@ -1,48 +1,37 @@
-<creature version="0.1">
+<?xml version="1.0" encoding="UTF-8"?>
+<creature version="0.4" author="devint">
 	<id>coccinelle</id>
 	<name lang="fr">Coccinelle</name>
 	
 	<dimension direction="x">100</dimension>
-	<dimension direction="y">40</dimension>
+	<dimension direction="y">100</dimension>
 	
 	<description lang="fr">Coccinellidae, en français coccinellidés, est une famille d'insectes de l'ordre des coléoptères, appelés aussi coccinelles, ou bêtes à bon Dieu. Véritables ogres à pucerons, les coccinelles sont aujourd'hui reconnues comme l'un des meilleurs insecticides naturels.</description>
 	
-	<assets>
-		<standing>
-			<img></img>
-		</standing>
-		<moving direction="left">
-			<img></img>
-			<img></img>
-			<img></img>
-			<img></img>
-		</moving>
-		<moving direction="right">
-			<img></img>
-			<img></img>
-			<img></img>
-			<img></img>
-		</moving>
-		<moving direction="down">
-			<img></img>
-			<img></img>
-			<img></img>
-			<img></img>
-		</moving>
-		<moving direction="up">
-			<img></img>
-			<img></img>
-			<img></img>
-			<img></img>
-		</moving>
+	<assets type="standard">
+		<still> <!--insecte immobile-->
+			<img>./assets/standard/coccinellestand.svg</img>
+		</still>
+		<left> <!-- images pour créer une animation de déplacement à gauche -->
+			<img>./assets/standard/coccinellegauche1.svg</img>
+			<img>./assets/standard/coccinellegauche2.svg</img>
+		</left>
+		<right> <!-- images pour créer une animation de déplacement à droite -->
+			<img>./assets/standard/coccinelledroite1.svg</img>
+			<img>./assets/standard/coccinelledroite2.svg</img>
+		</right>
+		<down> <!-- images pour créer une animation de déplacement en bas -->
+			<img>./assets/standard/coccinellebas1.svg</img>
+			<img>./assets/standard/coccinellebas2.svg</img>
+		</down>
+		<up> <!-- images pour créer une animation de déplacement en haut -->
+			<img>./assets/standard/coccinellehaut1.svg</img>
+			<img>./assets/standard/coccinellehaut2.svg</img>
+		</up>
 	</assets>
 	
-	<preys>
-		<creature>aphidoidea</creature> <!--id de créature -->
-	</preys>
-	
 	<eats>
-		<seed>rosa</seed> <!-- id de seed -->
+		<creature>aphidoidea</creature>
 	</eats>
 	
 </creature>

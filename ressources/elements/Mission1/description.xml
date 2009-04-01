@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mission version="0.2" author="devint">
+	
+	<id>mission_1</id>
+	<name lang="fr">Mission 1</name>
+	
+	<description lang="fr">Cette première mission consiste en la capture d'une coccinelle</description>
+
+	<hints>
+		<hint level="0">En plantant des roses, tu auras à coup sur des pucerons et les coccinelles adorent les pucerons</hint> <!-- level : degré d'aide de l'indice (par ordre décroissant de niveau d'aide, i.e. 0 = solution exacte) -->
+		<hint level="1">Les roses font généralement venir des pucerons</hint>
+		<hint level="10">Pour faire venir la coccinelle, fait venir un insecte qui l'interesse</hint>
+	</hints>
+	
+	<difficulty>0</difficulty> <!-- entier à partir de 0 (par ordre croissant de difficulté) -->
+	
+	<time_limit>240</time_limit> <!-- temps limite d'accomplissement du niveau en secondes -->
+	
+	<holes>5</holes> <!-- nombre de trous disponibles -->
+	
+	<assets type="standard">
+		<icon>blank.gif</icon>
+		<sky>blank.gif</sky>
+		<grass>blank.gif</grass>
+		<sun>blank.gif</sun>
+		<hole>blank.gif</hole>
+	</assets>
+
+	<assets type="high_contrast">
+		<icon>blank.gif</icon>
+		<sky>blank.gif</sky>
+		<grass>blank.gif</grass>
+		<sun>blank.gif</sun>
+		<hole>blank.gif</hole>
+	</assets>
+	
+	<plants>
+		<plant id="rosa">4</plant>
+	</plants>
+	
+	<goal> <!-- nombre et type des créatures nécesaires pour gagner la mission -->
+		<creature id="coccinelle">3</creature>
+	</goal>
+	
+</mission>
