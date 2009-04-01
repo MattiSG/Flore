@@ -31,7 +31,7 @@
 	
 	<assets type="high_contrast">
 		<seed> <!-- graine ("icône")-->
-			<img></img>
+			<img>./seed.png</img>
 		</seed>
 		<shaft> <!-- tige -->
 			<img></img>
@@ -44,7 +44,7 @@
 			<img></img>
 		</leaves>
 		<flowers> <!-- fleurs (sélectionnées en random) -->
-			<img></img>
+			<img>./rosa.png</img>
 			<img></img>
 			<img></img>
 		</flowers>
