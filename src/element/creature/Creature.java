@@ -3,6 +3,13 @@ package element.creature;
 import element.XMLLoadableElement;
 
 public class Creature extends XMLLoadableElement {
+    /*
+    int posX;
+    int posY;
+    int mvt; // 0 = up, 1 = right, 2 = down, 3 = left
+    float mvtT;
+    */
+
 	private final static double PARSER_VERSION = 0;
 	private final static String[] ASSETS_NAMES = {"still", "left", "right", "up", "down"};
 	

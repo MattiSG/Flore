@@ -21,7 +21,7 @@ public class Flore extends MenuAbstrait {
     }
 
     protected String[] nomOptions() {
-        return new String[] { "Jouer", "Options", "Scores", "Quitter" };
+        return new String[] { "Jouer", "Quitter" };
     }
 
     protected void lancerOption(int i) {

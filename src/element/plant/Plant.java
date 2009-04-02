@@ -18,16 +18,81 @@ import org.w3c.dom.Document;
 
 import element.XMLLoadableElement;
 
+import element.creature.Creature;
+
+/*
+class Volant {
+    private BufferedImage image;
+
+    // insecte
+    int posX;
+    int posY;
+    int mvt; // 0 = up, 1 = right, 2 = down, 3 = left
+    float mvtT;
+
+    public Volant() {
+        posX = 0;
+        posY = 0;
+
+        try {
+            image = ImageIO.read(new File("../elements/coccinelle/assets/standard/coccinellehaut2.png"));
+        } catch(java.io.IOException e) {
+            System.err.println("[erreur] " + e);
+        }   
+    }
+
+    public void move(Graphics g) {
+        Rectangle rect = g.getClipBounds();
+        int vit = 5;
+
+        switch(Math.random(4)) {
+        case 0:
+            posY -= vit;
+            break;
+        case 1:
+            posX += vit;
+            break;
+        case 2:
+            posY += vit;
+            break;
+        case 4:
+            posX -= vit;
+            break;
+        }
+        
+        if(posX < 0)
+            posX = 0;
+        if(posY < 0)
+            posY = 0;
+        if(posX > rect.width)
+            posX = rect.width;
+        if(posY > rect.height)
+            posY = rect.height;
+    }
+
+    public void draw(Graphics g) {
+
+        int x = posX,
+            y = posY;
+
+        move(g);
+
+        g.drawImage(image, posX, posY);
+    }
+}
+*/
+
 public class Plant extends XMLLoadableElement {
 	private final static double PARSER_VERSION = 0.3;
 	private final static String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
+    private ArrayList<Creature> creatures = new ArrayList<Creature>();
 	
     private BufferedImage image;
     private float health = 0;
     private float anim   = 0;
     private int   x      = 0,
                   y      = 0;
-	
+
     public Plant(String ID) {
         this(ID, 512, 777);
     }
@@ -42,7 +107,9 @@ public class Plant extends XMLLoadableElement {
         setHealth(100.0f);
     }
 
-    public float get() { return anim; }
+    public float get() {
+        return anim;
+    }
 
     public void setX(int xx) {
         x = xx;
@@ -91,6 +158,10 @@ public class Plant extends XMLLoadableElement {
             anim = health;
     }
 
+    public boolean isAdult() {
+        return anim == health;
+    }
+
     public void paint(Graphics g) {
         Rectangle rect = g.getClipBounds();
 
@@ -121,5 +192,9 @@ public class Plant extends XMLLoadableElement {
                     imh,*/
                     null
                    );
+
+        if(anim == 100) {
+//            volant.draw(g);
+        }
     }
 }

@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JOptionPane;
 
 import java.awt.Dimension;
 import java.awt.Component;
@@ -46,6 +47,7 @@ public class MainWindow extends JFrame {
 
     private ArrayList<Plant> plantedPlants = new ArrayList<Plant>(gameView.HOLES_NUMBER);
     private Mission          currentMission;
+    private Timer timer;
 
     public MainWindow() {
         for (int i = 0; i < gameView.HOLES_NUMBER; ++i)
@@ -66,7 +68,11 @@ public class MainWindow extends JFrame {
             public void keyPressed(KeyEvent e) {
                 if (KeyEvent.VK_ENTER == e.getKeyCode()) {
                     int i = gameView.getSelectedHoleIndex();
-                    plantedPlants.set(i, new Plant(((Plant) seedListView.getSelectedValue()).ID()));
+                    if (plantedPlants.get(i) == null) {
+                        plantedPlants.set(i, new Plant(((Plant) seedListView.getSelectedValue()).ID()));
+                    }
+                    else
+                        play("Il ya déjà une plante dans ce trou.");
                     gameView.repaint();
                 } else if (KeyEvent.VK_RIGHT == e.getKeyCode()) {
                     gameView.setSelectedHoleNext();
@@ -113,16 +119,35 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // fait grandir ta plante ici !
                 //statusBar.setText("tick: " + e.getWhen());
+                boolean finish = true;
                 for (Plant p : plantedPlants)
                     if (p != null)
                     {
                         p.grow();
-                        System.out.println(p.name());
+                        //System.out.println(p.name());
+                        if (!p.isAdult())
+                            finish = false;
                     }
+                    else
+                        finish = false;
                 gameView.repaint();
+                if (finish) {
+                    gameView.setWin(true);
+                    gameView.repaint();
+                    stopTimer();
+                    play("Tu as gagné !");
+                    JOptionPane.showMessageDialog(null, "Tu as gagné !", "Bravo", JOptionPane.INFORMATION_MESSAGE);
+                    setVisible(false);
+                    dispose();
+                }
             }
         };
-        new Timer(delay, taskPerformer).start();
+        timer = new Timer(delay, taskPerformer);
+        timer.start();
+    }
+
+    private void stopTimer() {
+        timer.stop();
     }
 
     private void play(String text) {
