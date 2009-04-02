@@ -132,7 +132,6 @@ public class MainWindow extends JFrame {
 
     private void loadPlants() {
         plants.add(new Plant("rosa"));
-        plants.add(new Plant("specs_plant"));
         plants.add(new Plant("mimosa"));
     }
 

@@ -19,7 +19,7 @@ import org.w3c.dom.Document;
 import element.XMLLoadableElement;
 
 public class Plant extends XMLLoadableElement {
-	private final static double PARSER_VERSION = 0;
+	private final static double PARSER_VERSION = 0.3;
 	private final static String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
 	
     private BufferedImage image;
@@ -34,12 +34,7 @@ public class Plant extends XMLLoadableElement {
     
     public Plant(String ID, int xx, int yy) {
 		load(ID);
-        //image = seedImages().get(0);
-        try {
-            image = ImageIO.read(new File("../ressources/images/plant.png"));
-        } catch(java.io.IOException e) {
-            System.err.println("[erreur] " + e);
-        }
+        image = getAssets("flowers").get(0);
 
         x = xx;
         y = yy;

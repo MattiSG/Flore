@@ -13,19 +13,19 @@
 	
 	<assets type="standard">
 		<seed> <!-- graine ("icône")-->
-      <img width="100" height="100">blank.gif</img>
+			<img width="100" height="100">seed.png</img>
 		</seed>
 		<shaft> <!-- tige -->
-			<img width="100" height="100">blank.gif</img>
-			<img width="100" height="100">blank.gif</img>
+			<img width="100" height="100">rosa.png</img>
+			<img width="100" height="100">rosa.png</img>
 		</shaft>
 		<leaves> <!-- feuilles (sélectionnées en random) -->
-			<img width="100" height="100">blank.gif</img>
-			<img width="100" height="100">blank.gif</img>
-			<img width="100" height="100">blank.gif</img>
+			<img width="100" height="100">rosa.png</img>
+			<img width="100" height="100">rosa.png</img>
+			<img width="100" height="100">rosa.png</img>
 		</leaves>
 		<flowers> <!-- fleurs (sélectionnées en random) -->
-			<img width="100" height="100">blank.gif</img>
+			<img width="100" height="100">rosa.png</img>
 		</flowers>
 	</assets>
 	
