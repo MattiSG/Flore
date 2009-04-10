@@ -36,11 +36,11 @@ abstract public class XMLLoadableElement {
 	 *They represent the common data shared by all game elements represented by XML files.
 	 */
 	//@{
-	private final static String EXPR_VERSION = "//id/../@version";
-	private final static String EXPR_ID = "//id";
-	private final static String EXPR_NAME = "//name[@lang='fr']";
-	private final static String EXPR_ASSETS = "//assets[@type='standard']";
-	private final static String EXPR_DESCRIPTION = "//description";
+	private final String EXPR_VERSION = rootElement() + "/id/../@version";
+	private final String EXPR_ID = rootElement() + "/id";
+	private final String EXPR_NAME = rootElement() + "/name[@lang='fr']";
+	private final String EXPR_ASSETS = rootElement() + "/assets[@type='standard']";
+	private final String EXPR_DESCRIPTION = rootElement() + "/description";
 	//@}
 	
 	/**@name	Getters*/
@@ -68,6 +68,12 @@ abstract public class XMLLoadableElement {
 	 *@see	loadAssets
 	 */
 	public abstract String[] getAssetsNames();
+	
+	/**The tag name of the root element of the XML document.
+	 *Designed to be overriden for specific needs by the inheriting classes.
+	 *For example, the "Mission" class will most probably return "mission".
+	 */
+	public abstract String rootElement();
 	
 	/**The key has to be one from the String array returned by getAssetsNames.
 	 *@see	getAssetsNames
@@ -123,7 +129,7 @@ abstract public class XMLLoadableElement {
 		double parserVersion = parserVersion();
 		if (version > parserVersion) {
 			System.err.println("The given file's version (" + version + ") is newer than this parser (" + parserVersion + ").\nI'll try to read it, but be aware that you may get errors ! You should update this software.");
-			return true;
+			return false;
 		} else if (version < parserVersion) {
 			System.err.println("Parser version check temporarily disabled for developement, but be aware that this file uses an obsolete syntax.");
 			return true;

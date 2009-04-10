@@ -7,9 +7,9 @@
 	<description lang="fr">Ce fichier sert de specifications pour les fichiers decrivant des missions.</description>
 
 	<hints>
-		<hint level="0">Solution</hint> <!-- level : degré d'aide de l'indice (par ordre décroissant de niveau d'aide, i.e. 0 = solution exacte) -->
-		<hint level="1">Quasiment la solution</hint>
-		<hint level="10">Quelque chose de très vague</hint>
+		<hint level="0">Level 0 hint</hint> <!-- level : degré d'aide de l'indice (par ordre décroissant de niveau d'aide, i.e. 0 = solution exacte) -->
+		<hint level="1">Level 1 hint</hint> <!--quasiment la solution-->
+		<hint level="10">Level 10 hint</hint> <!-- Quelque chose de tres vague -->
 	</hints>
 	
 	<difficulty>0</difficulty> <!-- entier à partir de 0 (par ordre croissant de difficulté) -->
@@ -36,11 +36,12 @@
 	
 	<plants>
 		<plant id="rosa">4</plant>
+		<plant id="specs_plant">2</plant>
 	</plants>
 	
 	<goal> <!-- nombre et type des créatures nécesaires pour gagner la mission -->
 		<creature id="coccinelle">3</creature>
-		<creature id="aphidoidea">1</creature>
+		<creature id="specs_creature">1</creature>
 	</goal>
 	
 </mission>

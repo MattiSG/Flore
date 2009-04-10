@@ -85,6 +85,7 @@ class Volant {
 public class Plant extends XMLLoadableElement {
 	private final static double PARSER_VERSION = 0.3;
 	private final static String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
+	private final static String ROOT = "plant";
     private ArrayList<Creature> creatures = new ArrayList<Creature>();
 	
     private BufferedImage image;
@@ -132,6 +133,10 @@ public class Plant extends XMLLoadableElement {
 	
 	public double parserVersion() {
 		return PARSER_VERSION;
+	}
+	
+	public String rootElement() {
+		return ROOT;
 	}
 	
 	public List<BufferedImage> seedImages() {
