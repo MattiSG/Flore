@@ -14,6 +14,10 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+
 import element.XMLLoadableElement;
 import element.plant.Plant;
 import element.creature.Creature;
@@ -21,27 +25,85 @@ import element.mission.Mission;
 
 public class DefaultElementsTest {
 	
-	public final static String[] MISSIONS_IDS = {"mission_1", "mission_2"};
+	public final static String[] MISSIONS_IDS = {"mission_1"/*, "mission_2"*/};
 	public final static String[] PLANTS_IDS = {"rosa", "mimosa"};
 	public final static String[] CREATURES_IDS = {"aphidoidea", "coccinelle"};	
+
+	private int array = 0,
+				counter = 0;
+	private XMLLoadableElement subject;
 	
 	@Test
-	public void elementTest() {
-		try {
-			for (int i = 0; i < MISSIONS_IDS.length; i++)
-				runTests(new Mission(MISSIONS_IDS[i]));
-			for (int i = 0; i < PLANTS_IDS.length; i++)
-				runTests(new Plant(PLANTS_IDS[i]));
-			for (int i = 0; i < CREATURES_IDS.length; i++)
-				runTests(new Creature(CREATURES_IDS[i]));
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail(e.toString());
+	public void testElements() {
+		try { 
+			for (int i = 0; i < MISSIONS_IDS.length; i++) {
+				subject = new Mission(MISSIONS_IDS[i]);
+				runTests();
+			}
+			for (int i = 0; i < PLANTS_IDS.length; i++) {
+				subject = new Plant(PLANTS_IDS[i]);
+				runTests();
+			}
+			for (int i = 0; i < CREATURES_IDS.length; i++) {
+				subject = new Creature(CREATURES_IDS[i]);
+				runTests();
+			}
+		} catch (Exception e) { 
+			e.printStackTrace(); 
+			fail(e.toString()); 
 		}
 	}
 	
-	public static void runTests(XMLLoadableElement subject) {
+	public void runTests() {
 		assertTrue("Element ID \"" + subject.ID() + "\" has an incompatible version number.", subject.checkVersion());
 		XMLLoadableElementTest.runTests(subject);
+		checkDependencies();
 	}
+	
+	public void checkDependencies() {
+		if (subject.getClass() == Mission.class) {
+			checkPlantsExistence(new ArrayList(((Mission) subject).plants().keySet()));
+			checkCreaturesExistence(new ArrayList(((Mission) subject).goal().keySet()));
+		}
+		else if (subject.getClass() == Creature.class) {
+			checkExistence(((Creature) subject).eats());
+		}
+	}
+	
+	public void checkExistence(List<String> ids) {
+		for (String id : ids)
+			if (! (checkCreatureExistence(id) || checkPlantExistence(id)))
+				fail("No loadable element was found for ID \"" + id + "\", used in element \"" + subject.ID() + "\".");
+	}
+
+	public void checkCreaturesExistence(List<String> ids) {
+		for (String id : ids)
+			if (! checkCreatureExistence(id))
+				fail("No loadable creature was found for ID \"" + id + "\", used in element \"" + subject.ID() + "\".");
+	}
+
+	public void checkPlantsExistence(List<String> ids) {
+		for (String id : ids)
+			if (! checkPlantExistence(id))
+				fail("No loadable plant was found for ID \"" + id + "\", used in element \"" + subject.ID() + "\"."); 
+	}
+	
+	public boolean checkCreatureExistence(String id) {
+		try {
+			new Creature(id);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean checkPlantExistence(String id) {
+		try {
+			new Plant(id);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
 }

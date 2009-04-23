@@ -165,10 +165,10 @@ public abstract class XMLLoadableElement {
 		double parserVersion = parserVersion();
 		if (version > parserVersion) {
 			System.err.println("The given file's version (" + version + ") is newer than this parser (" + parserVersion + ").\nI'll try to read it, but be aware that you may get errors ! You should update this software.");
-//			return false;
+			return false;
 		} else if (version < parserVersion) {
 			System.err.println("Parser version check temporarily disabled for developement, but be aware that this file uses an obsolete syntax.");
-//			return false;
+			return false;
 		}
 		return true;
 	}	
@@ -180,8 +180,8 @@ public abstract class XMLLoadableElement {
 	 */
 	protected void load(String ID) {
 		loadFromXML("../ressources/elements/" + ID + "/description.xml");
-		if (! checkVersion())
-			throw new RuntimeException("Incorrect file version, stopping execution.");
+//		if (! checkVersion())
+//			throw new RuntimeException("Incorrect file version, stopping execution.");
 		if (! ID.equals(ID()))
 			throw new RuntimeException("Folder ID (" + ID + ") and parsed inner ID (" + ID() + ") do not match !");
 	}

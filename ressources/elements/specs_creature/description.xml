@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<creature version="0.4" author="devint">
+<creature version="0.41" author="devint">
 	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des créatures -->
 	<id>specs_creature</id>
 	<name lang="fr">Specifications Creature</name>
@@ -33,13 +33,10 @@
 		</up>
 	</assets>
 	
-	<eats>
-		<plant>ID</plant>
-		<plant>ID</plant>
-		<plant>ID</plant>
-		<creature>ID</creature> <!-- peut ne contenir aucune créature (ou aucune plante d'ailleurs) -->
-		<creature>ID</creature>
-		<creature>ID</creature>
+	<eats> <!-- peut ne contenir aucune créature ou aucune plante. Les ID peuvent être celles de créatures ou de plantes, indifféremment. -->
+		<id>ID1</id>
+		<id>ID2</id>
+		<id>ID3</id>
 	</eats>
 	
 </creature>

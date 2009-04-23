@@ -35,6 +35,14 @@ public abstract class XMLLoadableElementTest {
 	}
 	
 	@Test
+	public void versionCheckTest() {
+		assertTrue("Specification file version doesn't match parser version.", subject.checkVersion());
+		double[] illegalVersions = {-1, 0, 0.1, subject.parserVersion() - 0.1};
+		for (int i = 0; i < illegalVersions.length; i++)
+			assertFalse("An illegal version number (" + illegalVersions[i] +") was accepted.", subject.checkVersion(illegalVersions[i]));
+	}
+	
+	@Test
 	public void parsingTest() {
 		assertEquals("ID badly parsed : ", EXPECTED_ID, subject.ID());
 		assertEquals("Name badly parsed : ", EXPECTED_NAME, subject.name());

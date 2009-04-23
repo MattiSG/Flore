@@ -86,7 +86,6 @@ public class Plant extends XMLLoadableElement {
 	private final static String DEFAULT_FOLDER = "../defaults/plant/";
 	private final static String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
 	private final static String ROOT = "plant";
-    private ArrayList<Creature> creatures = new ArrayList<Creature>();
 	
     private BufferedImage image;
     private float health = 0;

@@ -13,11 +13,15 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.List;
+
 import test.element.XMLLoadableElementTest;
 import element.creature.Creature;
 
 
 public class CreatureTest extends XMLLoadableElementTest {
+	
+	private static String[] EXPECTED_EATS = {"ID1", "ID2", "ID3"};
 	
 	@Before
 	public void setUp() {
@@ -31,5 +35,13 @@ public class CreatureTest extends XMLLoadableElementTest {
 			e.printStackTrace();
 			fail(e.toString());
 		}
+	}
+	
+	@Test
+	public void eatsParsingTest() {
+		List<String> eats = ((Creature) subject).eats();
+		assertEquals("Parsed eats list doesn't have the expected size !", EXPECTED_EATS.length, eats.size());
+		for (int i = 0; i < EXPECTED_EATS.length; i++)
+			assertTrue("Parsed eats list doesn't contain the expected \"" + EXPECTED_EATS[i] + "\" element !", eats.contains(EXPECTED_EATS[i]));
 	}
 }
