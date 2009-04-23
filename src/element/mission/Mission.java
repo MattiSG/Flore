@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
 import org.w3c.dom.Node;
+import java.net.URI;
 
 public class Mission extends XMLLoadableElement {
 	private final static double PARSER_VERSION = 0.2;
+	private final static String DEFAULT_FOLDER = "../defaults/mission/";
     private final static String[] ASSETS_NAMES = {"icon", "sky", "grass", "sun", "hole"};
 	private final static String ROOT = "mission";
 	private final String	HINTS_EXPR = rootElement() + "/hints/*",
@@ -69,6 +71,15 @@ public class Mission extends XMLLoadableElement {
 	public Map<String, Integer> goal() {
 		return goal;
 	}
+	
+	public URI defaultFolder() {
+		try {
+			return new URI(DEFAULT_FOLDER);
+		} catch (java.net.URISyntaxException e) {
+			System.err.println("Default folder is unreachable.");
+			throw new RuntimeException(e);
+		}
+	}
 	//@}
 	
 	
@@ -89,12 +100,27 @@ public class Mission extends XMLLoadableElement {
 	protected Map<String, List<BufferedImage>> loadAssets(String query) {
 		Map<String, List<BufferedImage>> result = new HashMap<String, List<BufferedImage>>();
 		List<String> tags = parser.getTags(query + "/*");
-		List<String> paths = new ArrayList<String>(1);
+		List<String> path = new ArrayList<String>(1);
 		for (String tag : tags) {
 			if (! isAssetKey(tag))
 				throw new RuntimeException("One of the assets nodes has unknown value \"" + tag + "\".");
-			paths.add(parser.get(query + "/" + tag));
-			result.put(tag, loadImages(paths));
+			
+			List<BufferedImage> images;
+			path.add(parser.get(query + "/" + tag));
+			try {
+				images = loadImages(path);
+			} catch (RuntimeException e) {
+				path.clear();
+				URI defaultImage = defaultFolder().resolve(tag + ".png");
+				path.add(defaultImage.toString());
+				images = loadImages(path);
+			}
+			
+			if (images.isEmpty())
+				throw new RuntimeException("Erreur à l'initialisation de l'élément " + ID() + " (\"" + name() + "\") : aucune image n'a pu être chargée !\nClé recherchée : " + tag);
+			
+			result.put(tag, images);
+			path.clear();
 		}
 		return result;
     }

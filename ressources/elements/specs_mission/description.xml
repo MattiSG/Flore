@@ -19,7 +19,7 @@
 	<holes>5</holes> <!-- nombre de trous disponibles -->
 	
 	<assets type="standard">
-		<icon>blank.gif</icon>
+		<icon></icon>
 		<sky>blank.gif</sky>
 		<grass>blank.gif</grass>
 		<sun>blank.gif</sun>

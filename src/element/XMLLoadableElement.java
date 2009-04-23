@@ -19,7 +19,7 @@ import xml.XMLParser;
  *@author <a href="mailto:alcmene.gs@gmail.com">Matti Schneider-Ghibaudo</a>
  *@version 0.2
  */
-abstract public class XMLLoadableElement {
+public abstract class XMLLoadableElement {
 	
 	protected XMLParser parser;
 	
@@ -81,11 +81,39 @@ abstract public class XMLLoadableElement {
 	public List<BufferedImage> getAssets(String key) {
 		return assets.get(key);
 	}
+	
+	/**URI of the folder containing the default values for assets.
+	 *The images inside have to be named from the key of the corresponding asset, and in the PNG format.
+	 */
+	protected abstract URI defaultFolder();
 	//@}
 	
 	
 	/**@name	Assets (images) management*/
 	//@{
+	protected Map<String, List<BufferedImage>> loadAssets(String query) {
+		Map<String, List<String>> map = parser.getListsMap(query);
+		Map<String, List<BufferedImage>> assets = new HashMap<String, List<BufferedImage>>();
+		for (String key : map.keySet()) {
+			List<String> imagesPaths = map.get(key);
+			List<BufferedImage> images;
+			try {
+				images = loadImages(imagesPaths);
+			} catch (RuntimeException e) {
+				imagesPaths.clear();
+				URI defaultImage = defaultFolder().resolve(key + ".png");
+				imagesPaths.add(defaultImage.toString());
+				images = loadImages(imagesPaths);
+			}
+			
+			if (images.isEmpty())
+				throw new RuntimeException("Erreur à l'initialisation de l'élément " + ID() + " (\"" + name() + "\") : aucune image n'a pu être chargée !\nClé recherchée : " + key);
+			
+			assets.put(key, images);
+		}
+		return assets;
+	}
+	
 	/**Returns a list of images from a list of their paths, relative to the XML document of this element.
 	 */
 	public List<BufferedImage> loadImages(List<String> paths) {
@@ -122,6 +150,14 @@ abstract public class XMLLoadableElement {
 	
 	/**@name	XML parsing*/
 	//@{
+	
+	/**Tells whether the loaded file is parsable or not.
+ 	 *@see	checkVersion
+	 */
+	public boolean checkVersion() {
+		return checkVersion(parser.getDouble(EXPR_VERSION));
+	}
+		
 	/**Tells whether the given file format version is parsable or not.
  	 *@see	parserVersion
 	 */
@@ -129,7 +165,7 @@ abstract public class XMLLoadableElement {
 		double parserVersion = parserVersion();
 		if (version > parserVersion) {
 			System.err.println("The given file's version (" + version + ") is newer than this parser (" + parserVersion + ").\nI'll try to read it, but be aware that you may get errors ! You should update this software.");
-			return false;
+			return true;
 		} else if (version < parserVersion) {
 			System.err.println("Parser version check temporarily disabled for developement, but be aware that this file uses an obsolete syntax.");
 			return true;
@@ -144,6 +180,8 @@ abstract public class XMLLoadableElement {
 	 */
 	protected void load(String ID) {
 		loadFromXML("../ressources/elements/" + ID + "/description.xml");
+		if (! checkVersion())
+			throw new RuntimeException("Incorrect file version, stopping execution.");
 		if (! ID.equals(ID()))
 			throw new RuntimeException("Folder ID (" + ID + ") and parsed inner ID (" + ID() + ") do not match !");
 	}
@@ -160,20 +198,6 @@ abstract public class XMLLoadableElement {
 		description = parser.get(EXPR_DESCRIPTION);
 		
 		assets = loadAssets(EXPR_ASSETS);
-	}
-	
-	protected Map<String, List<BufferedImage>> loadAssets(String query) {
-		Map<String, List<String>> map = parser.getListsMap(query);
-		Map<String, List<BufferedImage>> assets = new HashMap<String, List<BufferedImage>>();
-		for (String key : map.keySet()) {
-			List<String> imagesPaths = map.get(key);
-			
-			if (imagesPaths.size() == 0)
-				throw new RuntimeException("Erreur à l'initialisation de l'élément " + ID() + " (\"" + name() + "\") : aucune image n'a pu être chargée !\nClé recherchée : " + key);
-			
-			assets.put(key, loadImages(imagesPaths));
-		}
-		return assets;
 	}
 	//@}
 }

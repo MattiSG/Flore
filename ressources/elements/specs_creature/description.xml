@@ -11,7 +11,7 @@
 	
 	<assets type="standard">
 		<still> <!--insecte immobile-->
-			<img>blank.gif</img>
+			<img></img>
 		</still>
 		<left> <!-- images pour créer une animation de déplacement à gauche -->
 			<img>blank.gif</img>

@@ -12,9 +12,8 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.ArrayList;
 
-import javax.xml.xpath.*;
-import javax.xml.parsers.*;
 import org.w3c.dom.Document;
+import java.net.URI;
 
 import element.XMLLoadableElement;
 
@@ -84,6 +83,7 @@ class Volant {
 
 public class Plant extends XMLLoadableElement {
 	private final static double PARSER_VERSION = 0.3;
+	private final static String DEFAULT_FOLDER = "../defaults/plant/";
 	private final static String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
 	private final static String ROOT = "plant";
     private ArrayList<Creature> creatures = new ArrayList<Creature>();
@@ -125,18 +125,27 @@ public class Plant extends XMLLoadableElement {
             health = h;
     }
 
-	/**@name	Assets*/
+	/**@name	Parsing*/
 	//@{
-	public String[] getAssetsNames() {
-		return ASSETS_NAMES;
-	}
-	
 	public double parserVersion() {
 		return PARSER_VERSION;
 	}
 	
 	public String rootElement() {
 		return ROOT;
+	}
+	
+	public String[] getAssetsNames() {
+		return ASSETS_NAMES;
+	}
+	
+	public URI defaultFolder() {
+		try {
+			return new URI(DEFAULT_FOLDER);
+		} catch (java.net.URISyntaxException e) {
+			System.err.println("Default folder is unreachable.");
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public List<BufferedImage> seedImages() {

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mission version="0.2" author="devint">
+	
+	<id>mission_1</id>
+	<name lang="fr">Les bêtes à bon Dieu</name>
+	
+	<description lang="fr">Dans cette mission, tu devras capturer des coccinelles.</description>
+
+	<hints>
+		<hint level="0">En plantant des roses, tu auras à coup sûr des pucerons, et les coccinelles adorent les pucerons !</hint>
+		<hint level="2">Les roses font généralement venir des pucerons.</hint>
+		<hint level="10">Pour faire venir des coccinelles, il faut que tu attires un insecte qui l'intéresse.</hint>
+	</hints>
+	
+	<difficulty>2</difficulty>
+	
+	<time_limit>240</time_limit>
+	
+	<holes>3</holes>
+	
+	<assets type="standard">
+		<icon></icon>
+		<sky></sky>
+		<grass></grass>
+		<sun></sun>
+		<hole></hole>
+	</assets>
+
+	<assets type="high_contrast">
+		<icon></icon>
+		<sky></sky>
+		<grass></grass>
+		<sun></sun>
+		<hole></hole>
+	</assets>
+	
+	<plants>
+		<plant id="rosa">2</plant>
+		<plant id="mimosa">2</plant>
+	</plants>
+	
+	<goal>
+		<creature id="coccinelle">3</creature>
+	</goal>
+	
+</mission>

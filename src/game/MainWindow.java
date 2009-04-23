@@ -30,7 +30,9 @@ import java.awt.event.KeyAdapter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class MainWindow extends JFrame {
     private JMenuBar         menuBar       = new JMenuBar();
@@ -41,9 +43,9 @@ public class MainWindow extends JFrame {
     private GameView         gameView      = new GameView();
     private SIVOXDevint      player        = new SIVOXDevint();
 
-    private ArrayList<Plant>    plants   = new ArrayList<Plant>();
-    private ArrayList<Creature> insects  = new ArrayList<Creature>();
-    private ArrayList<Mission>  missions = new ArrayList<Mission>();
+    private List<Plant>    plants   = new LinkedList<Plant>();
+    private List<Creature> insects  = new LinkedList<Creature>();
+    private List<Mission>  missions = new LinkedList<Mission>();
 
     private ArrayList<Plant> plantedPlants = new ArrayList<Plant>(gameView.HOLES_NUMBER);
     private Mission          currentMission;
@@ -53,9 +55,9 @@ public class MainWindow extends JFrame {
         for (int i = 0; i < gameView.HOLES_NUMBER; ++i)
             plantedPlants.add(null);
 
+        loadMissions();
         loadPlants();
         loadInsects();
-        loadMissions();
 
         setMenu();
         setSeedList();
@@ -164,8 +166,7 @@ public class MainWindow extends JFrame {
     }
 
     private void loadMissions() {
-        Mission temp = new Mission("specs_mission");
-        missions.add(temp);
+        missions.add(new Mission("mission_1"));
     }
 
     private void setMenu() {
