@@ -3,48 +3,27 @@
 	<id>rosa</id>
 	<name lang="fr">Rosier</name>
 		
-	<description lang="fr">Appréciée pour sa beauté, célébrée depuis l’antiquité par de nombreux poètes et écrivains, pour ses couleurs qui vont du blanc pur au pourpre foncé en passant par le jaune franc et toutes les nuances intermédiaires, et pour son parfum, elle est devenue la « reine des fleurs », présente dans presque tous les jardins et presque tous les bouquets.</description>
+	<description lang="fr">La rose est très connue pour sa beauté et son parfum unique, qui attire de nombreux insectes. Elle est parfois victime d'invasions de pucerons.</description>
 	
 	<water>10</water>
 	<sun>10</sun>
 	<time>10</time>
 	
 	<assets type="standard">
-		<seed> <!-- graine ("icône")-->
+		<seed>
 			<img width="100" height="100">seed.png</img>
 		</seed>
-		<shaft> <!-- tige -->
+		<shaft>
 			<img width="100" height="100">rosa.png</img>
 			<img width="100" height="100">rosa.png</img>
 		</shaft>
-		<leaves> <!-- feuilles (sélectionnées en random) -->
+		<leaves>
 			<img width="100" height="100">rosa.png</img>
 			<img width="100" height="100">rosa.png</img>
 			<img width="100" height="100">rosa.png</img>
 		</leaves>
-		<flowers> <!-- fleurs (sélectionnées en random) -->
+		<flowers>
 			<img width="100" height="100">rosa.png</img>
-		</flowers>
-	</assets>
-	
-	<assets type="high_contrast">
-		<seed> <!-- graine ("icône")-->
-			<img>./seed.png</img>
-		</seed>
-		<shaft> <!-- tige -->
-			<img></img>
-			<img></img>
-			<img></img>
-		</shaft>
-		<leaves> <!-- feuilles (sélectionnées en random) -->
-			<img></img>
-			<img></img>
-			<img></img>
-		</leaves>
-		<flowers> <!-- fleurs (sélectionnées en random) -->
-			<img>./rosa.png</img>
-			<img></img>
-			<img></img>
 		</flowers>
 	</assets>
 </plant>
