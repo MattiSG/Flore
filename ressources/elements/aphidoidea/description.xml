@@ -6,27 +6,27 @@
 	<dimension direction="x">60</dimension>
 	<dimension direction="y">30</dimension>
 	
-	<description lang="fr">Les pucerons sont de petits insectes mesurant généralement entre 1 et 4 mm. Ils peuvent être verts, roses, rouges, noirs, bruns, bleus, jaunes ou bien encore bleuâtres. Ils possèdent des antennes situées entre les deux yeux.</description>
+	<description lang="fr">Les pucerons sont de très petits insectes. Ils possèdent des antennes situées entre les deux yeux. Leurs larves se trouvent souvent sur les rosiers.</description>
 	
 	<assets type="standard">
-		<still> <!--insecte immobile-->
-			<img>./assets/standard/puceronhaut1.svg</img>
+		<still>
+			<img>assets/standard/puceronhaut1.svg</img>
 		</still>
-		<left> <!-- images pour créer une animation de déplacement à gauche -->
-			<img>./assets/standard/pucerongauche1.sg</img>
-			<img>./assets/standard/pucerongauche2.sg</img>
+		<left>
+			<img>assets/standard/pucerongauche1.svg</img>
+			<img>assets/standard/pucerongauche2.svg</img>
 		</left>
-		<right> <!-- images pour créer une animation de déplacement à droite -->
-			<img>./assets/standard/pucerondroite1.sg</img>
-			<img>./assets/standard/pucerondroite2.sg</img>
+		<right>
+			<img>assets/standard/pucerondroite1.svg</img>
+			<img>assets/standard/pucerondroite2.svg</img>
 		</right>
-		<down> <!-- images pour créer une animation de déplacement en bas -->
-			<img>./assets/standard/puceronbas2.svg</img>
-			<img>./assets/standard/puceronbas2.svg</img>
+		<down>
+			<img>assets/standard/puceronbas2.svg</img>
+			<img>assets/standard/puceronbas2.svg</img>
 		</down>
-		<up> <!-- images pour créer une animation de déplacement en haut -->
-			<img>./assets/standard/puceronhaut1.svg</img>
-			<img>./assets/standard/puceronhaut2.svg</img>
+		<up>
+			<img>assets/standard/puceronhaut1.svg</img>
+			<img>assets/standard/puceronhaut2.svg</img>
 		</up>
 	</assets>
 	
