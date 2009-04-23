@@ -165,12 +165,12 @@ public abstract class XMLLoadableElement {
 		double parserVersion = parserVersion();
 		if (version > parserVersion) {
 			System.err.println("The given file's version (" + version + ") is newer than this parser (" + parserVersion + ").\nI'll try to read it, but be aware that you may get errors ! You should update this software.");
-			return true;
+//			return false;
 		} else if (version < parserVersion) {
 			System.err.println("Parser version check temporarily disabled for developement, but be aware that this file uses an obsolete syntax.");
-			return true;
+//			return false;
 		}
-		return version == parserVersion;
+		return true;
 	}	
 	
 	/**Loads an Element file from its ID.

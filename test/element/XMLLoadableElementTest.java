@@ -27,6 +27,10 @@ public abstract class XMLLoadableElementTest {
 	
 	@Test
 	public void initTest() {
+		initTest(subject);
+	}
+	
+	public static void initTest(XMLLoadableElement subject) {
 		assertNotNull("Constructor created a null object !", subject);
 	}
 	
@@ -39,6 +43,10 @@ public abstract class XMLLoadableElementTest {
 	
 	@Test
 	public void assetsLoading() {
+		assetsLoading(subject);
+	}
+	
+	public static void assetsLoading(XMLLoadableElement subject) {
 		for (String key : subject.getAssetsNames()) {
 			assertNotNull("The assets list \"" + key + "\" was null.", subject.getAssets(key));
 			assertFalse("The assets list \"" + key + "\" was empty.", subject.getAssets(key).isEmpty());
@@ -47,9 +55,19 @@ public abstract class XMLLoadableElementTest {
 	
 	@Test
 	public void assetsKeysCheck() {
+		assetsKeysCheck(subject);
+	}
+	
+	public static void assetsKeysCheck(XMLLoadableElement subject) {
 		String[] assetsKeys = subject.getAssetsNames();
 		for (int i = 0; i < assetsKeys.length; i++)
 			assertTrue("A valid key (" + assetsKeys[i] + ") wasn't recognized as such !", subject.isAssetKey(assetsKeys[i]));
 		assertFalse("An empty key was recognized as valid !", subject.isAssetKey(""));
+	}
+	
+	public static void runTests(XMLLoadableElement subject) {
+		initTest(subject);
+		assetsLoading(subject);
+		assetsKeysCheck(subject);
 	}
 }
