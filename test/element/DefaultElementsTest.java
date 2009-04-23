@@ -27,28 +27,16 @@ public class DefaultElementsTest {
 	
 	@Test
 	public void elementTest() {
-		String[][] ids = {MISSIONS_IDS, PLANTS_IDS, CREATURES_IDS};
-		for (int i = 0; i < ids.length; i++) {
-			for (int j = 0; j < ids[i].length; j++) {
-				String id = ids[i][j];
-				try {
-					switch (i) {
-						case 0 :
-							runTests(new Mission(ids[i][j]));
-							break;
-						case 1 :
-							runTests(new Plant(ids[i][j]));
-							break;
-						case 2 :
-							runTests(new Creature(ids[i][j]));
-							break;
-					}
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-					fail(e.toString());
-				}
-			}
+		try {
+			for (int i = 0; i < MISSIONS_IDS.length; i++)
+				runTests(new Mission(MISSIONS_IDS[i]));
+			for (int i = 0; i < PLANTS_IDS.length; i++)
+				runTests(new Plant(PLANTS_IDS[i]));
+			for (int i = 0; i < CREATURES_IDS.length; i++)
+				runTests(new Creature(CREATURES_IDS[i]));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.toString());
 		}
 	}
 	
