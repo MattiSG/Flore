@@ -26,10 +26,8 @@ public class Flore extends MenuAbstrait {
 
     protected void lancerOption(int i) {
         switch (i) {  
-            case 0 : new MainWindow();    break;
-                     //case 1 : new OptionInterface(nomJeu); break;
-                     //case 2 : new ScoreInterface(nomJeu);  break;
-            case 3 : System.exit(0);
+            case 0 : new MainWindow(); break;
+            case 1 : System.exit(0);
             default: System.err.println("action non définie");
         }
     } 

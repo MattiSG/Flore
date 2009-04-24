@@ -31,11 +31,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class MainWindow extends JFrame {
-    private JMenuBar         menuBar       = new JMenuBar();
     private JLabel           statusBar     = new JLabel("Initialisation");
     private JProgressBar     levelBar      = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
     private DefaultListModel seedList      = new DefaultListModel();
@@ -43,104 +43,123 @@ public class MainWindow extends JFrame {
     private GameView         gameView      = new GameView();
     private SIVOXDevint      player        = new SIVOXDevint();
 
+    // plantes de la mission courante
     private List<Plant>    plants   = new LinkedList<Plant>();
+    // insectes de la mission courante
     private List<Creature> insects  = new LinkedList<Creature>();
+    // listes de toutes les missions
     private List<Mission>  missions = new LinkedList<Mission>();
 
-    private ArrayList<Plant> plantedPlants = new ArrayList<Plant>(gameView.HOLES_NUMBER);
+    // plantes en terre
+    private ArrayList<Plant> plantedPlants = new ArrayList<Plant>();
+    // mission courante
     private Mission          currentMission;
-    private Timer timer;
+    // timer pour la pousse des plantes
+    private Timer            timer;
 
     public MainWindow() {
-        for (int i = 0; i < gameView.HOLES_NUMBER; ++i)
-            plantedPlants.add(null);
-
+        // chargement de toutes les missions
         loadMissions();
-        loadPlants();
-        loadInsects();
 
-        setMenu();
-        setSeedList();
+        // chargement de la première mission
+        loadMission(0);
 
-        levelBar.setValue(10);
+        // changement du type de rendu de la liste pour l'affichage des images
+        seedListView.setCellRenderer(new CustomCellRenderer());
+        seedListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        // autoriser l'affichage d'un message dans la progress bar
         levelBar.setStringPainted(true);
-        levelBar.setString("10 insectes");
 
+        // gestion des évènements gauche, droite, haut, bas et entrée
         seedListView.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 if (KeyEvent.VK_ENTER == e.getKeyCode()) {
                     int i = gameView.getSelectedHoleIndex();
                     if (plantedPlants.get(i) == null) {
-                        plantedPlants.set(i, new Plant(((Plant) seedListView.getSelectedValue()).ID()));
+                        try {
+                            plantedPlants.set(i, (Plant) ((Plant) seedListView.getSelectedValue()).clone());
+                        } catch(CloneNotSupportedException ex) {
+                            System.err.println("[erreur] Impossible de cloner l'objet plante : " + ex);
+                        }
                     }
                     else
-                        play("Il ya déjà une plante dans ce trou.");
+                        play("Il ya déjà une plante dans ce trou.", "Il y a déjà une plante dans ce trou.");
                     gameView.repaint();
                 } else if (KeyEvent.VK_RIGHT == e.getKeyCode()) {
-                    gameView.setSelectedHoleNext();
+                    gameView.selectNextHole();
                 } else if (KeyEvent.VK_LEFT == e.getKeyCode()) {
-                    gameView.setSelectedHolePrevious();
+                    gameView.selectPreviousHole();
                 } else if (KeyEvent.VK_ESCAPE == e.getKeyCode()) {
                     statusBar.setText("Au revoir !");
                     dispose();
                 }
             }
         });
+
+        // pronociation du nom de la plante dont la graine est sélectionnée
         seedListView.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 Plant p = (Plant) seedListView.getSelectedValue();
-                statusBar.setText(p.name());
+                play(p.name());
             }
         });
-        JScrollPane s = new JScrollPane(seedListView);
-        s.setPreferredSize(new Dimension(200, 400));
+
+        // scroll pour l'affichage de la liste
+        JScrollPane list = new JScrollPane(seedListView);
+        list.setPreferredSize(new Dimension(200, 400));
 
         getContentPane().add(gameView,  BorderLayout.CENTER);
-        getContentPane().add(s,         BorderLayout.EAST);
+        getContentPane().add(list,      BorderLayout.EAST);
         getContentPane().add(levelBar,  BorderLayout.WEST);
         getContentPane().add(statusBar, BorderLayout.SOUTH);
 
-        setJMenuBar(menuBar);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setFullScreen();
+        //setFullScreen();
+        setSize(700,700);
         setVisible(true);
-
-        run();
-    }
-
-    private void run() {
-        currentMission = missions.get(0);
-        play(currentMission.description());
-        statusBar.setText(currentMission.description());
 
         seedListView.requestFocus();
         seedListView.setSelectedIndex(0);
 
+        // lancement du jeu
+        run();
+    }
+
+    private void run() {
+        play(currentMission.description());
+        statusBar.setText(currentMission.description());
+
         int delay = 100;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // fait grandir ta plante ici !
-                //statusBar.setText("tick: " + e.getWhen());
                 boolean finish = true;
                 for (Plant p : plantedPlants)
-                    if (p != null)
-                    {
+                    if (p != null) {
                         p.grow();
-                        //System.out.println(p.name());
                         if (!p.isAdult())
                             finish = false;
                     }
                     else
                         finish = false;
+
                 gameView.repaint();
+
                 if (finish) {
-                    gameView.setWin(true);
                     gameView.repaint();
                     stopTimer();
-                    play("Tu as gagné !");
-                    JOptionPane.showMessageDialog(null, "Tu as gagné !", "Bravo", JOptionPane.INFORMATION_MESSAGE);
-                    setVisible(false);
-                    dispose();
+                    play("Tu as gagné cette mission !", true);
+                    int newMission = missions.indexOf(currentMission) + 1;
+                    if (newMission >= missions.size()) {
+                        play("Tu as fini de jouer. Il n'y a plus de niveau disponible.");
+                        setVisible(false);
+                        dispose();
+                    }
+                    else
+                    {
+                        play("Niveau suivant");
+                        missions.get(newMission);
+                    }
                 }
             }
         };
@@ -152,24 +171,74 @@ public class MainWindow extends JFrame {
         timer.stop();
     }
 
-    private void play(String text) {
+    // prononce le texte et l'affiche dans la barre de status
+    private void play(String readText, String statusText, boolean widthDialog) {
         player.stop();
-        player.playText(text);
+        player.playText(readText);
+        statusBar.setText(statusText);
+        if (widthDialog)
+            JOptionPane.showMessageDialog(null, statusText, "Information", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void loadPlants() {
-        plants.add(new Plant("rosa"));
-        plants.add(new Plant("mimosa"));
+    private void play(String readText) {
+        play(readText, readText, false);
     }
 
-    private void loadInsects() {
+    private void play(String readText, boolean widthDialog) {
+        play(readText, readText, widthDialog);
+    }
+
+    private void play(String readText, String statusText) {
+        play(readText, statusText, false);
     }
 
     private void loadMissions() {
         missions.add(new Mission("mission_1"));
+        missions.add(new Mission("mission_2"));
     }
 
-    private void setMenu() {
+    private void loadMission(int index) {
+        currentMission = missions.get(index);
+
+        for (int i = 0; i < currentMission.holes(); ++i)
+            plantedPlants.add(null);
+
+        loadCurrentPlants();
+        loadCurrentInsects();
+
+        gameView.setHolesNumber(currentMission.holes());
+    }
+
+    private void loadCurrentPlants() {
+        plants.clear();
+
+        for (Map.Entry<String, Integer> i : currentMission.plants().entrySet())
+            plants.add(new Plant(i.getKey()));
+
+        // list on the left
+        for (Plant p : plants)
+            seedList.addElement(p);
+    }
+
+    private void loadCurrentInsects() {
+        insects.clear();
+
+        String msg = "";
+        int value  = 0;
+        for (Map.Entry<String, Integer> i : currentMission.goal().entrySet()) {
+            value += i.getValue();
+            msg += i.getValue() + " " + i.getKey() + "(s)";
+            insects.add(new Creature(i.getKey()));
+        }
+
+        // adapte la barre de progression en fonction de la mission
+        levelBar.setValue(0);
+        levelBar.setMaximum(value);
+        levelBar.setString(msg);
+    }
+
+    public ArrayList<Plant> getPlantedPlants() {
+        return plantedPlants;
     }
 
     private void setFullScreen() {
@@ -177,13 +246,6 @@ public class MainWindow extends JFrame {
         setSize(getToolkit().getScreenSize());
         setLocationRelativeTo(null);
         validate();
-    }
-
-    private void setSeedList() {
-        seedListView.setCellRenderer(new CustomCellRenderer());
-        seedListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        for (Plant p : plants)
-            seedList.addElement(p);
     }
 
     class CustomCellRenderer extends DefaultListCellRenderer {
@@ -201,9 +263,5 @@ public class MainWindow extends JFrame {
 
             return this;
         }
-    }
-
-    public ArrayList<Plant> getPlantedPlants() {
-        return plantedPlants;
     }
 }

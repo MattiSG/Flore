@@ -81,7 +81,7 @@ class Volant {
 }
 */
 
-public class Plant extends XMLLoadableElement {
+public class Plant extends XMLLoadableElement implements Cloneable {
 	private final static double PARSER_VERSION = 0.3;
 	private final static String DEFAULT_FOLDER = "../defaults/plant/";
 	private final static String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
@@ -209,5 +209,9 @@ public class Plant extends XMLLoadableElement {
         if(anim == 100) {
 //            volant.draw(g);
         }
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

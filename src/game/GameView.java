@@ -20,18 +20,13 @@ public class GameView extends JPanel {
     private BufferedImage    grass;
     private ArrayList<Point> holes = new ArrayList<Point>();
     private Point            selectedHole;
-    private BufferedImage    creature;
-
-    private boolean win = false;
-
-    public static final int HOLES_NUMBER = 4;
+    private int              holesNumber = 0;
 
     public GameView() {
         try {
-            grass = ImageIO.read(new File("../ressources/images/grass.jpg"));
-            creature = ImageIO.read(new File("../ressources/elements/coccinelle/assets/standard/coccinellegauche2.png"));
+            grass = ImageIO.read(new File("../ressources/elements/defaults/mission/grass.png"));
         } catch (java.io.IOException e) {
-            System.err.println("[erreur] " + e);
+            System.err.println("[erreur] Impossible de charger l'image de fond (herbe) : " + e);
         }
 
         addComponentListener(new ComponentAdapter() {
@@ -41,17 +36,21 @@ public class GameView extends JPanel {
         });
     }
 
+    public void setHolesNumber(int nb) {
+        holesNumber = nb;
+    }
+
     public int getSelectedHoleIndex() {
         return holes.indexOf(selectedHole);
     }
 
-    public void setSelectedHoleNext() {
+    public void selectNextHole() {
         int i = getSelectedHoleIndex();
         selectedHole = holes.get(holes.size() == i+1 ? 0 : i+1);
         repaint();
     }
 
-    public void setSelectedHolePrevious() {
+    public void selectPreviousHole() {
         int i = getSelectedHoleIndex();
         selectedHole = holes.get(i == 0 ? holes.size()-1 : i-1);
         repaint();
@@ -60,20 +59,11 @@ public class GameView extends JPanel {
     private void computeHoles() {
         int w = getSize().width;
         int h = getSize().height;
-        int n = w / (HOLES_NUMBER + 1);
-        //System.out.println("width:  " + w);
-        //System.out.println("height: " + h);
-        //System.out.println("space:  " + n);
-        for (int i = 0; i < HOLES_NUMBER; ++i)
-        {
+        int n = w / (holesNumber + 1);
+        for (int i = 0; i < holesNumber; ++i)
             holes.add(new Point(n*(i+1), h-(h/10)));
-            //System.out.println("trous n°" + i + ": " + n*(i+1) + ", " + (h-(h/10)));
-        }
-        selectedHole = holes.get(0);
-    }
 
-    public void setWin(boolean w) {
-        win = w;
+        selectedHole = holes.get(0);
     }
 
     public void paintComponent(Graphics g){
@@ -122,17 +112,6 @@ public class GameView extends JPanel {
                 //System.out.println(" => " + i + " : " + p.get());
                 p.paint(g);
             }
-        }
-
-        // insecte
-        if (win) {
-            g2d.drawImage(creature, null, 50, 500);
-            g2d.drawImage(creature, null, 250, 400);
-            g2d.drawImage(creature, null, 450, 300);
-            g2d.drawImage(creature, null, 550, 200);
-            g2d.drawImage(creature, null, 650, 300);
-            g2d.drawImage(creature, null, 750, 400);
-            g2d.drawImage(creature, null, 850, 500);
         }
     }
 }
