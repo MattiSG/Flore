@@ -1,6 +1,6 @@
 /**A set of tests for the Plant class.
  *@author <a href="mailto:alcmene.gs@gmail.com">Matti Schneider-Ghibaudo</a>
- *@version 0.1
+ *@version 0.2
  */
 
 package test.element.plant;
@@ -18,6 +18,9 @@ import element.plant.Plant;
 
 
 public class PlantTest extends XMLLoadableElementTest {
+	protected final int	EXPECTED_SUN = 15,
+						EXPECTED_TIME = 10,
+						EXPECTED_WATER = 5;
 	
 	@Before
 	public void setUp() {
@@ -31,5 +34,20 @@ public class PlantTest extends XMLLoadableElementTest {
 			e.printStackTrace();
 			fail(e.toString());
 		}
+	}
+	
+	@Test
+	public void sunParsingTest() {
+		assertEquals("Sun incorrectly parsed !", EXPECTED_SUN, ((Plant) subject).neededSun());
+	}
+	
+	@Test
+	public void timeParsingTest() {
+		assertEquals("Time incorrectly parsed !", EXPECTED_TIME, ((Plant) subject).neededTime());
+	}
+	
+	@Test
+	public void waterParsingTest() {
+		assertEquals("Water incorrectly parsed !", EXPECTED_WATER, ((Plant) subject).neededWater());
 	}
 }

@@ -34,12 +34,6 @@ public class Mission extends XMLLoadableElement {
 
     public Mission(String ID) {
         load(ID);
-		parseHints();
-		parsePlants();
-		parseGoal();
-		difficulty = parser.getDouble(rootElement() + "/difficulty").intValue();
-		holes = parser.getDouble(rootElement() + "/holes").intValue();
-		timeLimit = parser.getDouble(rootElement() + "/time_limit").intValue();
     }
 	
 	/**@name	Getters*/
@@ -124,6 +118,15 @@ public class Mission extends XMLLoadableElement {
 		}
 		return result;
     }
+	
+	protected void parsePrivates() {
+		parseHints();
+		parsePlants();
+		parseGoal();
+		difficulty = parser.getDouble(rootElement() + "/difficulty").intValue();
+		holes = parser.getDouble(rootElement() + "/holes").intValue();
+		timeLimit = parser.getDouble(rootElement() + "/time_limit").intValue();
+	}
 	
 	/**Populates the hints list.*/
 	private void parseHints() {

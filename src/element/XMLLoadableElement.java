@@ -198,6 +198,12 @@ public abstract class XMLLoadableElement {
 		description = parser.get(EXPR_DESCRIPTION);
 		
 		assets = loadAssets(EXPR_ASSETS);
+		
+		parsePrivates();
 	}
+	
+	/**The place where to put all element-specific parsing.
+	 */
+	protected abstract void parsePrivates();
 	//@}
 }

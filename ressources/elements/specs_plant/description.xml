@@ -6,8 +6,8 @@
 	
 	<description lang="fr">Ce fichier sert de specifications pour les fichiers decrivant des plantes.</description>
 	
-	<water>10</water> <!-- quantité d'eau nécessaire -->
-	<sun>10</sun> <!-- quantité de soleil nécessaire -->
+	<water>5</water> <!-- quantité d'eau nécessaire -->
+	<sun>15</sun> <!-- quantité de soleil nécessaire -->
 	<time>10</time> <!-- nombre de jours avant la floraison (à voir par rapport au soleil ?) -->
 	
 	<assets type="standard">

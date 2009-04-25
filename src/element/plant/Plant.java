@@ -90,8 +90,11 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     private BufferedImage image;
     private float health = 0;
     private float anim   = 0;
-    private int   x      = 0,
-                  y      = 0;
+    private int		x      = 0,
+					y      = 0,
+					neededSun,
+					neededWater,
+					neededTime;
 
     public Plant(String ID) {
         this(ID, 512, 777);
@@ -124,7 +127,39 @@ public class Plant extends XMLLoadableElement implements Cloneable {
             health = h;
     }
 
-	/**@name	Parsing*/
+	/**@name	Getters*/
+	//@{
+	public int neededWater() {
+		return neededWater;
+	}
+	
+	public int neededSun() {
+		return neededSun;
+	}
+	
+	public int neededTime() {
+		return neededTime;
+	}
+	
+	public List<BufferedImage> seedImages() {
+		return getAssets("seed");
+	}
+	
+	public List<BufferedImage> shaftImages() {
+		return getAssets("shaft");
+	}
+	
+	public List<BufferedImage> leavesImages() {
+		return getAssets("leaves");
+	}
+	
+	public List<BufferedImage> flowersImages() {
+		return getAssets("flowers");
+	}
+	//@}
+	
+	
+	/**@name	Unmarshalling*/
 	//@{
 	public double parserVersion() {
 		return PARSER_VERSION;
@@ -147,20 +182,10 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 		}
 	}
 	
-	public List<BufferedImage> seedImages() {
-		return getAssets("seed");
-	}
-	
-	public List<BufferedImage> shaftImages() {
-		return getAssets("shaft");
-	}
-	
-	public List<BufferedImage> leavesImages() {
-		return getAssets("leaves");
-	}
-	
-	public List<BufferedImage> flowersImages() {
-		return getAssets("flowers");
+	protected void parsePrivates() {
+		neededWater = parser.getDouble(rootElement() + "/water").intValue();
+		neededSun = parser.getDouble(rootElement() + "/sun").intValue();
+		neededTime = parser.getDouble(rootElement() + "/time").intValue();
 	}
 	//@}
 

@@ -24,7 +24,6 @@ public class Creature extends XMLLoadableElement {
 	
     public Creature(String ID) {
 		load(ID);
-		eats = parseEats();
     }
 	
 	/**@name	Getters*/
@@ -55,6 +54,10 @@ public class Creature extends XMLLoadableElement {
 			System.err.println("Default folder is unreachable.");
 			throw new RuntimeException(e);
 		}
+	}
+	
+	protected void parsePrivates() {
+		eats = parseEats();
 	}
 	
 	private List<String> parseEats() {
