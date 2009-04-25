@@ -32,17 +32,14 @@ import javax.swing.event.ListSelectionListener;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class MainWindow extends JFrame {
-    private JLabel           statusBar     = new JLabel("Initialisation");
-    private JProgressBar     levelBar      = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
-    private DefaultListModel seedList      = new DefaultListModel();
-    private JList            seedListView  = new JList(seedList);
-    private GameView         gameView      = new GameView();
-    private SIVOXDevint      player        = new SIVOXDevint();
+import java.io.File;
+import java.io.FilenameFilter;
 
+public class MainWindow extends JFrame {
     // plantes de la mission courante
     private List<Plant>    plants   = new LinkedList<Plant>();
     // insectes de la mission courante
@@ -55,7 +52,14 @@ public class MainWindow extends JFrame {
     // mission courante
     private Mission          currentMission;
     // timer pour la pousse des plantes
+
     private Timer            timer;
+    private JLabel           statusBar     = new JLabel("Initialisation");
+    private JProgressBar     levelBar      = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
+    private DefaultListModel seedList      = new DefaultListModel();
+    private JList            seedListView  = new JList(seedList);
+    private GameView         gameView      = new GameView(plantedPlants);
+    private SIVOXDevint      player        = new SIVOXDevint();
 
     public MainWindow() {
         // chargement de toutes les missions
@@ -197,8 +201,17 @@ public class MainWindow extends JFrame {
     }
 
     private void loadMissions() {
-        missions.add(new Mission("mission_1"));
-        missions.add(new Mission("mission_2"));
+        File rep = new File("../ressources/elements/");
+        File[] listMissions = rep.listFiles(new FilenameFilter() {
+            public boolean accept(File dir, String name) {
+                return name.startsWith("mission_");
+            }
+        });
+
+        Arrays.sort(listMissions);
+
+        for (File f : listMissions)
+            missions.add(new Mission(f.getName()));
     }
 
     private void loadMission(int index) {
@@ -241,10 +254,6 @@ public class MainWindow extends JFrame {
         levelBar.setValue(0);
         levelBar.setMaximum(value);
         levelBar.setString(msg);
-    }
-
-    public ArrayList<Plant> getPlantedPlants() {
-        return plantedPlants;
     }
 
     private void setFullScreen() {

@@ -21,8 +21,11 @@ public class GameView extends JPanel {
     private ArrayList<Point> holes = new ArrayList<Point>();
     private Point            selectedHole;
     private int              holesNumber = 0;
+    private ArrayList<Plant> plantedPlants;
 
-    public GameView() {
+    public GameView(ArrayList<Plant> plantedPlants) {
+        this.plantedPlants = plantedPlants;
+
         try {
             grass = ImageIO.read(new File("../ressources/elements/defaults/mission/grass.png"));
         } catch (java.io.IOException e) {
@@ -100,16 +103,14 @@ public class GameView extends JPanel {
         }
 
         // plantes
-        MainWindow m = (MainWindow) getParent().getParent().getParent().getParent(); // immonde => ajouter un param au constructeur
-        for (int i = 0; i < m.getPlantedPlants().size(); ++i)
+        for (int i = 0; i < plantedPlants.size(); ++i)
         {
-            Plant p = m.getPlantedPlants().get(i);
+            Plant p = plantedPlants.get(i);
             if (p != null)
             {
                 Point pos = holes.get(i);
                 p.setX(pos.x);
                 p.setY(pos.y+50);
-                //System.out.println(" => " + i + " : " + p.get());
                 p.paint(g);
             }
         }
