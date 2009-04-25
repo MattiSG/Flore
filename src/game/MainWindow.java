@@ -101,7 +101,8 @@ public class MainWindow extends JFrame {
         seedListView.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 Plant p = (Plant) seedListView.getSelectedValue();
-                play(p.name());
+                if (p != null)
+                    play(p.name());
             }
         });
 
@@ -128,9 +129,9 @@ public class MainWindow extends JFrame {
 
     private void run() {
         play(currentMission.description());
-        statusBar.setText(currentMission.description());
 
         int delay = 100;
+
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int nbAdult = 0;
@@ -151,9 +152,9 @@ public class MainWindow extends JFrame {
                 gameView.repaint();
 
                 if (finish) {
-                    gameView.repaint();
-                    stopTimer();
+                    timer.stop();
                     play("Tu as gagné cette mission !", true);
+
                     int newMission = missions.indexOf(currentMission) + 1;
                     if (newMission >= missions.size()) {
                         play("Tu as fini de jouer. Il n'y a plus de niveau disponible.");
@@ -163,17 +164,15 @@ public class MainWindow extends JFrame {
                     else
                     {
                         play("Niveau suivant");
-                        missions.get(newMission);
+                        loadMission(newMission);
+                        play(currentMission.description());
+                        timer.start();
                     }
                 }
             }
         };
         timer = new Timer(delay, taskPerformer);
         timer.start();
-    }
-
-    private void stopTimer() {
-        timer.stop();
     }
 
     // prononce le texte et l'affiche dans la barre de status
@@ -204,6 +203,7 @@ public class MainWindow extends JFrame {
 
     private void loadMission(int index) {
         currentMission = missions.get(index);
+        plantedPlants.clear();
 
         for (int i = 0; i < currentMission.holes(); ++i)
             plantedPlants.add(null);
@@ -216,6 +216,7 @@ public class MainWindow extends JFrame {
 
     private void loadCurrentPlants() {
         plants.clear();
+        seedList.clear();
 
         for (Map.Entry<String, Integer> i : currentMission.plants().entrySet())
             plants.add(new Plant(i.getKey()));
