@@ -133,15 +133,20 @@ public class MainWindow extends JFrame {
         int delay = 100;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                int nbAdult = 0;
                 boolean finish = true;
                 for (Plant p : plantedPlants)
                     if (p != null) {
                         p.grow();
                         if (!p.isAdult())
                             finish = false;
+                        else
+                            ++nbAdult;
                     }
                     else
                         finish = false;
+
+                levelBar.setValue(nbAdult);
 
                 gameView.repaint();
 
