@@ -1,6 +1,7 @@
 package game;
 
 import element.plant.Plant;
+import element.creature.Creature;
 
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;
@@ -14,17 +15,20 @@ import java.awt.image.BufferedImage;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentAdapter;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class GameView extends JPanel {
-    private BufferedImage    grass;
-    private ArrayList<Point> holes = new ArrayList<Point>();
-    private Point            selectedHole;
-    private int              holesNumber = 0;
-    private ArrayList<Plant> plantedPlants;
+    private BufferedImage       grass;
+    private ArrayList<Point>    holes = new ArrayList<Point>();
+    private Point               selectedHole;
+    private int                 holesNumber = 0;
+    private List<Plant>    plantedPlants;
+    private List<Creature> insects;
 
-    public GameView(ArrayList<Plant> plantedPlants) {
+    public GameView(List<Plant> plantedPlants, List<Creature> insects) {
         this.plantedPlants = plantedPlants;
+        this.insects = insects;
 
         try {
             grass = ImageIO.read(new File("../ressources/elements/defaults/mission/grass.png"));
@@ -113,6 +117,12 @@ public class GameView extends JPanel {
                 p.setY(pos.y+50);
                 p.paint(g);
             }
+        }
+
+        // insectes
+        for(Creature insect : insects)
+        {
+            insect.paint(g);
         }
     }
 }

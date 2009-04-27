@@ -10,23 +10,23 @@
 	
 	<assets type="standard">
 		<still>
-			<img>assets/standard/coccinellestand.svg</img>
+			<img>assets/standard/coccinellestand.png</img>
 		</still>
 		<left>
-			<img>assets/standard/coccinellegauche1.svg</img>
-			<img>assets/standard/coccinellegauche2.svg</img>
+			<img>assets/standard/coccinellegauche1.png</img>
+			<img>assets/standard/coccinellegauche2.png</img>
 		</left>
 		<right>
-			<img>assets/standard/coccinelledroite1.svg</img>
-			<img>assets/standard/coccinelledroite2.svg</img>
+			<img>assets/standard/coccinelledroite1.png</img>
+			<img>assets/standard/coccinelledroite2.png</img>
 		</right>
 		<down>
-			<img>assets/standard/coccinellebas1.svg</img>
-			<img>assets/standard/coccinellebas2.svg</img>
+			<img>assets/standard/coccinellebas1.png</img>
+			<img>assets/standard/coccinellebas2.png</img>
 		</down>
 		<up>
-			<img>assets/standard/coccinellehaut1.svg</img>
-			<img>assets/standard/coccinellehaut2.svg</img>
+			<img>assets/standard/coccinellehaut1.png</img>
+			<img>assets/standard/coccinellehaut2.png</img>
 		</up>
 	</assets>
 	
