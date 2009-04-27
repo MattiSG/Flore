@@ -210,7 +210,7 @@ public class Creature extends XMLLoadableElement {
             img = stillImages().get(0);
 
         // affichage
-        g.drawImage(img, virtualPos.x, virtualPos.y, null);
+        g.drawImage(img, virtualPos.x - img.getWidth() / 2, virtualPos.y - img.getHeight() / 2, null);
 
         // sauvegarde de l'ancienne position
         virtualPos = newVirtualPos;
