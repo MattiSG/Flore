@@ -13,9 +13,9 @@ import java.awt.Point;
 import element.XMLLoadableElement;
 
 public class Creature extends XMLLoadableElement {
-    private Point pos, virtualPos;
-    private int mvt; // 0 = up, 1 = right, 2 = down, 3 = left
-    private float mvtT;
+    private int dir; // type de déplacement (0 à 3 en courbe, 4 à 7 en ligne droite)
+    private float mvtT; 
+    private Point pos, virtualPos; // position de référence et position sur le déplacement en cours
     private Random random = new Random();
 
 	private final static double PARSER_VERSION = 0.41;
@@ -31,8 +31,9 @@ public class Creature extends XMLLoadableElement {
     public Creature(String ID) {
 		load(ID);
 
+        // l'insecte doit être placé au hasard sur l'écran, mais aucun accès ici à la taille de l'écran
+        // le couple (-1 -1) signifie alors pour la méthode paint qu'il est nécéssaire d'initialiser la position
         virtualPos = pos = new Point(-1, -1);
-        img = stillImages().get(0);
     }
 	
 	/**@name	Getters*/
@@ -93,6 +94,11 @@ public class Creature extends XMLLoadableElement {
 		return parser.getValues(EATS_EXPR);
 	}
 
+    /*
+     * Calcule le déplacement relatif à la base
+     * Le paramètre t est le 'pourcentage' (de 0 à 1) du déplacement
+     * dir est la direction (même règles que Creature::dir)
+     */
     private Point calcMvt(float t, int dir) {
         float mvtSize = 150;
 
@@ -147,10 +153,10 @@ public class Creature extends XMLLoadableElement {
             isOutside = false;
 
             // selection d'un mouvement au hasard
-            mvt = random.nextInt(8);
+            dir = random.nextInt(8);
 
             // calcul de la position après ce déplacement
-            Point vd = calcMvt(1.337f, mvt);
+            Point vd = calcMvt(1.337f, dir);
             Point newPos = new Point(pos.x + vd.x, pos.y + vd.y);
 
             // si cette nouvelle position sors de l'écran
@@ -180,7 +186,7 @@ public class Creature extends XMLLoadableElement {
         if(mvtT >= 1)
         {
             // on déplace pour de "vrai" la créature
-            Point virtualDisplacement = calcMvt(1, mvt);
+            Point virtualDisplacement = calcMvt(1, dir);
             pos.x += virtualDisplacement.x;
             pos.y += virtualDisplacement.y;
 
@@ -195,18 +201,18 @@ public class Creature extends XMLLoadableElement {
               newVirtualPos        = new Point(pos.x + virtualDisplacement.x, pos.y + virtualDisplacement.y),
               relativeDisplacement = new Point(newVirtualPos.x - virtualPos.x, newVirtualPos.y - virtualPos.y);
 
-        // deplacement horizontal
-        if(Math.abs(relativeDisplacement.x) > Math.abs(relativeDisplacement.y))
+        // selection de l'image en fonction de la direction (gauche, haut, bas, droite, aucun déplacement)
+        if(Math.abs(relativeDisplacement.x) > Math.abs(relativeDisplacement.y)) // deplacement horizontal
             img = relativeDisplacement.x > 0 ? rightImages().get(0) : leftImages().get(0);
-        // deplacement vertical
-        else if(Math.abs(relativeDisplacement.y) > Math.abs(relativeDisplacement.x))
+        else if(Math.abs(relativeDisplacement.y) > Math.abs(relativeDisplacement.x)) // deplacement vertical
             img = relativeDisplacement.y > 0 ? downImages().get(0) : upImages().get(0);
-        else
+        else // aucun déplacement
             img = stillImages().get(0);
 
         // affichage
         g.drawImage(img, virtualPos.x, virtualPos.y, null);
 
+        // sauvegarde de l'ancienne position
         virtualPos = newVirtualPos;
     }
 	//@}
