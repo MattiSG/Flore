@@ -197,7 +197,7 @@ public class Creature extends XMLLoadableElement {
         mvtT += 0.04;
 
         // calcul du déplacement en cours de la créature
-        Point virtualDisplacement  = calcMvt(mvtT, mvt),
+        Point virtualDisplacement  = calcMvt(mvtT, dir),
               newVirtualPos        = new Point(pos.x + virtualDisplacement.x, pos.y + virtualDisplacement.y),
               relativeDisplacement = new Point(newVirtualPos.x - virtualPos.x, newVirtualPos.y - virtualPos.y);
 
