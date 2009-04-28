@@ -1,7 +1,7 @@
 package game;
 
 import element.plant.Plant;
-import element.creature.Creature;
+import element.mission.Mission;
 
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;
@@ -15,32 +15,29 @@ import java.awt.image.BufferedImage;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentAdapter;
 
-import java.util.List;
 import java.util.ArrayList;
 
 public class GameView extends JPanel {
-    private BufferedImage       grass;
-    private ArrayList<Point>    holes = new ArrayList<Point>();
-    private Point               selectedHole;
-    private int                 holesNumber = 0;
-    private List<Plant>    plantedPlants;
-    private List<Creature> insects;
+    private BufferedImage    grass;
+    private ArrayList<Point> holes = new ArrayList<Point>();
+    private Point            selectedHole;
+    private int              holesNumber = 0;
+    private ArrayList<Plant> plantedPlants;
+    private Mission          mission;
 
-    public GameView(List<Plant> plantedPlants, List<Creature> insects) {
+    public GameView(ArrayList<Plant> plantedPlants) {
         this.plantedPlants = plantedPlants;
-        this.insects = insects;
-
-        try {
-            grass = ImageIO.read(new File("../ressources/elements/defaults/mission/grass.png"));
-        } catch (java.io.IOException e) {
-            System.err.println("[erreur] Impossible de charger l'image de fond (herbe) : " + e);
-        }
 
         addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
                 computeHoles();
             }
         });
+    }
+
+    public void setMission(Mission m) {
+        mission = m;
+        grass = m.getAssets("grass").get(0);
     }
 
     public void setHolesNumber(int nb) {
@@ -64,6 +61,8 @@ public class GameView extends JPanel {
     }
 
     private void computeHoles() {
+        holes.clear();
+
         int w = getSize().width;
         int h = getSize().height;
         int n = w / (holesNumber + 1);
@@ -117,12 +116,6 @@ public class GameView extends JPanel {
                 p.setY(pos.y+50);
                 p.paint(g);
             }
-        }
-
-        // insectes
-        for(Creature insect : insects)
-        {
-            insect.paint(g);
         }
     }
 }

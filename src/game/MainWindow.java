@@ -27,6 +27,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -58,7 +60,7 @@ public class MainWindow extends JFrame {
     private JProgressBar     levelBar      = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
     private DefaultListModel seedList      = new DefaultListModel();
     private JList            seedListView  = new JList(seedList);
-    private GameView         gameView      = new GameView(plantedPlants, insects);
+    private GameView         gameView      = new GameView(plantedPlants);
     private SIVOXDevint      player        = new SIVOXDevint();
 
     public MainWindow() {
@@ -78,7 +80,11 @@ public class MainWindow extends JFrame {
         // gestion des évènements gauche, droite, haut, bas et entrée
         seedListView.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
-                if (KeyEvent.VK_ENTER == e.getKeyCode()) {
+                if (KeyEvent.VK_SPACE == e.getKeyCode()) {
+                    int i = gameView.getSelectedHoleIndex();
+                    if (plantedPlants.get(i) != null)
+                        plantedPlants.get(i).incrWater();
+                } else if (KeyEvent.VK_ENTER == e.getKeyCode()) {
                     int i = gameView.getSelectedHoleIndex();
                     if (plantedPlants.get(i) == null) {
                         try {
@@ -89,13 +95,13 @@ public class MainWindow extends JFrame {
                     }
                     else
                         play("Il ya déjà une plante dans ce trou.", "Il y a déjà une plante dans ce trou.");
-                    gameView.repaint();
                 } else if (KeyEvent.VK_RIGHT == e.getKeyCode()) {
                     gameView.selectNextHole();
                 } else if (KeyEvent.VK_LEFT == e.getKeyCode()) {
                     gameView.selectPreviousHole();
                 } else if (KeyEvent.VK_ESCAPE == e.getKeyCode()) {
                     statusBar.setText("Au revoir !");
+                    timer.stop();
                     dispose();
                 }
             }
@@ -123,6 +129,11 @@ public class MainWindow extends JFrame {
         //setFullScreen();
         setSize(700,700);
         setVisible(true);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                timer.stop();
+            }
+        });
 
         seedListView.requestFocus();
         seedListView.setSelectedIndex(0);
@@ -139,23 +150,20 @@ public class MainWindow extends JFrame {
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int nbAdult = 0;
-                boolean finish = true;
+
                 for (Plant p : plantedPlants)
                     if (p != null) {
-                        p.grow();
-                        if (!p.isAdult())
-                            finish = false;
-                        else
+                        if (p.isAdult())
                             ++nbAdult;
+                        else
+                            p.grow();
                     }
-                    else
-                        finish = false;
 
                 levelBar.setValue(nbAdult);
 
                 gameView.repaint();
 
-                if (finish) {
+                if (nbAdult == plantedPlants.size()) { // fini
                     timer.stop();
                     play("Tu as gagné cette mission !", true);
 
@@ -216,6 +224,7 @@ public class MainWindow extends JFrame {
 
     private void loadMission(int index) {
         currentMission = missions.get(index);
+        gameView.setMission(currentMission);
         plantedPlants.clear();
 
         for (int i = 0; i < currentMission.holes(); ++i)

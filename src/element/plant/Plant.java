@@ -1,10 +1,13 @@
 package element.plant;
 
-import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
+
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -16,7 +19,6 @@ import org.w3c.dom.Document;
 import java.net.URI;
 
 import element.XMLLoadableElement;
-
 import element.creature.Creature;
 
 /*
@@ -90,8 +92,9 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     private BufferedImage image;
     private float health = 0;
     private float anim   = 0;
-    private int		x      = 0,
-					y      = 0,
+    private int		x     = 0,
+					y     = 0,
+                    water = 0,
 					neededSun,
 					neededWater,
 					neededTime;
@@ -110,8 +113,12 @@ public class Plant extends XMLLoadableElement implements Cloneable {
         setHealth(100.0f);
     }
 
-    public float get() {
-        return anim;
+    public void incrWater() {
+        ++water;
+    }
+    
+    public void decrWater() {
+        --water;
     }
 
     public void setX(int xx) {
@@ -200,7 +207,9 @@ public class Plant extends XMLLoadableElement implements Cloneable {
         return anim == health;
     }
 
-    public void paint(Graphics g) {
+    public void paint(Graphics g2) {
+        Graphics2D g = (Graphics2D) g2;
+
         Rectangle rect = g.getClipBounds();
 
         // get the ratio for perfect plant size (1 / 3 of screen)
@@ -231,7 +240,19 @@ public class Plant extends XMLLoadableElement implements Cloneable {
                     null
                    );
 
-        if(anim == 100) {
+
+        // quantité d'eau
+        String msg = "Quantité d'eau : " + water;
+        int ww = g.getFontMetrics().stringWidth(msg);
+        int hh = g.getFontMetrics().getHeight();
+        // fond
+        g.setColor(Color.WHITE);
+        g.fillRect(x - ww / 2, y - hh, ww, hh);
+        // texte
+        g.setColor(Color.BLUE);
+        g.drawString(msg, x - ww / 2, y);
+
+        if (anim == 100) {
 //            volant.draw(g);
         }
     }
