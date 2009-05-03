@@ -32,14 +32,19 @@ import java.awt.event.WindowAdapter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 import java.io.File;
 import java.io.FilenameFilter;
+
+// TODO capturer le temps d'appui sur la touche espace
+//      pour la pluie et ajouter un nuage au dessus de
+//      la plante correspondante durant un certains temps
+//      proportionel au temps d'appui
 
 public class MainWindow extends JFrame {
     // plantes de la mission courante
@@ -53,9 +58,9 @@ public class MainWindow extends JFrame {
     private ArrayList<Plant> plantedPlants = new ArrayList<Plant>();
     // mission courante
     private Mission          currentMission;
-    // timer pour la pousse des plantes
-
+    // timer pour la gestion des plantes
     private Timer            timer;
+
     private JLabel           statusBar     = new JLabel("Initialisation");
     private JProgressBar     levelBar      = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
     private DefaultListModel seedList      = new DefaultListModel();
@@ -78,12 +83,13 @@ public class MainWindow extends JFrame {
         levelBar.setStringPainted(true);
 
         // gestion des √©v√®nements gauche, droite, haut, bas et entr√©e
-        seedListView.addKeyListener(new KeyAdapter() {
+        seedListView.addKeyListener(new KeyAdapter() {        	
             public void keyPressed(KeyEvent e) {
                 if (KeyEvent.VK_SPACE == e.getKeyCode()) {
                     int i = gameView.getSelectedHoleIndex();
                     if (plantedPlants.get(i) != null)
-                        plantedPlants.get(i).incrWater();
+                    	for (int j = 0; j < 10; ++j)
+                    		plantedPlants.get(i).incrWater();
                 } else if (KeyEvent.VK_ENTER == e.getKeyCode()) {
                     int i = gameView.getSelectedHoleIndex();
                     if (plantedPlants.get(i) == null) {
@@ -94,7 +100,7 @@ public class MainWindow extends JFrame {
                         }
                     }
                     else
-                        play("Il ya d√©j√† une plante dans ce trou.", "Il y a d√©j√† une plante dans ce trou.");
+                        play("Il ya dÈj‡ une plante dans ce trou.", "Il y a dÈj‡ une plante dans ce trou.");
                 } else if (KeyEvent.VK_RIGHT == e.getKeyCode()) {
                     gameView.selectNextHole();
                 } else if (KeyEvent.VK_LEFT == e.getKeyCode()) {
@@ -160,12 +166,12 @@ public class MainWindow extends JFrame {
                     }
 
                 levelBar.setValue(nbAdult);
-
+                
                 gameView.repaint();
 
                 if (nbAdult == plantedPlants.size()) { // fini
                     timer.stop();
-                    play("Tu as gagn√© cette mission !", true);
+                    play("Tu as gagnÈ cette mission !", true);
 
                     int newMission = missions.indexOf(currentMission) + 1;
                     if (newMission >= missions.size()) {
@@ -230,8 +236,12 @@ public class MainWindow extends JFrame {
         for (int i = 0; i < currentMission.holes(); ++i)
             plantedPlants.add(null);
 
-        loadCurrentPlants();
-        loadCurrentInsects();
+        try {
+	        loadCurrentPlants();
+	        loadCurrentInsects();
+        } catch (RuntimeException e) {
+        	play("Impossible de charger la mission suivante.", true);
+        }
 
         gameView.setHolesNumber(currentMission.holes());
     }

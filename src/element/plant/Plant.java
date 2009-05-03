@@ -2,6 +2,7 @@ package element.plant;
 
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.IOException;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -88,7 +89,8 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 	private final static String DEFAULT_FOLDER = "../defaults/plant/";
 	private final static String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
 	private final static String ROOT = "plant";
-	
+
+    private BufferedImage nuage;
     private BufferedImage image;
     private float health = 0;
     private float anim   = 0;
@@ -106,7 +108,12 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     public Plant(String ID, int xx, int yy) {
 		load(ID);
         image = getAssets("flowers").get(0);
-
+        try {
+			nuage = ImageIO.read(new File("../ressources/elements/defaults/plant/cloud.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
         x = xx;
         y = yy;
 
@@ -197,10 +204,16 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 	//@}
 
     public void grow() {
-        if (anim < health)
-            anim += health > anim ? 1 : -1;
-        if (anim > health)
-            anim = health;
+    	if (water > 0) {
+	        if (anim < health) {
+	            anim += health > anim ? 1 : -1;
+	            --water;
+	        }
+	        if (anim > health) {
+	            anim = health;
+	            --water;
+	        }
+    	}
     }
 
     public boolean isAdult() {
@@ -251,6 +264,11 @@ public class Plant extends XMLLoadableElement implements Cloneable {
         // texte
         g.setColor(Color.BLUE);
         g.drawString(msg, x - ww / 2, y);
+        
+        if (water > 0) {
+        	int ch = nuage.getHeight() * imw / nuage.getWidth();
+        	g.drawImage(nuage, x - imw / 2, y - imh * 2, imw, ch, null);
+        }
 
         if (anim == 100) {
 //            volant.draw(g);

@@ -1,6 +1,7 @@
 package game;
 
 import element.plant.Plant;
+import element.creature.Creature;
 import element.mission.Mission;
 
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ public class GameView extends JPanel {
     private int              holesNumber = 0;
     private ArrayList<Plant> plantedPlants;
     private Mission          mission;
+	private int              nbInsects = 0;
 
     public GameView(ArrayList<Plant> plantedPlants) {
         this.plantedPlants = plantedPlants;
@@ -115,7 +117,14 @@ public class GameView extends JPanel {
                 p.setX(pos.x);
                 p.setY(pos.y+50);
                 p.paint(g);
+                
+                // insectes
+                if (p.isAdult() && Math.random() > 0.10) {
+                	//Creature c = p.getCreature();
+                	Creature c = new Creature("coccinelle");
+                	c.paint(g2d);
+                }
             }
         }
-    }
+	}
 }
