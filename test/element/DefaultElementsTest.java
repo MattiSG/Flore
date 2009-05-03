@@ -27,7 +27,7 @@ public class DefaultElementsTest {
 	
 	public final static String[] MISSIONS_IDS = {"mission_1"/*, "mission_2"*/};
 	public final static String[] PLANTS_IDS = {"rosa", "mimosa"};
-	public final static String[] CREATURES_IDS = {"aphidoidea", "coccinelle"};	
+	public final static String[] CREATURES_IDS = {"aphidoidea", "coccinelle", "sphingidae", "papilionidae", "lycaenidae"};	
 
 	private int array = 0,
 				counter = 0;

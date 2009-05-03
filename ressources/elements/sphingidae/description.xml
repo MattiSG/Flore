@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<creature version="0.41" author="devint">
+	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des créatures -->
+	<id>sphingidae</id> <!--identifiant unique-->
+	<name lang="fr">Sphinx</name> <!--nom affiché-->
+	
+	<description lang="fr">Les sphingidés (Sphingidae) sont une famille de lépidoptères hétérocères. Les sphingidés sont d'assez grande taille, ont le corps épais et pour la plupart des ailes étroites. Certaines espèces ont des ailes plus larges et festonnées. Les Sphinx sont conçus pour des vols à grande vitesse et certaines espèces peuvent atteindre 55 kilomètres par heure.</description>
+	
+	<dimension direction="x">150</dimension>
+	<dimension direction="y">67</dimension>
+	
+	<assets type="standard">
+		<still> <!--insecte immobile-->
+			<img>assets/standard/haut.png</img>
+		</still>
+		<left> <!-- images pour créer une animation de déplacement à gauche -->
+			<img>assets/standard/gauche.png</img>
+			<img>assets/standard/gauche.png</img>
+		</left>
+		<right> <!-- images pour créer une animation de déplacement à droite -->
+			<img>assets/standard/droite.png</img>
+			<img>assets/standard/droite.png</img>
+		</right>
+		<down> <!-- images pour créer une animation de déplacement en bas -->
+			<img>assets/standard/bas.png</img>
+			<img>assets/standard/bas.png</img>
+		</down>
+		<up> <!-- images pour créer une animation de déplacement en haut -->
+			<img>assets/standard/haut.png</img>
+			<img>assets/standard/haut.png</img>
+		</up>
+	</assets>
+	
+	<eats> <!-- peut ne contenir aucune créature ou aucune plante. Les ID peuvent être celles de créatures ou de plantes, indifféremment. -->
+		<id>wisteria</id>
+		<id>buddleia</id>
+	</eats>
+	
+</creature>

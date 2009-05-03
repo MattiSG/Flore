@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<creature version="0.41" author="devint">
+	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des créatures -->
+	<id>lycaenidae</id> <!--identifiant unique-->
+	<name lang="fr">Argus bleu</name> <!--nom affiché-->
+	
+	<description lang="fr">Papillons petits et délicats, possédant un corps fragile, avec la face supérieure des ailes souvent d'une couleur bleutée (surtout les mâles). L'ultime nervure radiale est divisée en deux branches et prend naissance juste au dessous de l'angle supérieur de la cellule.</description>
+	
+	<dimension direction="x">170</dimension>
+	<dimension direction="y">113</dimension>
+	
+	<assets type="standard">
+		<still> <!--insecte immobile-->
+			<img>assets/standard/haut.png</img>
+		</still>
+		<left> <!-- images pour créer une animation de déplacement à gauche -->
+			<img>assets/standard/gauche.png</img>
+			<img>assets/standard/gauche.png</img>
+		</left>
+		<right> <!-- images pour créer une animation de déplacement à droite -->
+			<img>assets/standard/droite.png</img>
+			<img>assets/standard/droite.png</img>
+		</right>
+		<down> <!-- images pour créer une animation de déplacement en bas -->
+			<img>assets/standard/bas.png</img>
+			<img>assets/standard/bas.png</img>
+		</down>
+		<up> <!-- images pour créer une animation de déplacement en haut -->
+			<img>assets/standard/haut.png</img>
+			<img>assets/standard/haut.png</img>
+		</up>
+	</assets>
+	
+	<eats> <!-- peut ne contenir aucune créature ou aucune plante. Les ID peuvent être celles de créatures ou de plantes, indifféremment. -->
+		<id>buddleia</id>
+		<id>serrulata</id>
+	</eats>
+	
+</creature>

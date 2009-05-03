@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<creature version="0.41" author="devint">
+	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des créatures -->
+	<id>papilionidae</id> <!--identifiant unique-->
+	<name lang="fr">Machaon</name> <!--nom affiché-->
+	
+	<description lang="fr">La famille des papilionidés (Papilionidae) est une famille de papillons diurnes qui comprend environ 570 espèces dans le monde. Ce sont de grands papillons aux couleurs généralement vives. La plupart possède une « queue » sur chaque aile postérieure</description>
+	
+	<dimension direction="x">150</dimension>
+	<dimension direction="y">127</dimension>
+	
+	<assets type="standard">
+		<still> <!--insecte immobile-->
+			<img>assets/standard/haut.png</img>
+		</still>
+		<left> <!-- images pour créer une animation de déplacement à gauche -->
+			<img>assets/standard/gauche.png</img>
+			<img>assets/standard/gauche.png</img>
+		</left>
+		<right> <!-- images pour créer une animation de déplacement à droite -->
+			<img>assets/standard/droite.png</img>
+			<img>assets/standard/droite.png</img>
+		</right>
+		<down> <!-- images pour créer une animation de déplacement en bas -->
+			<img>assets/standard/bas.png</img>
+			<img>assets/standard/bas.png</img>
+		</down>
+		<up> <!-- images pour créer une animation de déplacement en haut -->
+			<img>assets/standard/haut.png</img>
+			<img>assets/standard/haut.png</img>
+		</up>
+	</assets>
+	
+	<eats> <!-- peut ne contenir aucune créature ou aucune plante. Les ID peuvent être celles de créatures ou de plantes, indifféremment. -->
+		<id>buddleia</id>
+	</eats>
+	
+</creature>
