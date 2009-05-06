@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plant version="0.3" author="devint">
+	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des plantes -->
+	<id>buddleia</id> <!--identifiant unique-->
+	<name lang="fr">Buddleia</name> <!--nom affiché-->
+	
+	<description lang="fr">Le buddléia du père David (Buddleja davidii), plus connu sous le charmant nom d'arbre aux papillons forme un buisson généreux, très touffu aux longues branches florifères.</description>
+	
+	<water>4</water> <!-- quantité d'eau nécessaire -->
+	<sun>10</sun> <!-- quantité de soleil nécessaire -->
+	<time>9</time> <!-- nombre de jours avant la floraison (à voir par rapport au soleil ?) -->
+	
+	<assets type="standard">
+		<seed> <!-- graine ("icône")-->
+			<img width="100" height="100">assets/standard/seed.png</img>
+		</seed>
+		<shaft> <!-- tige -->
+			<img width="100" height="100">assets/standard/buddleia.png</img>
+			<img width="100" height="100">assets/standard/buddleia.png</img>
+		</shaft>
+		<leaves> <!-- feuilles (sélectionnées en random) -->
+			<img width="100" height="100">assets/standard/buddleia.png</img>
+			<img width="100" height="100">assets/standard/buddleia.png</img>
+			<img width="100" height="100">assets/standard/buddleia.png</img>
+		</leaves>
+		<flowers> <!-- fleurs (sélectionnées en random) -->
+			<img width="100" height="100">assets/standard/buddleia.png</img>
+		</flowers>
+	</assets>
+	
+	<assets type="high_contrast">
+		<seed> <!-- graine ("icône")-->
+			<img></img>
+		</seed>
+		<shaft> <!-- tige -->
+			<img></img>
+			<img></img>
+			<img></img>
+		</shaft>
+		<leaves> <!-- feuilles (sélectionnées en random) -->
+			<img></img>
+			<img></img>
+			<img></img>
+		</leaves>
+		<flowers> <!-- fleurs (sélectionnées en random) -->
+			<img></img>
+			<img></img>
+			<img></img>
+		</flowers>
+	</assets>
+	
+</plant>

@@ -32,7 +32,7 @@
 	</assets>
 	
 	<eats> <!-- peut ne contenir aucune créature ou aucune plante. Les ID peuvent être celles de créatures ou de plantes, indifféremment. -->
-		<id>wisteria</id>
+		<!--<id>wisteria</id> (pas encore fait) -->
 		<id>buddleia</id>
 	</eats>
 	
