@@ -2,6 +2,8 @@ package element.creature;
 
 import java.util.List;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Random;
 import java.lang.Math;
 import java.net.URI;
@@ -9,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Point;
+
+import org.w3c.dom.Node;
 
 import element.XMLLoadableElement;
 
@@ -18,15 +22,14 @@ public class Creature extends XMLLoadableElement {
     private Point pos, virtualPos; // position de référence et position sur le déplacement en cours
     private Random random = new Random();
 
-	private final static double PARSER_VERSION = 0.41;
+	private final static double PARSER_VERSION = 0.5;
 	private final static String DEFAULT_FOLDER = "../defaults/creature/";
 	private final static String[] ASSETS_NAMES = {"still", "left", "right", "up", "down"};
 	private final String ROOT = "creature";
-	private String	EATS_EXPR = rootElement() + "/eats";
+	private String BRINGS_EXPR = rootElement() + "/brings";
 	
     private BufferedImage img;
-
-	private List<String> eats;
+	private Map<String, Double> brings;
 	
     public Creature(String ID) {
 		load(ID);
@@ -38,10 +41,10 @@ public class Creature extends XMLLoadableElement {
 	
 	/**@name	Getters*/
 	//@{
-	public List<String> eats() {
-		return eats;
+	public Map<String, Double> brings() {
+		return brings;
 	}
-
+	
 	public List<BufferedImage> stillImages() {
 		return getAssets("still");
 	}
@@ -87,11 +90,15 @@ public class Creature extends XMLLoadableElement {
 	}
 	
 	protected void parsePrivates() {
-		eats = parseEats();
+		brings = parseBrings();
 	}
 	
-	private List<String> parseEats() {
-		return parser.getValues(EATS_EXPR);
+	private Map<String, Double> parseBrings() {
+		Map<String, Double> result = new HashMap<String, Double>();
+		List<Node> bringsNodes = parser.getNodes(BRINGS_EXPR + "/*");
+		for (Node node : bringsNodes)
+			result.put(node.getTextContent(), new Double(node.getAttributes().getNamedItem("probability").getNodeValue()));
+		return result;
 	}
 
     /*

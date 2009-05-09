@@ -17,78 +17,19 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import java.net.URI;
 
 import element.XMLLoadableElement;
 import element.creature.Creature;
 
-/*
-class Volant {
-    private BufferedImage image;
-
-    // insecte
-    int posX;
-    int posY;
-    int mvt; // 0 = up, 1 = right, 2 = down, 3 = left
-    float mvtT;
-
-    public Volant() {
-        posX = 0;
-        posY = 0;
-
-        try {
-            image = ImageIO.read(new File("../elements/coccinelle/assets/standard/coccinellehaut2.png"));
-        } catch(java.io.IOException e) {
-            System.err.println("[erreur] " + e);
-        }   
-    }
-
-    public void move(Graphics g) {
-        Rectangle rect = g.getClipBounds();
-        int vit = 5;
-
-        switch(Math.random(4)) {
-        case 0:
-            posY -= vit;
-            break;
-        case 1:
-            posX += vit;
-            break;
-        case 2:
-            posY += vit;
-            break;
-        case 4:
-            posX -= vit;
-            break;
-        }
-        
-        if(posX < 0)
-            posX = 0;
-        if(posY < 0)
-            posY = 0;
-        if(posX > rect.width)
-            posX = rect.width;
-        if(posY > rect.height)
-            posY = rect.height;
-    }
-
-    public void draw(Graphics g) {
-
-        int x = posX,
-            y = posY;
-
-        move(g);
-
-        g.drawImage(image, posX, posY);
-    }
-}
-*/
-
 public class Plant extends XMLLoadableElement implements Cloneable {
-	private final static double PARSER_VERSION = 0.3;
+	private final static double PARSER_VERSION = 0.4;
 	private final static String DEFAULT_FOLDER = "../defaults/plant/";
 	private final static String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
 	private final static String ROOT = "plant";
+
+	private String BRINGS_EXPR = rootElement() + "/brings";
 
     private BufferedImage nuage;
     private BufferedImage image;
@@ -100,6 +41,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 					neededSun,
 					neededWater,
 					neededTime;
+	private Map<String, Double> brings;
 
     public Plant(String ID) {
         this(ID, 512, 777);
@@ -108,11 +50,11 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     public Plant(String ID, int xx, int yy) {
 		load(ID);
         image = getAssets("flowers").get(0);
-        try {
-			nuage = ImageIO.read(new File("../ressources/elements/defaults/plant/cloud.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//        try {
+//			nuage = ImageIO.read(new File("../ressources/elements/defaults/plant/cloud.png"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
         x = xx;
         y = yy;
@@ -153,6 +95,10 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 	
 	public int neededTime() {
 		return neededTime;
+	}
+	
+	public Map<String, Double> brings() {
+		return brings;
 	}
 	
 	public List<BufferedImage> seedImages() {
@@ -200,6 +146,15 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 		neededWater = parser.getDouble(rootElement() + "/water").intValue();
 		neededSun = parser.getDouble(rootElement() + "/sun").intValue();
 		neededTime = parser.getDouble(rootElement() + "/time").intValue();
+		brings = parseBrings();
+	}
+	
+	private Map<String, Double> parseBrings() {
+		Map<String, Double> result = new HashMap<String, Double>();
+		List<Node> bringsNodes = parser.getNodes(BRINGS_EXPR + "/*");
+		for (Node node : bringsNodes)
+			result.put(node.getTextContent(), new Double(node.getAttributes().getNamedItem("probability").getNodeValue()));
+		return result;
 	}
 	//@}
 
