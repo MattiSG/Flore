@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<creature version="0.41" author="devint">
+<creature version="0.5" author="devint">
 	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des créatures -->
 	<id>papilionidae</id> <!--identifiant unique-->
 	<name lang="fr">Machaon</name> <!--nom affiché-->
 	
-	<description lang="fr">La famille des papilionidés (Papilionidae) est une famille de papillons diurnes qui comprend environ 570 espèces dans le monde. Ce sont de grands papillons aux couleurs généralement vives. La plupart possède une « queue » sur chaque aile postérieure</description>
+	<description lang="fr">Les Machaons sont de grands papillons aux couleurs très vives. La plupart possède une sorte de queue au bout de chaque aile.</description>
 	
 	<dimension direction="x">150</dimension>
 	<dimension direction="y">127</dimension>
@@ -30,9 +30,5 @@
 			<img>assets/standard/haut.png</img>
 		</up>
 	</assets>
-	
-	<eats> <!-- peut ne contenir aucune créature ou aucune plante. Les ID peuvent être celles de créatures ou de plantes, indifféremment. -->
-		<id>buddleia</id>
-	</eats>
 	
 </creature>
