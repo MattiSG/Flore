@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<creature version="0.41" author="devint">
+<creature version="0.5" author="devint">
 	<id>coccinelle</id>
 	<name lang="fr">Coccinelle</name>
 	
@@ -29,9 +29,4 @@
 			<img>assets/standard/coccinellehaut2.png</img>
 		</up>
 	</assets>
-	
-	<eats>
-		<id>aphidoidea</id>
-	</eats>
-	
 </creature>

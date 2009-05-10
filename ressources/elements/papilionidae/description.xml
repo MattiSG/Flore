@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <creature version="0.5" author="devint">
-	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des créatures -->
-	<id>papilionidae</id> <!--identifiant unique-->
-	<name lang="fr">Machaon</name> <!--nom affiché-->
+	<id>papilionidae</id>
+	<name lang="fr">Machaon</name>
 	
 	<description lang="fr">Les Machaons sont de grands papillons aux couleurs très vives. La plupart possède une sorte de queue au bout de chaque aile.</description>
 	
@@ -10,25 +9,20 @@
 	<dimension direction="y">127</dimension>
 	
 	<assets type="standard">
-		<still> <!--insecte immobile-->
+		<still>
 			<img>assets/standard/haut.png</img>
 		</still>
-		<left> <!-- images pour créer une animation de déplacement à gauche -->
-			<img>assets/standard/gauche.png</img>
+		<left>
 			<img>assets/standard/gauche.png</img>
 		</left>
-		<right> <!-- images pour créer une animation de déplacement à droite -->
-			<img>assets/standard/droite.png</img>
+		<right>
 			<img>assets/standard/droite.png</img>
 		</right>
-		<down> <!-- images pour créer une animation de déplacement en bas -->
-			<img>assets/standard/bas.png</img>
+		<down>
 			<img>assets/standard/bas.png</img>
 		</down>
-		<up> <!-- images pour créer une animation de déplacement en haut -->
-			<img>assets/standard/haut.png</img>
+		<up>
 			<img>assets/standard/haut.png</img>
 		</up>
 	</assets>
-	
 </creature>

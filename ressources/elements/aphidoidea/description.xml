@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<creature version="0.41" author="devint">
+<creature version="0.5" author="devint">
 	<id>aphidoidea</id>
 	<name lang="fr">Puceron</name>
 	
 	<dimension direction="x">60</dimension>
 	<dimension direction="y">30</dimension>
 	
-	<description lang="fr">Les pucerons sont de très petits insectes. Ils possèdent des antennes situées entre les deux yeux. Leurs larves se trouvent souvent sur les rosiers.</description>
+	<description lang="fr">Les pucerons sont de très petits insectes, dont les larves se trouvent souvent sur les rosiers. Leurs plus grands prédateurs sont les coccinelles, qui les dévorent par centaines.</description>
 	
 	<assets type="standard">
 		<still>
@@ -30,8 +30,7 @@
 		</up>
 	</assets>
 	
-	<eats>
-		<id>rosa</id>
-	</eats>
-	
+	<brings>
+		<creature probability="0.9">coccinelle</creature>
+	</brings>
 </creature>

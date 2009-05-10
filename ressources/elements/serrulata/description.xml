@@ -1,52 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plant version="0.3" author="devint">
-	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des plantes -->
-	<id>serrulata</id> <!--identifiant unique-->
-	<name lang="fr">Cerisier du Japon</name> <!--nom affiché-->
+<plant version="0.4" author="devint">
+	<id>serrulata</id>
+	<name lang="fr">Cerisier du Japon</name>
 	
 	<description lang="fr">Prunus serrulata, le cerisier du Japon, aussi appelé cerisier oriental est une espèce d'arbre d'ornement japonaise de la famille des Rosaceae.</description>
 	
-	<water>5</water> <!-- quantité d'eau nécessaire -->
-	<sun>15</sun> <!-- quantité de soleil nécessaire -->
-	<time>10</time> <!-- nombre de jours avant la floraison (à voir par rapport au soleil ?) -->
+	<water>5</water>
+	<sun>15</sun>
+	<time>10</time>
 	
 	<assets type="standard">
-		<seed> <!-- graine ("icône")-->
+		<seed>
 			<img width="100" height="100">assets/standard/seed.png</img>
 		</seed>
-		<shaft> <!-- tige -->
-			<img width="100" height="100">assets/standard/serrulata.png</img>
+		<shaft>
 			<img width="100" height="100">assets/standard/serrulata.png</img>
 		</shaft>
-		<leaves> <!-- feuilles (sélectionnées en random) -->
-			<img width="100" height="100">assets/standard/serrulata.png</img>
-			<img width="100" height="100">assets/standard/serrulata.png</img>
+		<leaves>
 			<img width="100" height="100">assets/standard/serrulata.png</img>
 		</leaves>
-		<flowers> <!-- fleurs (sélectionnées en random) -->
+		<flowers>
 			<img width="100" height="100">assets/standard/serrulata.png</img>
 		</flowers>
 	</assets>
 	
-	<assets type="high_contrast">
-		<seed> <!-- graine ("icône")-->
-			<img></img>
-		</seed>
-		<shaft> <!-- tige -->
-			<img></img>
-			<img></img>
-			<img></img>
-		</shaft>
-		<leaves> <!-- feuilles (sélectionnées en random) -->
-			<img></img>
-			<img></img>
-			<img></img>
-		</leaves>
-		<flowers> <!-- fleurs (sélectionnées en random) -->
-			<img></img>
-			<img></img>
-			<img></img>
-		</flowers>
-	</assets>
-	
+	<brings>
+		<creature probability="0.6">papilionidae</creature>
+		<creature probability="0.6">lycaenidae</creature>
+		<creature probability="0.3">sphingidae</creature>
+	</brings>
 </plant>
