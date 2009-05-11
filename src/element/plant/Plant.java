@@ -50,11 +50,11 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     public Plant(String ID, int xx, int yy) {
 		load(ID);
         image = getAssets("flowers").get(0);
-//        try {
-//			nuage = ImageIO.read(new File("../ressources/elements/defaults/plant/cloud.png"));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+        try {
+			nuage = ImageIO.read(new File("../ressources/elements/defaults/plant/cloud.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
         x = xx;
         y = yy;
