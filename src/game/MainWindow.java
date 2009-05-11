@@ -72,7 +72,7 @@ public class MainWindow extends JFrame {
         // chargement de toutes les missions
         loadMissions();
 
-        // chargement de la première mission
+        // chargement de la premiÃ¨re mission
         loadMission(0);
 
         // changement du type de rendu de la liste pour l'affichage des images
@@ -82,7 +82,7 @@ public class MainWindow extends JFrame {
         // autoriser l'affichage d'un message dans la progress bar
         levelBar.setStringPainted(true);
 
-        // gestion des évènements gauche, droite, haut, bas et entrée
+        // gestion des Ã©vÃ¨nements gauche, droite, haut, bas et entrÃ©e
         seedListView.addKeyListener(new KeyAdapter() {        	
             public void keyPressed(KeyEvent e) {
                 if (KeyEvent.VK_SPACE == e.getKeyCode()) {
@@ -100,7 +100,7 @@ public class MainWindow extends JFrame {
                         }
                     }
                     else
-                        play("Il ya d�j� une plante dans ce trou.", "Il y a d�j� une plante dans ce trou.");
+                        play("Il ya déjà une plante dans ce trou.", "Il y a déjà une plante dans ce trou.");
                 } else if (KeyEvent.VK_RIGHT == e.getKeyCode()) {
                     gameView.selectNextHole();
                 } else if (KeyEvent.VK_LEFT == e.getKeyCode()) {
@@ -113,7 +113,7 @@ public class MainWindow extends JFrame {
             }
         });
 
-        // pronociation du nom de la plante dont la graine est sélectionnée
+        // pronociation du nom de la plante dont la graine est sÃ©lectionnÃ©e
         seedListView.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 Plant p = (Plant) seedListView.getSelectedValue();
@@ -171,7 +171,7 @@ public class MainWindow extends JFrame {
 
                 if (nbAdult == plantedPlants.size()) { // fini
                     timer.stop();
-                    play("Tu as gagn� cette mission !", true);
+                    play("Tu as gagné cette mission !", true);
 
                     int newMission = missions.indexOf(currentMission) + 1;
                     if (newMission >= missions.size()) {
