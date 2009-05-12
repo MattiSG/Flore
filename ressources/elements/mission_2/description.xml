@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mission version="0.2" author="devint">
+<mission version="0.21" author="devint">
 	
 	<id>mission_2</id>
 	<name lang="fr">Papillons</name>
@@ -24,14 +24,7 @@
 		<grass></grass>
 		<sun></sun>
 		<hole></hole>
-	</assets>
-
-	<assets type="high_contrast">
-		<icon></icon>
-		<sky></sky>
-		<grass></grass>
-		<sun></sun>
-		<hole></hole>
+		<cloud></cloud>
 	</assets>
 	
 	<plants>

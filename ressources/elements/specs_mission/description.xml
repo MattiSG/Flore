@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mission version="0.2" author="devint">
+<mission version="0.21" author="devint">
 	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des missions -->
 	<id>specs_mission</id>
 	<name lang="fr">Specifications Mission</name>
@@ -24,6 +24,7 @@
 		<grass>blank.gif</grass>
 		<sun>blank.gif</sun>
 		<hole>blank.gif</hole>
+		<cloud>blank.gif</cloud>
 	</assets>
 
 	<assets type="high_contrast">
@@ -32,6 +33,7 @@
 		<grass>blank.gif</grass>
 		<sun>blank.gif</sun>
 		<hole>blank.gif</hole>
+		<cloud>blank.gif</cloud>
 	</assets>
 	
 	<plants>

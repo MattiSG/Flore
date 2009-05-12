@@ -14,9 +14,9 @@ import org.w3c.dom.Node;
 import java.net.URI;
 
 public class Mission extends XMLLoadableElement {
-	private final static double PARSER_VERSION = 0.2;
+	private final static double PARSER_VERSION = 0.21;
 	private final static String DEFAULT_FOLDER = "../defaults/mission/";
-    private final static String[] ASSETS_NAMES = {"icon", "sky", "grass", "sun", "hole"};
+    private final static String[] ASSETS_NAMES = {"icon", "sky", "grass", "sun", "hole", "cloud"};
 	private final static String ROOT = "mission";
 	private final String	HINTS_EXPR = rootElement() + "/hints/*",
 							PLANTS_EXPR = rootElement() + "/plants/*",
