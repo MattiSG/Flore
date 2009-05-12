@@ -16,19 +16,22 @@ import java.awt.image.BufferedImage;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentAdapter;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class GameView extends JPanel {
     private BufferedImage    grass;
-    private ArrayList<Point> holes = new ArrayList<Point>();
+    private List<Point> holes = new ArrayList<Point>();
+    private List<Creature> insects  = new ArrayList<Creature>();
     private Point            selectedHole;
     private int              holesNumber = 0;
-    private ArrayList<Plant> plantedPlants;
+    private List<Plant> plantedPlants;
     private Mission          mission;
 	private int              nbInsects = 0;
 
-    public GameView(ArrayList<Plant> plantedPlants) {
+    public GameView(List<Plant> plantedPlants, List<Creature> insects) {
         this.plantedPlants = plantedPlants;
+        this.insects = insects;
 
         addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
@@ -118,13 +121,21 @@ public class GameView extends JPanel {
                 p.setY(pos.y+50);
                 p.paint(g);
                 
+                /*
                 // insectes
                 if (p.isAdult() && Math.random() > 0.10) {
-                	//Creature c = p.getCreature();
-                	Creature c = new Creature("coccinelle");
+                	Creature c = p.getCreature();
+                	//Creature c = new Creature("coccinelle");
                 	c.paint(g2d);
                 }
+                */
             }
+        }
+
+        // creatures
+        for(Creature creature : insects)
+        {
+            creature.paint(g2d);
         }
 	}
 }

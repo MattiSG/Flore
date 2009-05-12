@@ -65,7 +65,7 @@ public class MainWindow extends JFrame {
     private JProgressBar     levelBar      = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
     private DefaultListModel seedList      = new DefaultListModel();
     private JList            seedListView  = new JList(seedList);
-    private GameView         gameView      = new GameView(plantedPlants);
+    private GameView         gameView      = new GameView(plantedPlants, insects);
     private SIVOXDevint      player        = new SIVOXDevint();
 
     public MainWindow() {
