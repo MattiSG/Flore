@@ -27,6 +27,7 @@ public class CreatureTest extends XMLLoadableElementTest {
 	private static final String[] EXPECTED_BRINGS = {"ID1", "ID2", "ID3"};
 	private static final Double[] EXPECTED_BRINGS_PROBABILITIES = {0.8, 0.3, 0.5};
 	private static final Dimension EXPECTED_DIMENSIONS = new Dimension(100, 200);
+	private static final int EXPECTED_LIFETIME = 10;
 	
 	@Before
 	public void setUp() {
@@ -58,5 +59,10 @@ public class CreatureTest extends XMLLoadableElementTest {
 		Dimension dimensions = ((Creature) subject).dimensions();
 		assertNotNull("Parsed dimensions are null !", dimensions);
 		assertEquals(EXPECTED_DIMENSIONS, dimensions);
+	}
+	
+	@Test
+	public void lifetimeParsingTest() {
+		assertEquals(EXPECTED_LIFETIME, ((Creature) subject).lifetime());
 	}
 }

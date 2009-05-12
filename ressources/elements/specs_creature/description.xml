@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<creature version="0.5" author="devint">
+<creature version="0.51" author="devint">
 	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des créatures -->
 	<id>specs_creature</id>
 	<name lang="fr">Specifications Creature</name>
 	
 	<description lang="fr">Ce fichier sert de specifications pour les fichiers decrivant des creatures.</description>
 	
-	<dimension direction="x">100</dimension>
-	<dimension direction="y">200</dimension>
+	<lifetime>10</lifetime> <!-- durée de vie, en secondes -->
+	
+	<dimension direction="x">100</dimension> <!-- largeur, en pixels -->
+	<dimension direction="y">200</dimension> <!-- hauteur, en pixels -->
 	
 	<assets type="standard">
 		<still> <!--insecte immobile-->

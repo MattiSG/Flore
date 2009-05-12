@@ -164,7 +164,7 @@ public abstract class XMLLoadableElement {
 	public boolean checkVersion(double version) {
 		double parserVersion = parserVersion();
 		if (version > parserVersion) {
-			System.err.println("File ID \"" + ID() + "\"'s version (" + version + ") is newer than this parser (" + parserVersion + ").\nI'll try to read it, but be aware that you may get errors ! You should update this software.");
+			System.err.println("File ID \"" + ID() + "\"'s version (" + version + ") is newer than this parser (" + parserVersion + ").\nYou should update this software.");
 			return false;
 		} else if (version < parserVersion) {
 			System.err.println("Please note that file ID \"" + ID() + "\" uses an obsolete syntax (parser version : " + parserVersion + ", file syntax version : " + version + ").");

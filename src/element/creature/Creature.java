@@ -20,15 +20,17 @@ import element.XMLLoadableElement;
 public class Creature extends XMLLoadableElement {
 	/**@name	Variables d'unmarshalling*/
 	//@{
-	private final static double PARSER_VERSION = 0.5;
+	private final static double PARSER_VERSION = 0.51;
 	private final static String DEFAULT_FOLDER = "../defaults/creature/";
 	private final static String[] ASSETS_NAMES = {"still", "left", "right", "up", "down"};
 	private final static int	DEFAULT_X_SIZE = 100,
-								DEFAULT_Y_SIZE = 100;
+								DEFAULT_Y_SIZE = 100,
+								DEFAULT_LIFETIME = 12;
 	private final String ROOT = "creature";
 	private String	BRINGS_EXPR = rootElement() + "/brings",
 					DIMENSIONS_X_EXPR = rootElement() + "/dimension[@direction=\"x\"]",
-					DIMENSIONS_Y_EXPR = rootElement() + "/dimension[@direction=\"y\"]";
+					DIMENSIONS_Y_EXPR = rootElement() + "/dimension[@direction=\"y\"]",
+					LIFETIME_EXPR = rootElement() + "/lifetime";
 	//@}
 	
 	/**@name	Variables membres*/
@@ -36,6 +38,7 @@ public class Creature extends XMLLoadableElement {
     private BufferedImage img;
 	private Map<String, Double> brings;
 	private Dimension dimensions;
+	private int lifetime;
 	//@}
 	
 	/**@name	Variables d'affichage*/
@@ -108,9 +111,14 @@ public class Creature extends XMLLoadableElement {
 		return dimensions;
 	}
 	
+	public int lifetime() {
+		return lifetime;
+	}
+	
 	protected void parsePrivates() {
 		brings = parseBrings();
 		dimensions = parseDimensions();
+		lifetime = parseLifetime();
 	}
 	
 	private Map<String, Double> parseBrings() {
@@ -124,9 +132,14 @@ public class Creature extends XMLLoadableElement {
 	private Dimension parseDimensions() {
 		int x = parser.getDouble(DIMENSIONS_X_EXPR).intValue();
 		int y = parser.getDouble(DIMENSIONS_Y_EXPR).intValue();
-		x = (x == 0 ? DEFAULT_X_SIZE : x);
-		y = (y == 0 ? DEFAULT_Y_SIZE : y);
+		x = (x <= 0 ? DEFAULT_X_SIZE : x);
+		y = (y <= 0 ? DEFAULT_Y_SIZE : y);
 		return new Dimension(x, y);
+	}
+	
+	private int parseLifetime() {
+		int result = parser.getDouble(LIFETIME_EXPR).intValue();
+		return (result <= 0 ? DEFAULT_LIFETIME : result);
 	}
 	//@}
 	

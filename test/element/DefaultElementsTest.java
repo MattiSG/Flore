@@ -29,28 +29,31 @@ public class DefaultElementsTest {
 	public final static String[] PLANTS_IDS = {"rosa", "mimosa", "buddleia", "serrulata"};
 	public final static String[] CREATURES_IDS = {"aphidoidea", "coccinelle", "sphingidae", "papilionidae", "lycaenidae"};	
 
-	private int array = 0,
-				counter = 0;
 	private XMLLoadableElement subject;
 	
 	@Test
 	public void testElements() {
-		try { 
-			for (int i = 0; i < MISSIONS_IDS.length; i++) {
-				subject = new Mission(MISSIONS_IDS[i]);
+		String currentId = "";
+		try {
+			int i;
+			for (i = 0; i < CREATURES_IDS.length; i++) {
+				currentId = CREATURES_IDS[i];
+				subject = new Creature(currentId);
 				runTests();
 			}
-			for (int i = 0; i < PLANTS_IDS.length; i++) {
-				subject = new Plant(PLANTS_IDS[i]);
+			for (i = 0; i < PLANTS_IDS.length; i++) {
+				currentId = PLANTS_IDS[i];
+				subject = new Plant(currentId);
 				runTests();
 			}
-			for (int i = 0; i < CREATURES_IDS.length; i++) {
-				subject = new Creature(CREATURES_IDS[i]);
+			for (i = 0; i < MISSIONS_IDS.length; i++) {
+				currentId = MISSIONS_IDS[i];
+				subject = new Mission(currentId);
 				runTests();
 			}
 		} catch (Exception e) { 
 			e.printStackTrace(); 
-			fail(e.toString()); 
+			fail("Error with element \"" + currentId + "\" : " + e.toString()); 
 		}
 	}
 	

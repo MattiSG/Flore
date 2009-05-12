@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<creature version="0.5" author="devint">
-	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des créatures -->
-	<id>lycaenidae</id> <!--identifiant unique-->
-	<name lang="fr">Argus bleu</name> <!--nom affiché-->
+<creature version="0.51" author="devint">
+
+	<id>lycaenidae</id>
+	<name lang="fr">Argus bleu</name>
 	
 	<description lang="fr">Ce sont des papillons petits et délicats, possédant un corps fragile, avec la face supérieure des ailes souvent d'une couleur bleutée, surtout pour les mâles.</description>
+	
+	<lifetime>8</lifetime>
 	
 	<dimension direction="x">170</dimension>
 	<dimension direction="y">113</dimension>
