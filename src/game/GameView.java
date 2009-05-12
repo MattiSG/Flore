@@ -16,6 +16,8 @@ import java.awt.image.BufferedImage;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentAdapter;
 
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -28,6 +30,7 @@ public class GameView extends JPanel {
     private List<Plant> plantedPlants;
     private Mission          mission;
 	private int              nbInsects = 0;
+    private BufferedImage    cloud;
 
     public GameView(List<Plant> plantedPlants, List<Creature> insects) {
         this.plantedPlants = plantedPlants;
@@ -43,10 +46,8 @@ public class GameView extends JPanel {
     public void setMission(Mission m) {
         mission = m;
         grass = m.getAssets("grass").get(0);
-    }
-
-    public void setHolesNumber(int nb) {
-        holesNumber = nb;
+        cloud = m.getAssets("cloud").get(0);
+        holesNumber = m.holes();
     }
 
     public int getSelectedHoleIndex() {
@@ -120,10 +121,21 @@ public class GameView extends JPanel {
                 p.setX(pos.x);
                 p.setY(pos.y+50);
                 p.paint(g);
+
+                if (p.hasWater()) {
+                    // dessiner le nuage
+                    g.drawImage(cloud, p.getX() - cloud.getWidth() / 2, g2d.getClipBounds().height / 3, null);
+                }
                 
                 /*
                 // insectes
-                if (p.isAdult() && Math.random() > 0.10) {
+                if (p.isEnoughtAdult() && Math.random() > 0.10) {
+                    Map <String, Double> creatures = p.brings();
+
+                    System.out.println("=====>");
+                    for (Map.Entry<String, Double> e : creatures.entrySet())
+                        System.out.println(e.getKey() + " : " + e.getValue());
+
                 	Creature c = p.getCreature();
                 	//Creature c = new Creature("coccinelle");
                 	c.paint(g2d);

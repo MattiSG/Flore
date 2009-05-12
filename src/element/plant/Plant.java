@@ -31,7 +31,6 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 
 	private String BRINGS_EXPR = rootElement() + "/brings";
 
-    private BufferedImage nuage;
     private BufferedImage image;
     private float health = 0;
     private float anim   = 0;
@@ -50,16 +49,15 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     public Plant(String ID, int xx, int yy) {
 		load(ID);
         image = getAssets("flowers").get(0);
-        try {
-			nuage = ImageIO.read(new File("../ressources/elements/defaults/plant/cloud.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
         x = xx;
         y = yy;
 
         setHealth(100.0f);
+    }
+
+    public boolean hasWater() {
+        return water > 0;
     }
 
     public void incrWater() {
@@ -68,6 +66,14 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     
     public void decrWater() {
         --water;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public void setX(int xx) {
@@ -175,6 +181,10 @@ public class Plant extends XMLLoadableElement implements Cloneable {
         return anim == health;
     }
 
+    public boolean isEnoughtAdult() {
+        return (anim / (double)health) >= 0.9;
+    }
+
     public void paint(Graphics g2) {
         Graphics2D g = (Graphics2D) g2;
 
@@ -195,21 +205,17 @@ public class Plant extends XMLLoadableElement implements Cloneable {
                     y - h,
                     x + imw / 2,
                     y,
-
                     0,
                     0,
                     image.getWidth(),
                     (int)((float)image.getHeight() * (anim / 100)),
-
-/*                    rect.width / 2 - imw,
-                    rect.height - h,
-                    imw,
-                    imh,*/
                     null
                    );
 
 
         // quantité d'eau
+        //   A SUPPRIMER DANS LA VERSION FINALE
+        // {
         String msg = "Quantité d'eau : " + water;
         int ww = g.getFontMetrics().stringWidth(msg);
         int hh = g.getFontMetrics().getHeight();
@@ -219,15 +225,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
         // texte
         g.setColor(Color.BLUE);
         g.drawString(msg, x - ww / 2, y);
-        
-        if (water > 0) {
-        	int ch = nuage.getHeight() * imw / nuage.getWidth();
-        	g.drawImage(nuage, x - imw / 2, y - imh * 2, imw, ch, null);
-        }
-
-        if (anim == 100) {
-//            volant.draw(g);
-        }
+        // }
     }
 
     public Object clone() throws CloneNotSupportedException {

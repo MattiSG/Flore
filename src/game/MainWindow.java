@@ -41,11 +41,6 @@ import java.util.LinkedList;
 import java.io.File;
 import java.io.FilenameFilter;
 
-// TODO capturer le temps d'appui sur la touche espace
-//      pour la pluie et ajouter un nuage au dessus de
-//      la plante correspondante durant un certains temps
-//      proportionel au temps d'appui
-
 public class MainWindow extends JFrame {
     // plantes de la mission courante
     private List<Plant>    plants   = new LinkedList<Plant>();
@@ -72,7 +67,7 @@ public class MainWindow extends JFrame {
         // chargement de toutes les missions
         loadMissions();
 
-        // chargement de la premiÃ¨re mission
+        // chargement de la première mission
         loadMission(0);
 
         // changement du type de rendu de la liste pour l'affichage des images
@@ -82,7 +77,7 @@ public class MainWindow extends JFrame {
         // autoriser l'affichage d'un message dans la progress bar
         levelBar.setStringPainted(true);
 
-        // gestion des Ã©vÃ¨nements gauche, droite, haut, bas et entrÃ©e
+        // gestion des événements gauche, droite, haut, bas et entrÃ©e
         seedListView.addKeyListener(new KeyAdapter() {        	
             public void keyPressed(KeyEvent e) {
                 if (KeyEvent.VK_SPACE == e.getKeyCode()) {
@@ -156,18 +151,24 @@ public class MainWindow extends JFrame {
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int nbAdult = 0;
+                boolean hasPlant = false;
 
                 for (Plant p : plantedPlants)
                     if (p != null) {
                         if (p.isAdult())
                             ++nbAdult;
-                        else
+                        else {
+                            if (p.hasWater())
+                                hasPlant = true;
                             p.grow();
+
+                        }
                     }
 
                 levelBar.setValue(nbAdult);
                 
-                gameView.repaint();
+                if (hasPlant)
+                    gameView.repaint();
 
                 if (nbAdult == plantedPlants.size()) { // fini
                     timer.stop();
@@ -185,6 +186,7 @@ public class MainWindow extends JFrame {
                         loadMission(newMission);
                         play(currentMission.description());
                         timer.start();
+                        gameView.repaint();
                     }
                 }
             }
@@ -242,8 +244,6 @@ public class MainWindow extends JFrame {
         } catch (RuntimeException e) {
         	play("Impossible de charger la mission suivante.", true);
         }
-
-        gameView.setHolesNumber(currentMission.holes());
     }
 
     private void loadCurrentPlants() {
