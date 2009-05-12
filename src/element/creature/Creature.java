@@ -11,25 +11,40 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Point;
+import java.awt.Dimension;
 
 import org.w3c.dom.Node;
 
 import element.XMLLoadableElement;
 
 public class Creature extends XMLLoadableElement {
-    private int dir; // type de déplacement (0 à 3 en courbe, 4 à 7 en ligne droite)
-    private float mvtT; 
-    private Point pos, virtualPos; // position de référence et position sur le déplacement en cours
-    private Random random = new Random();
-
+	/**@name	Variables d'unmarshalling*/
+	//@{
 	private final static double PARSER_VERSION = 0.5;
 	private final static String DEFAULT_FOLDER = "../defaults/creature/";
 	private final static String[] ASSETS_NAMES = {"still", "left", "right", "up", "down"};
+	private final static int	DEFAULT_X_SIZE = 100,
+								DEFAULT_Y_SIZE = 100;
 	private final String ROOT = "creature";
-	private String BRINGS_EXPR = rootElement() + "/brings";
+	private String	BRINGS_EXPR = rootElement() + "/brings",
+					DIMENSIONS_X_EXPR = rootElement() + "/dimension[@direction=\"x\"]",
+					DIMENSIONS_Y_EXPR = rootElement() + "/dimension[@direction=\"y\"]";
+	//@}
 	
+	/**@name	Variables membres*/
+	//@{
     private BufferedImage img;
 	private Map<String, Double> brings;
+	private Dimension dimensions;
+	//@}
+	
+	/**@name	Variables d'affichage*/
+	//@{
+	private int dir; // type de déplacement (0 à 3 en courbe, 4 à 7 en ligne droite)
+    private float mvtT; 
+    private Point pos, virtualPos; // position de référence et position sur le déplacement en cours
+    private Random random = new Random();
+	//@}
 	
     public Creature(String ID) {
 		load(ID);
@@ -89,8 +104,13 @@ public class Creature extends XMLLoadableElement {
 		}
 	}
 	
+	public Dimension dimensions() {
+		return dimensions;
+	}
+	
 	protected void parsePrivates() {
 		brings = parseBrings();
+		dimensions = parseDimensions();
 	}
 	
 	private Map<String, Double> parseBrings() {
@@ -100,7 +120,19 @@ public class Creature extends XMLLoadableElement {
 			result.put(node.getTextContent(), new Double(node.getAttributes().getNamedItem("probability").getNodeValue()));
 		return result;
 	}
-
+	
+	private Dimension parseDimensions() {
+		int x = parser.getDouble(DIMENSIONS_X_EXPR).intValue();
+		int y = parser.getDouble(DIMENSIONS_Y_EXPR).intValue();
+		x = (x == 0 ? DEFAULT_X_SIZE : x);
+		y = (y == 0 ? DEFAULT_Y_SIZE : y);
+		return new Dimension(x, y);
+	}
+	//@}
+	
+	
+	/**@name	Animations*/
+	//@{
     /*
      * Calcule le déplacement relatif à la base
      * Le paramètre t est le 'pourcentage' (de 0 à 1) du déplacement

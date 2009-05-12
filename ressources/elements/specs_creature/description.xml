@@ -7,7 +7,7 @@
 	<description lang="fr">Ce fichier sert de specifications pour les fichiers decrivant des creatures.</description>
 	
 	<dimension direction="x">100</dimension>
-	<dimension direction="y">100</dimension>
+	<dimension direction="y">200</dimension>
 	
 	<assets type="standard">
 		<still> <!--insecte immobile-->

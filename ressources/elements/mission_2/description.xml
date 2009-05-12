@@ -36,7 +36,6 @@
 	
 	<plants>
 		<plant id="buddleia">1</plant>
-		<!--<plant id="wisteria">2</plant>-->
 		<plant id="serrulata">2</plant>
 		<plant id="mimosa">3</plant>
 	</plants>
