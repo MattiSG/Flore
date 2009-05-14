@@ -3,7 +3,7 @@
 	<id>rosa</id>
 	<name lang="fr">Rosier</name>
 		
-	<description lang="fr">La rose est très connue pour sa beauté et son parfum unique, qui attire de nombreux insectes. Elle est régulièrement victime d'invasions de pucerons.</description>
+	<description lang="fr">La rose est très connue pour sa beauté et son parfum unique, qui attire de nombreux insectes. Elle est notamment souvent victime d'invasions de pucerons.</description>
 	
 	<water>10</water>
 	<sun>10</sun>
@@ -11,16 +11,17 @@
 	
 	<assets type="standard">
 		<seed>
-			<img width="100" height="100">seed.png</img>
+			<img width="120" height="120">assets/standard/seed.png</img>
+			<img width="120" height="120">assets/standard/seed_2.png</img>
 		</seed>
 		<shaft>
-			<img width="100" height="100">rosa.png</img>
+			<img>assets/standard/blue_rose.png</img>
 		</shaft>
 		<leaves>
-			<img>rosa.png</img>
+			<img>assets/standard/blue_rose.png</img>
 		</leaves>
 		<flowers>
-			<img>rosa.png</img>
+			<img>assets/standard/blue_rose.png</img>
 		</flowers>
 	</assets>
 	

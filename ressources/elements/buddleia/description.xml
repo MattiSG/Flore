@@ -11,16 +11,16 @@
 	
 	<assets type="standard">
 		<seed>
-			<img width="100" height="100">assets/standard/seed.png</img>
+			<img>assets/standard/seed.png</img>
 		</seed>
 		<shaft>
-			<img width="100" height="100">assets/standard/buddleia.png</img>
+			<img>assets/standard/buddleia.png</img>
 		</shaft>
 		<leaves>
-			<img width="100" height="100">assets/standard/buddleia.png</img>
+			<img>assets/standard/buddleia.png</img>
 		</leaves>
 		<flowers>
-			<img width="100" height="100">assets/standard/buddleia.png</img>
+			<img>assets/standard/buddleia.png</img>
 		</flowers>
 	</assets>
 		

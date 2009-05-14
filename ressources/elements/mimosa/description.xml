@@ -5,22 +5,26 @@
 	
 	<description lang="fr">Genre d'arbres de la famille des Mimosaceae ou selon la classification phylogénétique, de la grande famille des Fabaceae et de la sous-famille des Mimosoideae. Il comprend près de 400 espèces.</description>
 	
-	<water>10</water> <!-- quantité d'eau nécessaire -->
-	<sun>10</sun> <!-- quantité de soleil nécessaire -->
-	<time>10</time> <!-- nombre de jours avant la floraison (à voir par rapport au soleil ?) -->
+	<water>10</water>
+	<sun>10</sun>
+	<time>10</time>
 	
 	<assets type="standard">
 		<seed>
-			<img width="100" height="100">seed.png</img>
+			<img width="120" height="120">assets/standard/flower_1.png</img>
 		</seed>
 		<shaft>
-			<img width="100" height="100">plant.png</img>
+			<img>assets/standard/plant.png</img>
 		</shaft>
 		<leaves>
-			<img width="100" height="100">plant.png</img>
+			<img>assets/standard/leaf_1.png</img>
+			<img>assets/standard/leaf_2.png</img>
 		</leaves>
 		<flowers>
-			<img width="100" height="100">plant.png</img>
+			<img>assets/standard/plant.png</img>
+			<img>assets/standard/flower_1.png</img>
+			<img>assets/standard/flower_2.png</img>
+			<img>assets/standard/flower_3.png</img>
 		</flowers>
 	</assets>
 	

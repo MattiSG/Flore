@@ -35,18 +35,17 @@ public class DefaultElementsTest {
 	public void testElements() {
 		String currentId = "";
 		try {
-			int i;
-			for (i = 0; i < CREATURES_IDS.length; i++) {
+			for (int i = 0; i < CREATURES_IDS.length; i++) {
 				currentId = CREATURES_IDS[i];
 				subject = new Creature(currentId);
 				runTests();
 			}
-			for (i = 0; i < PLANTS_IDS.length; i++) {
+			for (int i = 0; i < PLANTS_IDS.length; i++) {
 				currentId = PLANTS_IDS[i];
 				subject = new Plant(currentId);
 				runTests();
 			}
-			for (i = 0; i < MISSIONS_IDS.length; i++) {
+			for (int i = 0; i < MISSIONS_IDS.length; i++) {
 				currentId = MISSIONS_IDS[i];
 				subject = new Mission(currentId);
 				runTests();

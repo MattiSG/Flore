@@ -9,23 +9,23 @@
 
 	<assets type="standard">
 		<still>
-			<img width="40" height="40">assets/standard/puceronhaut1.png</img>
+			<img width="30" height="30">assets/standard/puceronhaut1.png</img>
 		</still>
 		<left>
-			<img width="40" height="40">assets/standard/pucerongauche1.png</img>
-			<img width="40" height="40">assets/standard/pucerongauche2.png</img>
+			<img width="30" height="30">assets/standard/pucerongauche1.png</img>
+			<img width="30" height="30">assets/standard/pucerongauche2.png</img>
 		</left>
 		<right>
-			<img width="40" height="40">assets/standard/pucerondroite1.png</img>
-			<img width="40" height="40">assets/standard/pucerondroite2.png</img>
+			<img width="30" height="30">assets/standard/pucerondroite1.png</img>
+			<img width="30" height="30">assets/standard/pucerondroite2.png</img>
 		</right>
 		<down>
-			<img width="40" height="40">assets/standard/puceronbas2.png</img>
-			<img width="40" height="40">assets/standard/puceronbas2.png</img>
+			<img width="30" height="30">assets/standard/puceronbas2.png</img>
+			<img width="30" height="30">assets/standard/puceronbas2.png</img>
 		</down>
 		<up>
-			<img width="40" height="40">assets/standard/puceronhaut1.png</img>
-			<img width="40" height="40">assets/standard/puceronhaut2.png</img>
+			<img width="30" height="30">assets/standard/puceronhaut1.png</img>
+			<img width="30" height="30">assets/standard/puceronhaut2.png</img>
 		</up>
 	</assets>
 	
