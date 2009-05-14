@@ -304,23 +304,5 @@ public class Creature extends XMLLoadableElement {
         // sauvegarde de l'ancienne position
         pos = newPos;
     }
-/*
-        // calcul du déplacement en cours de la créature
-        Point virtualDisplacement  = calcMvt(mvtT, dir),
-              newVirtualPos        = new Point(pos.x + virtualDisplacement.x, pos.y + virtualDisplacement.y),
-              relativeDisplacement = new Point(newVirtualPos.x - virtualPos.x, newVirtualPos.y - virtualPos.y);
-
-        if(lifetime <= 0)
-        {
-           System.out.println("PENIS");
-        }
-        else
-        {
-            lifetime--;
-
-       }
-
-    }
-    */
 	//@}
 }
