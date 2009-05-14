@@ -43,9 +43,9 @@ public class Creature extends XMLLoadableElement {
 	
 	/**@name	Variables d'affichage*/
 	//@{
-	private int dir; // type de déplacement (0 à 3 en courbe, 4 à 7 en ligne droite)
-    private float mvtT; 
-    private Point pos, virtualPos; // position de référence et position sur le déplacement en cours
+	private int dir;    // type de déplacement (0 à 3 en courbe, 4 à 7 en ligne droite)
+    private float mvtT; // progression sur le déplacement en cours (0 à 1)
+    private Point pos;  // position
     private Random random = new Random();
 	//@}
 	
@@ -55,7 +55,7 @@ public class Creature extends XMLLoadableElement {
 
         // l'insecte doit être placé au hasard sur l'écran, mais aucun accès ici à la taille de l'écran
         // le couple (-1 -1) signifie alors pour la méthode paint qu'il est nécéssaire d'initialiser la position
-        virtualPos = pos = new Point(-1, -1);
+        pos = new Point(-1, -1);
     }
 	
 	/**@name	Getters*/
@@ -152,7 +152,8 @@ public class Creature extends XMLLoadableElement {
      * Le paramètre t est le 'pourcentage' (de 0 à 1) du déplacement
      * dir est la direction (même règles que Creature::dir)
      */
-    private Point calcMvt(float t, int dir) {
+    private Point calcMvt(float t, int dir)
+    {
         float mvtSize = 150;
 
         // virage
@@ -197,9 +198,17 @@ public class Creature extends XMLLoadableElement {
         }
     }
 
+    public void die()
+    {
+        lifetime = 0;
+    }
+
+    /**
+     * Selectionne au hasard un type de déplacement
+     */
     private void randomMvt(int width, int height)
     {
-        // on empêche la créature de sortir de l'écran
+        // on empêche la créature de sortir de l'écran en cherchant un mouvement correct
         boolean isOutside;
         do
         {
@@ -212,64 +221,97 @@ public class Creature extends XMLLoadableElement {
             Point vd = calcMvt(1.337f, dir);
             Point newPos = new Point(pos.x + vd.x, pos.y + vd.y);
 
-            // si cette nouvelle position sors de l'écran
+            // si cette nouvelle position sort de l'écran
             if(newPos.x < 0 || newPos.x > width)
                 isOutside = true;
             if(newPos.y < 0 || newPos.y > height)
                 isOutside = true;
 
-            // on en cherche une autre
+            // sinon on en cherche une autre
         } while (isOutside);
 
         mvtT = 0;
     }
 
-    public void paint(Graphics g) {
-        Rectangle rect = g.getClipBounds();
-
-        // place les creatures au hasard sur l'écran
+    public Point calcDep(Graphics g, Rectangle rect)
+    {
+        // place les creatures au hasard à leur création (mais est fait ici car l'on ne peut connaitre la taille de l'écran dans le construteur)
         if(pos.x == -1 || pos.y == -1)
         {
-            if(random.nextInt(2) == 0)
-                pos.x = -(img.getWidth() - 1);
-            else
-                pos.x = rect.width + img.getWidth() - 1;
-            pos.y = random.nextInt(rect.height);
+            // spawn sur côté gauche ou droit au hasard
+            pos.x = 200; //random.nextInt(2) == 0 ? -(img.getWidth() - 1) : rect.width + img.getWidth() - 1;
+            pos.y = 300; //random.nextInt(rect.height);
 
+            // selectionne un mouvement au hasard
             randomMvt(rect.width, rect.height);
         }
 
-        if(mvtT >= 1)
+        // créature "vivante"
+        if(lifetime > 0)
         {
-            // on déplace pour de "vrai" la créature
-            Point virtualDisplacement = calcMvt(1, dir);
-            pos.x += virtualDisplacement.x;
-            pos.y += virtualDisplacement.y;
+            // crève !§§
+            //lifetime--;
 
-            randomMvt(rect.width, rect.height);
+            // fin du déplacement ? on en prépare un nouveau
+            if(mvtT >= 1)
+                randomMvt(rect.width, rect.height);
+
+            Point oldMvt = calcMvt(mvtT, dir);
+
+            // incrémentation du déplacement
+            mvtT += 0.04; 
+
+            Point newMvt = calcMvt(mvtT, dir);
+ 
+            return new Point(newMvt.x - oldMvt.x, newMvt.y - oldMvt.y);
         }
+        // créature "morte"
+        else
+        {
+            // quelle moitié de l'écran ?
+            return new Point(pos.x < rect.width / 2 ? -10 : 10, 0);
+        }
+    }
 
-        // incrémentation du déplacement
-        mvtT += 0.04;
+    public void paint(Graphics g)
+    {
+        Rectangle rect = g.getClipBounds();
 
+        // calcule la nouvelle position
+        Point dep    = calcDep(g, rect),
+              newPos = new Point(pos.x + dep.x, pos.y + dep.y);
+
+        // affichage
+        g.drawImage(img, newPos.x - img.getWidth() / 2, newPos.y - img.getHeight() / 2, null);
+
+        // selection de l'image en fonction de la direction (gauche, haut, bas, droite, aucun déplacement)
+        if(Math.abs(dep.x) > Math.abs(dep.y))      // deplacement horizontal
+            img = dep.x > 0 ? rightImages().get(0) : leftImages().get(0);
+        else if(Math.abs(dep.y) > Math.abs(dep.x)) // deplacement vertical
+            img = dep.y > 0 ? downImages().get(0) : upImages().get(0);
+        else                                       // aucun déplacement
+            img = stillImages().get(0);
+
+        // sauvegarde de l'ancienne position
+        pos = newPos;
+    }
+/*
         // calcul du déplacement en cours de la créature
         Point virtualDisplacement  = calcMvt(mvtT, dir),
               newVirtualPos        = new Point(pos.x + virtualDisplacement.x, pos.y + virtualDisplacement.y),
               relativeDisplacement = new Point(newVirtualPos.x - virtualPos.x, newVirtualPos.y - virtualPos.y);
 
-        // selection de l'image en fonction de la direction (gauche, haut, bas, droite, aucun déplacement)
-        if(Math.abs(relativeDisplacement.x) > Math.abs(relativeDisplacement.y)) // deplacement horizontal
-            img = relativeDisplacement.x > 0 ? rightImages().get(0) : leftImages().get(0);
-        else if(Math.abs(relativeDisplacement.y) > Math.abs(relativeDisplacement.x)) // deplacement vertical
-            img = relativeDisplacement.y > 0 ? downImages().get(0) : upImages().get(0);
-        else // aucun déplacement
-            img = stillImages().get(0);
+        if(lifetime <= 0)
+        {
+           System.out.println("PENIS");
+        }
+        else
+        {
+            lifetime--;
 
-        // affichage
-        g.drawImage(img, virtualPos.x - img.getWidth() / 2, virtualPos.y - img.getHeight() / 2, null);
+       }
 
-        // sauvegarde de l'ancienne position
-        virtualPos = newVirtualPos;
     }
+    */
 	//@}
 }
