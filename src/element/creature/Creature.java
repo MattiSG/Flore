@@ -39,7 +39,8 @@ public class Creature extends XMLLoadableElement {
 	private Map<String, Double> brings;
 	private Dimension dimensions;
 	private int lifetime;
-    private boolean dead = false;
+    private boolean dead = false, outside = false;
+    long timeBorn = System.currentTimeMillis();
 	//@}
 	
 	/**@name	Variables d'affichage*/
@@ -120,7 +121,7 @@ public class Creature extends XMLLoadableElement {
 	protected void parsePrivates() {
 		brings = parseBrings();
 		dimensions = parseDimensions();
-		lifetime = parseLifetime();
+		lifetime = parseLifetime() * 1000;
 	}
 	
 	private Map<String, Double> parseBrings() {
@@ -201,12 +202,12 @@ public class Creature extends XMLLoadableElement {
 
     public void die()
     {
-        lifetime = 0;
+        dead = true;
     }
 
     public boolean isDead()
     {
-        return dead;
+        return dead && outside;
     }
 
     /**
@@ -253,10 +254,14 @@ public class Creature extends XMLLoadableElement {
         }
 
         // créature "vivante"
-        if(lifetime > 0)
+        if(dead == false)
         {
+            long timeCurrent = System.currentTimeMillis();
+            int age = (int)(timeCurrent - timeBorn);
+
             // crève !§§
-            //lifetime--;
+            if(lifetime > age)
+                dead = true;
 
             // fin du déplacement ? on en prépare un nouveau
             if(mvtT >= 1)
@@ -275,7 +280,7 @@ public class Creature extends XMLLoadableElement {
         else
         {
             if(pos.x + img.getWidth() < 0 || pos.x - img.getWidth() > rect.width)
-                dead = true;
+                outside = true;
 
             // quelle moitié de l'écran ?
             return new Point(pos.x < rect.width / 2 ? -10 : 10, 0);
