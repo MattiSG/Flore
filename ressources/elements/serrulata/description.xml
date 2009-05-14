@@ -27,6 +27,6 @@
 	<brings>
 		<creature probability="0.6">papilionidae</creature>
 		<creature probability="0.6">lycaenidae</creature>
-		<creature probability="0.3">sphingidae</creature>
+		<creature probability="0.5">sphingidae</creature>
 	</brings>
 </plant>

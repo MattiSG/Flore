@@ -36,7 +36,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 	
 	/**@name	Variables membres*/
 	//@{
-    private final static double	ADULT_PERCENT = 0.1;
+    private final static double	ADULT_PERCENT = 0.9;
     private float health = 0;
 	private int	water = 0,
 				neededSun,
