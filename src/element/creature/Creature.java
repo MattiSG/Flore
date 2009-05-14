@@ -39,6 +39,7 @@ public class Creature extends XMLLoadableElement {
 	private Map<String, Double> brings;
 	private Dimension dimensions;
 	private int lifetime;
+    private boolean dead = false;
 	//@}
 	
 	/**@name	Variables d'affichage*/
@@ -203,6 +204,11 @@ public class Creature extends XMLLoadableElement {
         lifetime = 0;
     }
 
+    public boolean isDead()
+    {
+        return dead;
+    }
+
     /**
      * Selectionne au hasard un type de déplacement
      */
@@ -268,6 +274,9 @@ public class Creature extends XMLLoadableElement {
         // créature "morte"
         else
         {
+            if(pos.x + img.getWidth() < 0 || pos.x - img.getWidth() > rect.width)
+                dead = true;
+
             // quelle moitié de l'écran ?
             return new Point(pos.x < rect.width / 2 ? -10 : 10, 0);
         }
