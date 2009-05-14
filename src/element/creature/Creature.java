@@ -121,7 +121,7 @@ public class Creature extends XMLLoadableElement {
 	protected void parsePrivates() {
 		brings = parseBrings();
 		dimensions = parseDimensions();
-		lifetime = parseLifetime() * 1000;
+		lifetime = parseLifetime();
 	}
 	
 	private Map<String, Double> parseBrings() {
