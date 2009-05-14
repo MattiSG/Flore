@@ -246,8 +246,8 @@ public class Creature extends XMLLoadableElement {
         if(pos.x == -1 || pos.y == -1)
         {
             // spawn sur côté gauche ou droit au hasard
-            pos.x = 200; //random.nextInt(2) == 0 ? -(img.getWidth() - 1) : rect.width + img.getWidth() - 1;
-            pos.y = 300; //random.nextInt(rect.height);
+            pos.x = random.nextInt(2) == 0 ? -(img.getWidth() - 1) : rect.width + img.getWidth() - 1;
+            pos.y = random.nextInt(rect.height);
 
             // selectionne un mouvement au hasard
             randomMvt(rect.width, rect.height);
