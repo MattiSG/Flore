@@ -257,7 +257,7 @@ public class Creature extends XMLLoadableElement {
         if(dead == false)
         {
             long timeCurrent = System.currentTimeMillis();
-            int age = (int)(timeCurrent - timeBorn);
+            int age = (int)((timeCurrent - timeBorn) / 1000);
 
             // crève !§§
             if(lifetime > age)
