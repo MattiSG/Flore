@@ -43,7 +43,8 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 					neededTime;
 	private Map<String, Double> brings;
 
-    private final static double ADULT_PERCENT = 0.1;
+    private final static double	ADULT_PERCENT = 0.1,
+								SCREEN_RATIO = 1.0 / 3.0;
 
     public Plant(String ID) {
         this(ID, 512, 777);
@@ -193,14 +194,18 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 
         Rectangle rect = g.getClipBounds();
 
-        // get the ratio for perfect plant size (1 / 3 of screen)
-        float ratio = (float)rect.width / 3 / image.getWidth();
+        // get the ratio for perfect plant size
+		double	width = image.getWidth(),
+			height = image.getHeight();
+		double	xRatio = (double) rect.width * SCREEN_RATIO / width,
+				yRatio = (double) rect.height * SCREEN_RATIO / height;
+        double ratio = (xRatio > yRatio ? yRatio : xRatio);
 
-        int imw = (int)(ratio * (float)image.getWidth()),
-            imh = (int)(ratio * (float)image.getHeight());
+        int imw = (int)(ratio * width),
+            imh = (int)(ratio * height);
 
         // how much pixels of the plant draw
-        int h = (int)((float)imh * (anim / 100));
+        int h = (int)((double)imh * (anim / 100));
 
         // drawImage(Image img, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, ImageObserver observer) 
         g.drawImage(image,
@@ -211,7 +216,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
                     0,
                     0,
                     image.getWidth(),
-                    (int)((float)image.getHeight() * (anim / 100)),
+                    (int)(height * (anim / 100)),
                     null
                    );
 
