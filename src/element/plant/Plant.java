@@ -25,27 +25,35 @@ import element.XMLLoadableElement;
 import element.creature.Creature;
 
 public class Plant extends XMLLoadableElement implements Cloneable {
+	/**@name	Variables d'unmarshalling*/
+	//@{
 	private final static double PARSER_VERSION = 0.4;
 	private final static String DEFAULT_FOLDER = "../defaults/plant/";
 	private final static String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
 	private final static String ROOT = "plant";
-
 	private String BRINGS_EXPR = rootElement() + "/brings";
-
-    private BufferedImage image;
+	//@}
+	
+	/**@name	Variables membres*/
+	//@{
+    private final static double	ADULT_PERCENT = 0.1;
     private float health = 0;
+	private int	water = 0,
+				neededSun,
+				neededWater,
+				neededTime;
+	private Map<String, Double> brings;
+	//@}
+	
+	/**@name	Variables d'affichage*/
+	//@{
+    private BufferedImage image;
     private float anim   = 0;
     private int		x     = 0,
-					y     = 0,
-                    water = 0,
-					neededSun,
-					neededWater,
-					neededTime;
-	private Map<String, Double> brings;
-
-    private final static double	ADULT_PERCENT = 0.1,
-								SCREEN_RATIO = 1.0 / 3.0;
-
+					y     = 0;
+	private final static double	SCREEN_RATIO = 1.0 / 2.5;
+	//@}
+	
     public Plant(String ID) {
         this(ID, 512, 777);
     }
@@ -69,7 +77,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     }
     
     public void decrWater() {
-        --water;
+        water -= neededWater();
     }
 
     public int getX() {
@@ -170,15 +178,9 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 
     public void grow() {
     	if (water > 0) {
-	        if (anim < health) {
-	            anim += health > anim ? 1 : -1;
-	            --water;
-	        }
-	        if (anim > health) {
-	            anim = health;
-	            --water;
-	        }
-    	}
+			anim += 10 / neededTime();
+			decrWater();
+		}
     }
 
     public boolean isAdult() {
