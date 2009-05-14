@@ -152,17 +152,14 @@ public class MainWindow extends JFrame {
         run();
     }
 
-    // TODO à revoir !!!!!!
-    // pas sûr que ça fonctionne xD
-    @SuppressWarnings("unchecked")
-    private int getNbInsects() {
+    private boolean checkInsects() {
         Map<String,Integer> ig = new HashMap<String,Integer>();
         for (Creature c : insectsOnGame) {
             if (c.isOnScreen()) {
-                if (ig.containsKey(c.name())) {
-                    ig.put(c.name(), ig.get(c.name()) + 1);
+                if (ig.containsKey(c.ID())) {
+                    ig.put(c.ID(), ig.get(c.ID()) + 1);
                 } else {
-                    ig.put(c.name(), 1);
+                    ig.put(c.ID(), 1);
                 }
             }
         }
@@ -170,15 +167,17 @@ public class MainWindow extends JFrame {
         int nbInsects = 0;
         boolean noGood = true;
         for (Map.Entry<String, Integer> e : insects.entrySet()) {
-            if (ig.containsKey(e.getKey()) && ig.get(e.getKey()) >= e.getValue()) {
-                ++nbInsects;
+            if (ig.containsKey(e.getKey())) {
+                nbInsects += ig.get(e.getKey());
+                if (ig.get(e.getKey()) < e.getValue())
+                    noGood = false;
             } else 
                 noGood = false;
         }
 
-        System.out.println("" + noGood + " => " + nbInsects);
+        levelBar.setValue(nbInsects);
 
-        return nbInsects;
+        return noGood;
     }
 
     private void run() {
@@ -193,11 +192,8 @@ public class MainWindow extends JFrame {
                 
                 gameView.repaint();
 
-                int nbInsectsValid = getNbInsects();
-                levelBar.setValue(nbInsectsValid);
 
-                /*
-                if (nbInsectsValid >= insects.size()) { // fini
+                if (checkInsects()) {
                     timer.stop();
                     play("Tu as gagné cette mission !", true);
 
@@ -213,7 +209,6 @@ public class MainWindow extends JFrame {
                         timer.start();
                     }
                 }
-                */
             }
         };
         timer = new Timer(delay, taskPerformer);

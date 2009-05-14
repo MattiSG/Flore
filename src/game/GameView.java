@@ -111,6 +111,8 @@ public class GameView extends JPanel {
     }
 
     public void setMission(Mission m) {
+        insects.clear();
+
         mission = m;
 
         grass = m.getAssets("grass").get(0);
