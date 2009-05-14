@@ -12,10 +12,7 @@ import test.element.DefaultElementsTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	XMLParserTest.class,
-	PlantTest.class,
-	CreatureTest.class,
-	MissionTest.class
+	DefaultElementsTest.class
 })
 
-public class RunAndPray {}
+public class ExtendedTests {}

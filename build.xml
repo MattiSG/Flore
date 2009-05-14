@@ -13,6 +13,7 @@
   <property name="file.build" value="build.xml"/>
   <property name="class.main" value="game.Flore"/>
   <property name="class.test" value="test.RunAndPray"/>
+  <property name="class.test.extended" value="test.ExtendedTests"/>
   <property name="lib.vox" value="${dir.lib}/si_vox.jar"/>
   <property name="lib.json" value="${dir.lib}/json.jar"/>
   <property name="lib.junit" value="${dir.lib}/junit-4.5.jar"/>
@@ -67,8 +68,20 @@
       </classpath>
     </junit>
   </target>
+  
+    <target name="junit_extended" depends="junit" description="Execute extended tests">
+    <junit fork="yes" haltonfailure="yes">
+      <jvmarg value="-Duser.dir=${dir.bin}"/>
+      <formatter type="plain" usefile="false"/>
+      <test name="${class.test.extended}"/>
+      <classpath>
+        <pathelement location="${dir.bin}"/>
+        <pathelement location="${lib.junit}"/>
+      </classpath>
+    </junit>
+  </target>
 
-  <target name="install" depends="jar,jar_tests,junit,doc" description="Creer le repertoire dist, inclure les jars et la doc si tout s'est bien passe">
+  <target name="install" depends="jar,jar_tests,junit_extended,doc" description="Creer le repertoire dist, inclure les jars et la doc si tout s'est bien passe">
     <mkdir dir="${dir.tmp}"/>
     <mkdir dir="${dir.tmp}/config"/>
     <copy file="${file.build}" todir="${dir.tmp}"/>
