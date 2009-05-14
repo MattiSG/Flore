@@ -260,7 +260,7 @@ public class Creature extends XMLLoadableElement {
             int age = (int)((timeCurrent - timeBorn) / 1000);
 
             // crève !§§
-            if(lifetime > age)
+            if(lifetime < age)
                 dead = true;
 
             // fin du déplacement ? on en prépare un nouveau
