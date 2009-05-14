@@ -39,7 +39,7 @@ public class Creature extends XMLLoadableElement {
 	private Map<String, Double> brings;
 	private Dimension dimensions;
 	private int lifetime;
-    private boolean dead = false, outside = false;
+    private boolean dead = false, outside = true;
     long timeBorn = System.currentTimeMillis();
 	//@}
 	
@@ -197,6 +197,11 @@ public class Creature extends XMLLoadableElement {
         return dead && outside;
     }
 
+    public boolean isOnScreen()
+    {
+        return !outside;
+    }
+
     /**
      * Selectionne au hasard un type de déplacement
      */
@@ -266,9 +271,6 @@ public class Creature extends XMLLoadableElement {
         // créature "morte"
         else
         {
-            if(pos.x + img.getWidth() < 0 || pos.x - img.getWidth() > rect.width)
-                outside = true;
-
             // quelle moitié de l'écran ?
             return new Point(pos.x < rect.width / 2 ? -10 : 10, 0);
         }
@@ -286,13 +288,25 @@ public class Creature extends XMLLoadableElement {
         g.drawImage(img, newPos.x - img.getWidth() / 2, newPos.y - img.getHeight() / 2, null);
 
         // selection de l'image en fonction de la direction (gauche, haut, bas, droite, aucun déplacement)
-        if(Math.abs(dep.x) > Math.abs(dep.y))      // deplacement horizontal
+        if (Math.abs(dep.x) > Math.abs(dep.y))      // deplacement horizontal
             img = dep.x > 0 ? rightImages().get(0) : leftImages().get(0);
-        else if(Math.abs(dep.y) > Math.abs(dep.x)) // deplacement vertical
+        else if (Math.abs(dep.y) > Math.abs(dep.x)) // deplacement vertical
             img = dep.y > 0 ? downImages().get(0) : upImages().get(0);
         else                                       // aucun déplacement
             img = stillImages().get(0);
 
+        if (pos.x - img.getWidth() / 2 < 0 ||
+                pos.y - img.getHeight() / 2 < 0 ||
+                pos.x + img.getWidth() / 2 > rect.width ||
+                pos.y + img.getHeight() / 2 > rect.height)
+            outside = true;
+        else
+            outside = false;
+
+        if (pos.x + img.getWidth() < 0 || pos.x - img.getWidth() > rect.width)
+            outside = true;
+
+        
         // sauvegarde de l'ancienne position
         pos = newPos;
     }
