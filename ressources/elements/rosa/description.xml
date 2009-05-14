@@ -17,10 +17,10 @@
 			<img width="100" height="100">rosa.png</img>
 		</shaft>
 		<leaves>
-			<img width="100" height="100">rosa.png</img>
+			<img>rosa.png</img>
 		</leaves>
 		<flowers>
-			<img width="100" height="100">rosa.png</img>
+			<img>rosa.png</img>
 		</flowers>
 	</assets>
 	

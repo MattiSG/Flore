@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<creature version="0.51" author="devint">
+<creature version="0.6" author="devint">
 
 	<id>lycaenidae</id>
 	<name lang="fr">Argus bleu</name>
@@ -13,19 +13,19 @@
 	
 	<assets type="standard">
 		<still>
-			<img>assets/standard/immobile.png</img>
+			<img width="80" height="80">assets/standard/immobile.png</img>
 		</still>
 		<left>
-			<img>assets/standard/gauche.png</img>
+			<img width="80" height="80">assets/standard/gauche.png</img>
 		</left>
 		<right>
-			<img>assets/standard/droite.png</img>
+			<img width="80" height="80">assets/standard/droite.png</img>
 		</right>
 		<down>
-			<img>assets/standard/bas.png</img>
+			<img width="80" height="80">assets/standard/bas.png</img>
 		</down>
 		<up>
-			<img>assets/standard/haut.png</img>
+			<img width="80" height="80">assets/standard/haut.png</img>
 		</up>
 	</assets>
 	

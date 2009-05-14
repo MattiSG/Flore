@@ -143,4 +143,23 @@ public class XMLParser {
 		}
 		return result;
 	}
+	
+	/**Returns the result of the evaluation of an Xpath query as a map of Strings to lists of Nodes.
+	 *An entry in the map will have its key be the tag of a node and its value be a list of all nodes inside it.
+	 *@param	query	an Xpath expression targeting one node whose children will be used as keys for the map (as opposed to the children themselves)
+	 *@see	getValues
+	 *@throws	RuntimeException	if one of the nodes from the query doesn't have children.
+	 */
+	public Map<String, List<Node>> getNodesListsMap(String query) {
+		Map<String, List<Node>> result = new HashMap<String, List<Node>>();
+		List<Node> keys = getNodes(query + "/*");
+		
+		for (Node key : keys) {
+			if (! key.hasChildNodes())
+				throw new RuntimeException("The node \"" + key.getNodeName() + "\" has no children !");
+			
+			result.put(key.getNodeName(), getNodes(query + "/" + key.getNodeName() + "/*"));
+		}
+		return result;
+	}
 }

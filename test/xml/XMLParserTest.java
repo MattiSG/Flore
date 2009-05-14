@@ -14,8 +14,12 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
 import java.io.File;
+
+import org.w3c.dom.Node;
 
 import xml.XMLParser;
 import test.element.XMLLoadableElementTest;
@@ -77,7 +81,6 @@ public class XMLParserTest {
 	public void checkList(List<String> list) {
 		assertFalse(list.isEmpty());
 		for (String s : list) {
-//			System.out.println("\"" + s + "\"");
 			assertNotNull(s);
 			assertFalse("Parsed string is empty !", s.length() == 0);
 		}
@@ -94,5 +97,22 @@ public class XMLParserTest {
 		assertFalse("getListsMap returned an empty map for the Xpath expression \"" + EXPR_LISTSMAP_TEST + "\" !", map.isEmpty());
 		for (List<String> list : map.values())
 			checkList(list);
+	}
+	
+	@Test
+	public void nodesListsMapParsingTest() {
+		Map<String, List<Node>> nodesMap = subject.getNodesListsMap(EXPR_LISTSMAP_TEST);
+		Map<String, List<String>> stringsMap = new HashMap<String, List<String>>();
+
+		for (Map.Entry<String, List<Node>> entry : nodesMap.entrySet()) {
+			List<Node> nodes = entry.getValue();
+			List<String> strings = new ArrayList(nodes.size());
+			for (Node node : nodes)
+				strings.add(node.getTextContent());
+			stringsMap.put(entry.getKey(), strings);
+		}
+		
+		Map<String, List<String>> expectedStringsMap = subject.getListsMap(EXPR_LISTSMAP_TEST);
+		assertEquals(expectedStringsMap, stringsMap);
 	}
 }

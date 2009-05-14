@@ -20,7 +20,7 @@ import element.XMLLoadableElement;
 public class Creature extends XMLLoadableElement {
 	/**@name	Variables d'unmarshalling*/
 	//@{
-	private final static double PARSER_VERSION = 0.51;
+	private final static double PARSER_VERSION = 0.6;
 	private final static String DEFAULT_FOLDER = "../defaults/creature/";
 	private final static String[] ASSETS_NAMES = {"still", "left", "right", "up", "down"};
 	private final static int	DEFAULT_X_SIZE = 100,
@@ -110,17 +110,12 @@ public class Creature extends XMLLoadableElement {
 		}
 	}
 	
-	public Dimension dimensions() {
-		return dimensions;
-	}
-	
 	public int lifetime() {
 		return lifetime;
 	}
 	
 	protected void parsePrivates() {
 		brings = parseBrings();
-		dimensions = parseDimensions();
 		lifetime = parseLifetime();
 	}
 	
@@ -130,14 +125,6 @@ public class Creature extends XMLLoadableElement {
 		for (Node node : bringsNodes)
 			result.put(node.getTextContent(), new Double(node.getAttributes().getNamedItem("probability").getNodeValue()));
 		return result;
-	}
-	
-	private Dimension parseDimensions() {
-		int x = parser.getDouble(DIMENSIONS_X_EXPR).intValue();
-		int y = parser.getDouble(DIMENSIONS_Y_EXPR).intValue();
-		x = (x <= 0 ? DEFAULT_X_SIZE : x);
-		y = (y <= 0 ? DEFAULT_Y_SIZE : y);
-		return new Dimension(x, y);
 	}
 	
 	private int parseLifetime() {

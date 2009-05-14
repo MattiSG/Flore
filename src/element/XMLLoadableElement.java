@@ -8,9 +8,14 @@ import java.util.ArrayList;
 
 import java.io.File;
 import java.net.URI;
+import org.w3c.dom.Node;
+import org.w3c.dom.NamedNodeMap;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.Dimension;
 
 import xml.XMLParser;
 
@@ -36,11 +41,14 @@ public abstract class XMLLoadableElement {
 	 *They represent the common data shared by all game elements represented by XML files.
 	 */
 	//@{
-	private final String EXPR_VERSION = rootElement() + "/id/../@version";
-	private final String EXPR_ID = rootElement() + "/id";
-	private final String EXPR_NAME = rootElement() + "/name[@lang='fr']";
-	private final String EXPR_ASSETS = rootElement() + "/assets[@type='standard']";
-	private final String EXPR_DESCRIPTION = rootElement() + "/description";
+	private final String	EXPR_VERSION = rootElement() + "/id/../@version",
+							EXPR_ID = rootElement() + "/id",
+							EXPR_NAME = rootElement() + "/name[@lang='fr']",
+							EXPR_ASSETS = rootElement() + "/assets[@type='standard']",
+							EXPR_DESCRIPTION = rootElement() + "/description",
+							WIDTH_ATTRIBUTE = "width",
+							HEIGHT_ATTRIBUTE = "height";
+						
 	//@}
 	
 	/**@name	Getters*/
@@ -92,47 +100,93 @@ public abstract class XMLLoadableElement {
 	/**@name	Assets (images) management*/
 	//@{
 	protected Map<String, List<BufferedImage>> loadAssets(String query) {
-		Map<String, List<String>> map = parser.getListsMap(query);
+		Map<String, List<Node>> map = parser.getNodesListsMap(query);
 		Map<String, List<BufferedImage>> assets = new HashMap<String, List<BufferedImage>>();
 		for (String key : map.keySet()) {
-			List<String> imagesPaths = map.get(key);
-			List<BufferedImage> images;
+			List<Node> imagesNodes = map.get(key);
+			List<String> imagesPaths = new ArrayList<String>(imagesNodes.size());
+			List<Dimension> dimensions = new ArrayList<Dimension>(imagesNodes.size());
+			for (Node node : imagesNodes) {
+				int width, height;
+				try {
+					width = new Integer(node.getAttributes().getNamedItem(WIDTH_ATTRIBUTE).getNodeValue());
+					height = new Integer(node.getAttributes().getNamedItem(HEIGHT_ATTRIBUTE).getNodeValue());
+				} catch (Exception e) {
+					width = height = 0;
+				}
+				dimensions.add(new Dimension(width, height));
+				imagesPaths.add(node.getTextContent());
+			}
+			
+			List<BufferedImage> images = new ArrayList<BufferedImage>(1);
 			try {
 				images = loadImages(imagesPaths);
 			} catch (RuntimeException e) {
-				imagesPaths.clear();
 				URI defaultImage = defaultFolder().resolve(key + ".png");
-				imagesPaths.add(defaultImage.toString());
-				images = loadImages(imagesPaths);
+				images.add(loadImage(defaultImage.toString()));
 			}
 			
 			if (images.isEmpty())
 				throw new RuntimeException("Erreur à l'initialisation de l'élément " + ID() + " (\"" + name() + "\") : aucune image n'a pu être chargée !\nClé recherchée : " + key);
+			
+			for (int i = 0; i < images.size(); i++) {
+				Dimension dim = dimensions.get(i);
+				BufferedImage image = images.get(i);
+				if (dim.getWidth() <= 0 || dim.getHeight() <= 0)
+					dim = new Dimension(image.getWidth(), image.getHeight());
+				images.set(i, resize(image, dim));
+			}
 			
 			assets.put(key, images);
 		}
 		return assets;
 	}
 	
-	/**Returns a list of images from a list of their paths, relative to the XML document of this element.
+	/**Resizes the given image to the given dimensions.
+	 */
+	private BufferedImage resize(BufferedImage image, Dimension dimensions) {
+//		AffineTransform t = new AffineTransform();
+//        t.scale(dimensions.getWidth() / image.getWidth(), dimensions.getHeight() / image.getHeight());
+//        AffineTransformOp op = new AffineTransformOp(t, AffineTransformOp.TYPE_BILINEAR);
+//		java.awt.GraphicsEnvironment ge = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
+//		java.awt.GraphicsDevice gs = ge.getDefaultScreenDevice();
+//		java.awt.GraphicsConfiguration gc = gs.getDefaultConfiguration();
+//		BufferedImage result = gc.createCompatibleImage((int) dimensions.getWidth(), (int) dimensions.getHeight(), java.awt.Transparency.TRANSLUCENT);
+//        return op.filter(image, result);
+		java.awt.GraphicsEnvironment ge = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
+		java.awt.GraphicsDevice gs = ge.getDefaultScreenDevice();
+		java.awt.GraphicsConfiguration gc = gs.getDefaultConfiguration();
+		
+//		double ratio = image.getWidth() / image.getHeight();
+		BufferedImage result = gc.createCompatibleImage((int) dimensions.getWidth(), (int) dimensions.getHeight(), java.awt.Transparency.TRANSLUCENT);
+		java.awt.Graphics2D g = result.createGraphics();
+		g.drawImage(image, 0, 0, (int) dimensions.getWidth(), (int) (dimensions.getHeight()), null);
+		g.dispose();
+		return result;
+	}
+	
+	/**Returns a list of buffered images from a list of their paths, relative to the XML document of this element.
 	 */
 	public List<BufferedImage> loadImages(List<String> paths) {
 		List<BufferedImage> result = new ArrayList<BufferedImage>(paths.size());
-		for (String path : paths) {
-			URI imageURI = parser.getDocumentURI();
-			try {
-				imageURI = imageURI.normalize().resolve(new URI(path));
-				File image = new File(imageURI);
-				if (! image.exists())
-					throw new java.io.IOException();
-				result.add(ImageIO.read(image));
-			} catch(java.io.IOException e) {
-				throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + imageURI);
-			} catch(java.net.URISyntaxException e) {
-				throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + imageURI);
-			}
-		}
+		for (String path : paths)
+			result.add(loadImage(path));
 		return result;
+	}
+	
+	private BufferedImage loadImage(String path) {
+		URI imageURI = parser.getDocumentURI();
+		try {
+			imageURI = imageURI.normalize().resolve(new URI(path));
+			File image = new File(imageURI);
+			if (! image.exists())
+				throw new java.io.IOException();
+			return ImageIO.read(image);
+		} catch(java.io.IOException e) {
+			throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + imageURI);
+		} catch(java.net.URISyntaxException e) {
+			throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + imageURI);
+		}
 	}
 	
 	/**Tells whether the given String is a valid key for an asset or not.

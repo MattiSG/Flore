@@ -58,6 +58,7 @@ public abstract class XMLLoadableElementTest {
 		for (String key : subject.getAssetsNames()) {
 			assertNotNull("The assets list \"" + key + "\" was null.", subject.getAssets(key));
 			assertFalse("The assets list \"" + key + "\" was empty.", subject.getAssets(key).isEmpty());
+			assertFalse("The assets list \"" + key + "\" contains a null value.", subject.getAssets(key).contains(null));
 		}
 	}
 	
