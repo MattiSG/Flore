@@ -43,6 +43,8 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 					neededTime;
 	private Map<String, Double> brings;
 
+    private final static double ADULT_PERCENT = 0.1;
+
     public Plant(String ID) {
         this(ID, 512, 777);
     }
@@ -183,7 +185,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     }
 
     public boolean isEnoughtAdult() {
-        return (anim / (double)health) >= 0.9;
+        return (anim / (double)health) >= ADULT_PERCENT;
     }
 
     public void paint(Graphics g2) {
@@ -229,7 +231,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
         // }
     }
 
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public Plant clone() throws CloneNotSupportedException {
+        return (Plant) super.clone();
     }
 }

@@ -246,17 +246,17 @@ public class Creature extends XMLLoadableElement {
         }
 
         // créature "vivante"
-        if(dead == false)
+        if (dead == false)
         {
             long timeCurrent = System.currentTimeMillis();
             int age = (int)((timeCurrent - timeBorn) / 1000);
 
             // crève !§§
-            if(lifetime < age)
+            if (lifetime < age)
                 dead = true;
 
             // fin du déplacement ? on en prépare un nouveau
-            if(mvtT >= 1)
+            if (mvtT >= 1)
                 randomMvt(rect.width, rect.height);
 
             Point oldMvt = calcMvt(mvtT, dir);
@@ -284,9 +284,6 @@ public class Creature extends XMLLoadableElement {
         Point dep    = calcDep(g, rect),
               newPos = new Point(pos.x + dep.x, pos.y + dep.y);
 
-        // affichage
-        g.drawImage(img, newPos.x - img.getWidth() / 2, newPos.y - img.getHeight() / 2, null);
-
         // selection de l'image en fonction de la direction (gauche, haut, bas, droite, aucun déplacement)
         if (Math.abs(dep.x) > Math.abs(dep.y))      // deplacement horizontal
             img = dep.x > 0 ? rightImages().get(0) : leftImages().get(0);
@@ -306,6 +303,8 @@ public class Creature extends XMLLoadableElement {
         if (pos.x + img.getWidth() < 0 || pos.x - img.getWidth() > rect.width)
             outside = true;
 
+        // affichage
+        g.drawImage(img, newPos.x - img.getWidth() / 2, newPos.y - img.getHeight() / 2, null);
         
         // sauvegarde de l'ancienne position
         pos = newPos;

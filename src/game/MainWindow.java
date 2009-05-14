@@ -33,6 +33,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -42,26 +43,28 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 public class MainWindow extends JFrame {
-    // plantes de la mission courante
-    private List<Plant>    plants   = new LinkedList<Plant>();
-    // insectes de la mission courante
-    private List<Creature> insects  = new LinkedList<Creature>();
     // listes de toutes les missions
-    private List<Mission>  missions = new LinkedList<Mission>();
-
+    private List<Mission>   missions = new LinkedList<Mission>();
+    // plantes disponibles pour la mission courante
+    private List<Plant>     plants   = new LinkedList<Plant>();
+    // insectes nécessaires pour valider la mission courante
+    private Map<String,Integer> insects  = new HashMap<String,Integer>();
     // plantes en terre
-    private ArrayList<Plant> plantedPlants = new ArrayList<Plant>();
+    private List<Plant> plantedPlants = new ArrayList<Plant>();
     // mission courante
     private Mission          currentMission;
-    // timer pour la gestion des plantes
+    // timer pour la boucle du temps
     private Timer            timer;
 
     private JLabel           statusBar     = new JLabel("Initialisation");
     private JProgressBar     levelBar      = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
     private DefaultListModel seedList      = new DefaultListModel();
     private JList            seedListView  = new JList(seedList);
-    private GameView         gameView      = new GameView(plantedPlants, insects);
+    private GameView         gameView      = new GameView(plantedPlants);
     private SIVOXDevint      player        = new SIVOXDevint();
+
+    // créatures apparus lors de la pousse des plantes
+    private List<Creature>   insectsOnGame = gameView.getCreaturesOnGame();
 
     public MainWindow() {
         // chargement de toutes les missions
@@ -77,29 +80,35 @@ public class MainWindow extends JFrame {
         // autoriser l'affichage d'un message dans la progress bar
         levelBar.setStringPainted(true);
 
-        // gestion des événements gauche, droite, haut, bas et entrÃ©e
+        // gestion des événements gauche, droite, entrée, espace et échap
         seedListView.addKeyListener(new KeyAdapter() {        	
             public void keyPressed(KeyEvent e) {
+                // espace => ajouter de l'eau
                 if (KeyEvent.VK_SPACE == e.getKeyCode()) {
                     int i = gameView.getSelectedHoleIndex();
                     if (plantedPlants.get(i) != null)
                     	for (int j = 0; j < 10; ++j)
                     		plantedPlants.get(i).incrWater();
+                // entrée => planter la plante
                 } else if (KeyEvent.VK_ENTER == e.getKeyCode()) {
                     int i = gameView.getSelectedHoleIndex();
                     if (plantedPlants.get(i) == null) {
                         try {
-                            plantedPlants.set(i, (Plant) ((Plant) seedListView.getSelectedValue()).clone());
+                            plantedPlants.set(i, ((Plant) seedListView.getSelectedValue()).clone());
+                            gameView.updatePlantedPlants();
                         } catch(CloneNotSupportedException ex) {
                             System.err.println("[erreur] Impossible de cloner l'objet plante : " + ex);
                         }
                     }
                     else
                         play("Il ya déjà une plante dans ce trou.", "Il y a déjà une plante dans ce trou.");
+                // droite => sélectionner le trou de droite
                 } else if (KeyEvent.VK_RIGHT == e.getKeyCode()) {
                     gameView.selectNextHole();
+                // gauche => sélectionner le trou de gauche
                 } else if (KeyEvent.VK_LEFT == e.getKeyCode()) {
                     gameView.selectPreviousHole();
+                // échap => quitter le jeu
                 } else if (KeyEvent.VK_ESCAPE == e.getKeyCode()) {
                     statusBar.setText("Au revoir !");
                     timer.stop();
@@ -108,7 +117,7 @@ public class MainWindow extends JFrame {
             }
         });
 
-        // pronociation du nom de la plante dont la graine est sÃ©lectionnÃ©e
+        // pronociation du nom de la plante dont la graine est sélectionnée
         seedListView.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 Plant p = (Plant) seedListView.getSelectedValue();
@@ -143,34 +152,52 @@ public class MainWindow extends JFrame {
         run();
     }
 
+    // TODO à revoir !!!!!!
+    // pas sûr que ça fonctionne xD
+    @SuppressWarnings("unchecked")
+    private int getNbInsects() {
+        Map<String,Integer> ig = new HashMap<String,Integer>();
+        for (Creature c : insectsOnGame) {
+            if (c.isOnScreen()) {
+                if (ig.containsKey(c.name())) {
+                    ig.put(c.name(), ig.get(c.name()) + 1);
+                } else {
+                    ig.put(c.name(), 1);
+                }
+            }
+        }
+
+        int nbInsects = 0;
+        boolean noGood = true;
+        for (Map.Entry<String, Integer> e : insects.entrySet()) {
+            if (ig.containsKey(e.getKey()) && ig.get(e.getKey()) >= e.getValue()) {
+                ++nbInsects;
+            } else 
+                noGood = false;
+        }
+
+        System.out.println("" + noGood + " => " + nbInsects);
+
+        return nbInsects;
+    }
+
     private void run() {
         play(currentMission.description());
 
         int delay = 100;
-
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int nbAdult = 0;
-                boolean hasPlant = false;
-
                 for (Plant p : plantedPlants)
-                    if (p != null) {
-                        if (p.isAdult())
-                            ++nbAdult;
-                        else {
-                            if (p.hasWater())
-                                hasPlant = true;
-                            p.grow();
-
-                        }
-                    }
-
-                levelBar.setValue(nbAdult);
+                    if (p != null && !p.isAdult())
+                        p.grow();
                 
-                if (hasPlant)
-                    gameView.repaint();
+                gameView.repaint();
 
-                if (nbAdult == plantedPlants.size()) { // fini
+                int nbInsectsValid = getNbInsects();
+                levelBar.setValue(nbInsectsValid);
+
+                /*
+                if (nbInsectsValid >= insects.size()) { // fini
                     timer.stop();
                     play("Tu as gagné cette mission !", true);
 
@@ -179,16 +206,14 @@ public class MainWindow extends JFrame {
                         play("Tu as fini de jouer. Il n'y a plus de niveau disponible.");
                         setVisible(false);
                         dispose();
-                    }
-                    else
-                    {
+                    } else {
                         play("Niveau suivant");
                         loadMission(newMission);
                         play(currentMission.description());
                         timer.start();
-                        gameView.repaint();
                     }
                 }
+                */
             }
         };
         timer = new Timer(delay, taskPerformer);
@@ -244,6 +269,8 @@ public class MainWindow extends JFrame {
         } catch (RuntimeException e) {
         	play("Impossible de charger la mission suivante.", true);
         }
+
+        gameView.repaint();
     }
 
     private void loadCurrentPlants() {
@@ -265,8 +292,8 @@ public class MainWindow extends JFrame {
         int value  = 0;
         for (Map.Entry<String, Integer> i : currentMission.goal().entrySet()) {
             value += i.getValue();
-            msg += i.getValue() + " " + i.getKey() + "(s)";
-            insects.add(new Creature(i.getKey()));
+            msg   += i.getValue() + " " + i.getKey() + "(s), ";
+            insects.put(i.getKey(), i.getValue());
         }
 
         // adapte la barre de progression en fonction de la mission
