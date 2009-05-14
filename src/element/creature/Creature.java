@@ -51,6 +51,7 @@ public class Creature extends XMLLoadableElement {
 	
     public Creature(String ID) {
 		load(ID);
+        img = stillImages().get(0);
 
         // l'insecte doit être placé au hasard sur l'écran, mais aucun accès ici à la taille de l'écran
         // le couple (-1 -1) signifie alors pour la méthode paint qu'il est nécéssaire d'initialiser la position
@@ -229,7 +230,10 @@ public class Creature extends XMLLoadableElement {
         // place les creatures au hasard sur l'écran
         if(pos.x == -1 || pos.y == -1)
         {
-            pos.x = random.nextInt(rect.width);
+            if(random.nextInt(2) == 0)
+                pos.x = -(img.getWidth() - 1);
+            else
+                pos.x = rect.width + img.getWidth() - 1;
             pos.y = random.nextInt(rect.height);
 
             randomMvt(rect.width, rect.height);
