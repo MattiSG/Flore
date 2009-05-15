@@ -42,6 +42,7 @@
   <target name="compile_tests" depends="compile" description="Compile tests code">
     <javac deprecation="on" srcdir="${dir.test}" destdir="${dir.bin}" source="1.6" target="1.6"
            includeAntRuntime="no" classpath="${lib.junit}" debug="${compile.debug}">
+      <compilerarg value="-Xlint:unchecked"/>
     </javac>
   </target>
 

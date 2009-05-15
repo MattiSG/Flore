@@ -106,7 +106,7 @@ public class XMLParserTest {
 
 		for (Map.Entry<String, List<Node>> entry : nodesMap.entrySet()) {
 			List<Node> nodes = entry.getValue();
-			List<String> strings = new ArrayList(nodes.size());
+			List<String> strings = new ArrayList<String>(nodes.size());
 			for (Node node : nodes)
 				strings.add(node.getTextContent());
 			stringsMap.put(entry.getKey(), strings);

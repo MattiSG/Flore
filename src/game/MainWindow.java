@@ -199,7 +199,7 @@ public class MainWindow extends JFrame {
 
                     int newMission = missions.indexOf(currentMission) + 1;
                     if (newMission >= missions.size()) {
-                        play("Tu as fini de jouer. Il n'y a plus de niveau disponible.");
+                        play("Tu as fini de jouer. Il n'y a plus de niveau disponible.", true);
                         setVisible(false);
                         dispose();
                     } else {

@@ -57,7 +57,7 @@ public class CreatureTest extends XMLLoadableElementTest {
 	@Test
 	public void dimensionsParsingTest() {
 		java.awt.image.BufferedImage i = ((Creature) subject).getAssets(subject.getAssetsNames()[0]).get(0);
-		Dimension dimensions = new Dimension((int) i.getWidth(), (int) i.getHeight());
+		Dimension dimensions = new Dimension((int) (i.getWidth() / subject.zoom()), (int) (i.getHeight() / subject.zoom()));
 		assertNotNull("Parsed dimensions are null !", dimensions);
 		assertEquals(EXPECTED_DIMENSIONS, dimensions);
 	}

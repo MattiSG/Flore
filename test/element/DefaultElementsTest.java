@@ -64,12 +64,12 @@ public class DefaultElementsTest {
 	
 	public void checkDependencies() {
 		if (subject.getClass() == Mission.class) {
-			checkPlantsExistence(new ArrayList(((Mission) subject).plants().keySet()));
-			checkCreaturesExistence(new ArrayList(((Mission) subject).goal().keySet()));
+			checkPlantsExistence(new ArrayList<String>(((Mission) subject).plants().keySet()));
+			checkCreaturesExistence(new ArrayList<String>(((Mission) subject).goal().keySet()));
 		} else if (subject.getClass() == Creature.class) {
-			checkCreaturesExistence(new ArrayList(((Creature) subject).brings().keySet()));
+			checkCreaturesExistence(new ArrayList<String>(((Creature) subject).brings().keySet()));
 		} else if (subject.getClass() == Plant.class) {
-			checkCreaturesExistence(new ArrayList(((Plant) subject).brings().keySet()));
+			checkCreaturesExistence(new ArrayList<String>(((Plant) subject).brings().keySet()));
 		}
 	}
 	

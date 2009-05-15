@@ -94,6 +94,13 @@ public abstract class XMLLoadableElement {
 	 *The images inside have to be named from the key of the corresponding asset, and in the PNG format.
 	 */
 	protected abstract URI defaultFolder();
+	
+	/**Zoom level (Coefficient multiplicatif à appliquer aux images au chargement).
+	 *Designed to be able to be overriden by inheriting classes (you may have a different zooming level for each type of element).
+	 */
+	public double zoom() {
+		return 1.0;
+	}
 	//@}
 	
 	
@@ -158,9 +165,9 @@ public abstract class XMLLoadableElement {
 		java.awt.GraphicsConfiguration gc = gs.getDefaultConfiguration();
 		
 //		double ratio = image.getWidth() / image.getHeight();
-		BufferedImage result = gc.createCompatibleImage((int) dimensions.getWidth(), (int) dimensions.getHeight(), java.awt.Transparency.TRANSLUCENT);
+		BufferedImage result = gc.createCompatibleImage((int) (dimensions.getWidth() * zoom()), (int) (dimensions.getHeight() * zoom()), java.awt.Transparency.TRANSLUCENT);
 		java.awt.Graphics2D g = result.createGraphics();
-		g.drawImage(image, 0, 0, (int) dimensions.getWidth(), (int) (dimensions.getHeight()), null);
+		g.drawImage(image, 0, 0, (int) (dimensions.getWidth() * zoom()), (int) (dimensions.getHeight() * zoom()), null);
 		g.dispose();
 		return result;
 	}

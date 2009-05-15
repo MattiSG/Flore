@@ -85,6 +85,10 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 	public List<BufferedImage> upImages() {
 		return getAssets("up");
 	}
+	
+	public double zoom() {
+		return 1.5;
+	}
 	//@}
 	
 	/**@name	Unmarshalling*/
