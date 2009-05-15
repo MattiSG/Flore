@@ -85,6 +85,8 @@ public class GameView extends JPanel {
 
     // calculer le placement des trous et des plantes
     private void computeHoles() {
+        int previousSelectedHole = holes.indexOf(selectedHole) == -1 ? 0 : holes.indexOf(selectedHole);
+
         holes.clear();
 
         int w = getSize().width;
@@ -96,14 +98,16 @@ public class GameView extends JPanel {
 
             holes.add(new Point(x,y));
 
-            Plant p = plantedPlants.get(i);
-            if (p != null) {
-                p.setX(x);
-                p.setY(y);
+            if (i < plantedPlants.size()) {
+                Plant p = plantedPlants.get(i);
+                if (p != null) {
+                    p.setX(x);
+                    p.setY(y);
+                }
             }
         }
 
-        selectedHole = holes.get(0);
+        selectedHole = holes.get(previousSelectedHole);
     }
 
     public void updatePlantedPlants() {
@@ -123,6 +127,8 @@ public class GameView extends JPanel {
         cloud = m.getAssets("cloud").get(0);
 
         holesNumber = m.holes();
+        computeHoles();
+        selectedHole = holes.get(0);
     }
 
     public int getSelectedHoleIndex() {
@@ -184,7 +190,7 @@ public class GameView extends JPanel {
                     Map <String, Double> creatures = p.brings();
                     for (Map.Entry<String, Double> e : creatures.entrySet())
                         if (e.getValue() > Math.random())
-                            insects.add(new Creature(e.getKey()));
+                            insects.add(CreaturePool.getCreature(e.getKey()));
                     gg = 0;
                 }
             }
@@ -200,6 +206,8 @@ public class GameView extends JPanel {
                     creature.paint(g);
                     ++i;
                 }
+            } else {
+                insects.remove(i);
             }
         }
 	}

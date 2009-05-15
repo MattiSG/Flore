@@ -17,7 +17,7 @@ import org.w3c.dom.Node;
 
 import element.XMLLoadableElement;
 
-public class Creature extends XMLLoadableElement {
+public class Creature extends XMLLoadableElement implements Cloneable {
 	/**@name	Variables d'unmarshalling*/
 	//@{
 	private final static double PARSER_VERSION = 0.6;
@@ -256,8 +256,14 @@ public class Creature extends XMLLoadableElement {
                 dead = true;
 
             // fin du déplacement ? on en prépare un nouveau
-            if (mvtT >= 1)
+            // TODO /!\ appel récursif en boucle
+            //System.out.println("début (2)");
+            if (mvtT >= 1) {
                 randomMvt(rect.width, rect.height);
+                // TODO je viens de le rajouter pour test
+                mvtT = 0;
+            }
+            //System.out.println("fin (2)");
 
             Point oldMvt = calcMvt(mvtT, dir);
 
@@ -276,8 +282,7 @@ public class Creature extends XMLLoadableElement {
         }
     }
 
-    public void paint(Graphics g)
-    {
+    public void paint(Graphics g) {
         Rectangle rect = g.getClipBounds();
 
         // calcule la nouvelle position
@@ -310,4 +315,8 @@ public class Creature extends XMLLoadableElement {
         pos = newPos;
     }
 	//@}
+
+    public Creature clone() throws CloneNotSupportedException {
+        return (Creature) super.clone();
+    }
 }

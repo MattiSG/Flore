@@ -70,9 +70,6 @@ public class MainWindow extends JFrame {
         // chargement de toutes les missions
         loadMissions();
 
-        // chargement de la première mission
-        loadMission(0);
-
         // changement du type de rendu de la liste pour l'affichage des images
         seedListView.setCellRenderer(new CustomCellRenderer());
         seedListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -148,8 +145,8 @@ public class MainWindow extends JFrame {
             }
         });
 
-        seedListView.requestFocus();
-        seedListView.setSelectedIndex(0);
+        // chargement de la première mission
+        loadMission(0);
 
         // lancement du jeu
         run();
@@ -267,6 +264,9 @@ public class MainWindow extends JFrame {
         } catch (RuntimeException e) {
         	play("Impossible de charger la mission suivante.", true);
         }
+
+        seedListView.requestFocus();
+        seedListView.setSelectedIndex(0);
 
         gameView.repaint();
     }
