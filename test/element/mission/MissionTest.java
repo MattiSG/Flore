@@ -14,6 +14,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -53,12 +54,13 @@ public class MissionTest extends XMLLoadableElementTest {
 	
 	@Test
 	public void hintsParsingTest() {
-		List<String> hints = ((Mission) subject).hints();
+		Queue<String> hints = ((Mission) subject).hints();
 		assertNotNull("Hints map is null !", hints);
 		assertFalse("Hints map is empty !", hints.isEmpty());
 		assertEquals("Hints list size isn't the expected one !", EXPECTED_ORDERED_HINTS.length, hints.size());
-		for (int i = 0; i < hints.size(); i++) 
-			assertEquals("Hint number " + (i + 1) + " incorrectly parsed.", EXPECTED_ORDERED_HINTS[i], hints.get(i));
+		for (int i = 0; i < EXPECTED_ORDERED_HINTS.length; i++)
+			assertEquals("Hint number " + (i + 1) + " incorrectly parsed.", EXPECTED_ORDERED_HINTS[i], hints.poll());
+		assertNull("Queue has an inconsistent behavior : should return null after last poll.", hints.poll());
 	}
 	
 	@Test

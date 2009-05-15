@@ -87,8 +87,7 @@ public class MainWindow extends JFrame {
                 if (KeyEvent.VK_SPACE == e.getKeyCode()) {
                     int i = gameView.getSelectedHoleIndex();
                     if (plantedPlants.get(i) != null)
-                    	for (int j = 0; j < 10; ++j)
-                    		plantedPlants.get(i).incrWater();
+                   		plantedPlants.get(i).incrWater();
                 // entrée => planter la plante
                 } else if (KeyEvent.VK_ENTER == e.getKeyCode()) {
                     int i = gameView.getSelectedHoleIndex();
@@ -113,7 +112,11 @@ public class MainWindow extends JFrame {
                     statusBar.setText("Au revoir !");
                     timer.stop();
                     dispose();
-                }
+				} else if (KeyEvent.VK_F1 == e.getKeyCode()) {
+					play(currentMission.hints().peek());
+				} else if (KeyEvent.VK_F2 == e.getKeyCode()) {
+					play(currentMission.hints().poll());
+				}
             }
         });
 

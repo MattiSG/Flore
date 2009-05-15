@@ -8,6 +8,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 import java.awt.image.BufferedImage;
 
 import org.w3c.dom.Node;
@@ -25,10 +26,10 @@ public class Mission extends XMLLoadableElement {
 	private int	difficulty,
 				holes,
 				timeLimit;
-	/**Ordered list, with increasing helpfulness.
+	/**Increasing helpfulness.
 	 *I.e. the last element in the list is the answer.
 	 */
-	private SortedMap<Integer, String> hints;
+	private PriorityQueue<String> hints;
 	private Map<String, Integer>	plants,
 									goal;
 
@@ -50,8 +51,8 @@ public class Mission extends XMLLoadableElement {
 		return timeLimit;
 	}
 	
-	public List<String> hints() {
-		return new ArrayList<String>(hints.values());
+	public PriorityQueue<String> hints() {
+		return hints;
 	}
 	
 	/**Returns a map whose keys are plants IDs and values are the number of seeds allowed for this ID.
@@ -131,9 +132,10 @@ public class Mission extends XMLLoadableElement {
 	/**Populates the hints list.*/
 	private void parseHints() {
 		List<Node> hintsNodes = parser.getNodes(HINTS_EXPR);
-		hints = new TreeMap<Integer, String>();
+		Map<Integer, String> hintsMap = new TreeMap<Integer, String>(); //TODO : utiliser une file directement.
 		for (Node node : hintsNodes)
-			hints.put(Integer.decode(node.getAttributes().getNamedItem("level").getNodeValue()), node.getTextContent());
+			hintsMap.put(Integer.decode(node.getAttributes().getNamedItem("level").getNodeValue()), node.getTextContent());
+		hints = new PriorityQueue<String>(hintsMap.values());
 	}
 	
 	/**Parses a Map whose keys are the value of the given attribute name and values are the value of the node itself.

@@ -73,7 +73,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     }
 
     public void incrWater() {
-        ++water;
+        water += 10;
     }
     
     public void decrWater() {
