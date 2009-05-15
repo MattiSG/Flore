@@ -26,7 +26,7 @@ import element.creature.Creature;
 
 public class Plant extends XMLLoadableElement implements Cloneable {
 	
-	private final static boolean DEV_MODE = false;
+	private final static boolean DEV_MODE = true;
 	
 	/**@name	Variables d'unmarshalling*/
 	//@{

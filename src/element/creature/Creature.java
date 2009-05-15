@@ -223,12 +223,14 @@ public class Creature extends XMLLoadableElement implements Cloneable {
             // calcul de la position après ce déplacement
             Point vd = calcMvt(1.337f, dir);
             Point newPos = new Point(pos.x + vd.x, pos.y + vd.y);
+            System.out.println("" + newPos.x + ", " + newPos.y);
 
             // si cette nouvelle position sort de l'écran
             if(newPos.x < 0 || newPos.x > width)
                 isOutside = true;
             if(newPos.y < 0 || newPos.y > height)
                 isOutside = true;
+            isOutside = false;
 
             // sinon on en cherche une autre
         } while (isOutside);
@@ -261,13 +263,11 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 
             // fin du déplacement ? on en prépare un nouveau
             // TODO /!\ appel récursif en boucle
-            //System.out.println("début (2)");
+            System.out.println("début (1)");
             if (mvtT >= 1) {
                 randomMvt(rect.width, rect.height);
-                // TODO je viens de le rajouter pour test
-                mvtT = 0;
             }
-            //System.out.println("fin (2)");
+            System.out.println("fin (1)");
 
             Point oldMvt = calcMvt(mvtT, dir);
 

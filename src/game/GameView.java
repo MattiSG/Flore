@@ -129,6 +129,7 @@ public class GameView extends JPanel {
         holesNumber = m.holes();
         computeHoles();
         selectedHole = holes.get(0);
+        repaint();
     }
 
     public int getSelectedHoleIndex() {
