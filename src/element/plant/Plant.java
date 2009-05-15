@@ -25,6 +25,9 @@ import element.XMLLoadableElement;
 import element.creature.Creature;
 
 public class Plant extends XMLLoadableElement implements Cloneable {
+	
+	private final static boolean DEV_MODE = false;
+	
 	/**@name	Variables d'unmarshalling*/
 	//@{
 	private final static double PARSER_VERSION = 0.4;
@@ -36,7 +39,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 	
 	/**@name	Variables membres*/
 	//@{
-    private final static double	ADULT_PERCENT = 0.9;
+    private final static double	ADULT_PERCENT = (DEV_MODE ? 0.1 : 0.9);
     private float health = 0;
 	private int	water = 0,
 				neededSun,
@@ -224,18 +227,17 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 
 
         // quantité d'eau
-        //   A SUPPRIMER DANS LA VERSION FINALE
-        // {
-        String msg = "Quantité d'eau : " + water;
-        int ww = g.getFontMetrics().stringWidth(msg);
-        int hh = g.getFontMetrics().getHeight();
-        // fond
-        g.setColor(Color.WHITE);
-        g.fillRect(x - ww / 2, y - hh, ww, hh);
-        // texte
-        g.setColor(Color.BLUE);
-        g.drawString(msg, x - ww / 2, y);
-        // }
+        if (DEV_MODE) {
+			String msg = "Quantité d'eau : " + water;
+			int ww = g.getFontMetrics().stringWidth(msg);
+			int hh = g.getFontMetrics().getHeight();
+			// fond
+			g.setColor(Color.WHITE);
+			g.fillRect(x - ww / 2, y - hh, ww, hh);
+			// texte
+			g.setColor(Color.BLUE);
+			g.drawString(msg, x - ww / 2, y);
+		}
     }
 
     public Plant clone() throws CloneNotSupportedException {
