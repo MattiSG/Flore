@@ -190,8 +190,11 @@ public class GameView extends JPanel {
                 if (p.isEnoughtAdult() && ++gg > 30) {
                     Map <String, Double> creatures = p.brings();
                     for (Map.Entry<String, Double> e : creatures.entrySet())
-                        if (e.getValue() > Math.random())
-                            insects.add(CreaturePool.getCreature(e.getKey()));
+                        if (e.getValue() > Math.random()) {
+                            Creature c = CreaturePool.getCreature(e.getKey());
+                            insects.add(c);
+                            //System.out.println("insecte créé : " + c.ID() + " => " + c.toString());
+                        }
                     gg = 0;
                 }
             }
@@ -202,6 +205,7 @@ public class GameView extends JPanel {
             Creature creature = insects.get(i);
             if (creature != null) {
                 if (creature.isDead()) {
+                    //System.out.println("suppression : " + creature.ID());
                     insects.remove(i);
                 } else {
                     creature.paint(g);

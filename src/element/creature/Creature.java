@@ -55,9 +55,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 		load(ID);
         img = stillImages().get(0);
 
-        // l'insecte doit être placé au hasard sur l'écran, mais aucun accès ici à la taille de l'écran
-        // le couple (-1 -1) signifie alors pour la méthode paint qu'il est nécéssaire d'initialiser la position
-        pos = new Point(-1, -1);
+        reInit();
     }
 	
 	/**@name	Getters*/
@@ -206,11 +204,27 @@ public class Creature extends XMLLoadableElement implements Cloneable {
         return !outside;
     }
 
+    public String toString() {
+        return "" + pos.x + ", " + pos.y;
+    }
+
+    public void reInit() {
+        // l'insecte doit être placé au hasard sur l'écran, mais aucun accès ici à la taille de l'écran
+        // le couple (-1 -1) signifie alors pour la méthode paint qu'il est nécéssaire d'initialiser la position
+        pos = new Point(-1, -1);
+
+        dead = false;
+        outside = true;
+        timeBorn = System.currentTimeMillis();
+    }
+
     /**
      * Selectionne au hasard un type de déplacement
      */
     private void randomMvt(int width, int height)
     {
+        int m = 50;
+
         // on empêche la créature de sortir de l'écran en cherchant un mouvement correct
         boolean isOutside;
         do
@@ -223,13 +237,15 @@ public class Creature extends XMLLoadableElement implements Cloneable {
             // calcul de la position après ce déplacement
             Point vd = calcMvt(1.337f, dir);
             Point newPos = new Point(pos.x + vd.x, pos.y + vd.y);
-            //System.out.println("" + newPos.x + ", " + newPos.y);
 
             // si cette nouvelle position sort de l'écran
             if(newPos.x < 0 || newPos.x > width)
                 isOutside = true;
             if(newPos.y < 0 || newPos.y > height)
                 isOutside = true;
+
+            if(m-- == 0)
+                break;
 
             // sinon on en cherche une autre
         } while (isOutside);
