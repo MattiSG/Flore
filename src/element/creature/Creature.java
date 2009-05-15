@@ -166,7 +166,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
                     y * (int)(mvtSize * Math.sin(mvtT * (java.lang.Math.PI / 2))));
         }
         // tout droit
-        else //if(dir >= 4 && dir < 8)
+        else //if (dir >= 4 && dir < 8)
         {
             int x = 0,
                 y = 0;
@@ -175,13 +175,13 @@ public class Creature extends XMLLoadableElement implements Cloneable {
             // 5 =>  1  0
             // 6 => -1  0
             // 7 =>  0 -1
-            if(dir == 4)
+            if (dir == 4)
                 y = 1;
-            else if(dir == 5)
+            else if (dir == 5)
                 x = 1;
-            else if(dir == 6)
+            else if (dir == 6)
                 x = -1;
-            else if(dir == 8)
+            else if (dir == 8)
                 y = -1;
 
             return new Point(x * (int)(mvtSize * t),
@@ -239,9 +239,9 @@ public class Creature extends XMLLoadableElement implements Cloneable {
             Point newPos = new Point(pos.x + vd.x, pos.y + vd.y);
 
             // si cette nouvelle position sort de l'écran
-            if(newPos.x < 0 || newPos.x > width)
+            if (newPos.x < 0 || newPos.x > width)
                 isOutside = true;
-            if(newPos.y < 0 || newPos.y > height)
+            if (newPos.y < 0 || newPos.y > height)
                 isOutside = true;
 
             if(m-- == 0)
@@ -253,10 +253,10 @@ public class Creature extends XMLLoadableElement implements Cloneable {
         mvtT = 0;
     }
 
-    public Point calcDep(Graphics g, Rectangle rect)
+    public Point calcDep(Graphics g, Rectangle rect, float dtime)
     {
         // place les creatures au hasard à leur création (mais est fait ici car l'on ne peut connaitre la taille de l'écran dans le construteur)
-        if(pos.x == -1 || pos.y == -1)
+        if (pos.x == -1 || pos.y == -1)
         {
             // spawn sur côté gauche ou droit au hasard
             pos.x = random.nextInt(2) == 0 ? -(img.getWidth() - 1) : rect.width + img.getWidth() - 1;
@@ -287,7 +287,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
             Point oldMvt = calcMvt(mvtT, dir);
 
             // incrémentation du déplacement
-            mvtT += 0.04; 
+            mvtT += dtime * 0.3; 
 
             Point newMvt = calcMvt(mvtT, dir);
  
@@ -301,11 +301,11 @@ public class Creature extends XMLLoadableElement implements Cloneable {
         }
     }
 
-    public void paint(Graphics g) {
+    public void paint(Graphics g, float dtime) {
         Rectangle rect = g.getClipBounds();
 
         // calcule la nouvelle position
-        Point dep    = calcDep(g, rect),
+        Point dep    = calcDep(g, rect, dtime),
               newPos = new Point(pos.x + dep.x, pos.y + dep.y);
 
         // selection de l'image en fonction de la direction (gauche, haut, bas, droite, aucun déplacement)

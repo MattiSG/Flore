@@ -36,6 +36,7 @@ public class GameView extends JPanel {
     private Mission          mission;
     private BufferedImage    cloud;
     private int grassWidth, grassHeight;
+    private long             timePrev = System.currentTimeMillis();
 
     private BufferedImage background;
 
@@ -156,6 +157,11 @@ public class GameView extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         Rectangle rect = g2d.getClipBounds();
 
+        // calcule un différentiel de temps entre chaque image
+        long timeNew = System.currentTimeMillis(),
+             timeDiff = timeNew - timePrev;
+        float dtime = (float)(timeDiff) / 1000.0f;
+
         // image de fond
         g2d.drawImage(background, 0, 0, null);
 
@@ -208,12 +214,14 @@ public class GameView extends JPanel {
                     //System.out.println("suppression : " + creature.ID());
                     insects.remove(i);
                 } else {
-                    creature.paint(g);
+                    creature.paint(g, dtime);
                     ++i;
                 }
             } else {
                 insects.remove(i);
             }
         }
+
+        timePrev = timeNew;
 	}
 }
