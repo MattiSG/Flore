@@ -27,6 +27,7 @@ import element.creature.Creature;
 public class Plant extends XMLLoadableElement implements Cloneable {
 	
 	private final static boolean DEV_MODE = true;
+	private final static double DEV_COEF = 5.0;
 	
 	/**@name	Variables d'unmarshalling*/
 	//@{
@@ -76,7 +77,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     }
 
     public void incrWater() {
-        water += 10;
+        water += 10 * (DEV_MODE ? DEV_COEF : 1.0);
     }
     
     public void decrWater() {
@@ -181,7 +182,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 
     public void grow() {
     	if (water > 0) {
-			anim += 10 / neededTime();
+			anim += 10 / neededTime() * (DEV_MODE ? DEV_COEF : 1.0);
 			decrWater();
 		}
     }

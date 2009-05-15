@@ -25,8 +25,8 @@
 	</assets>
 		
 	<brings>
-		<creature probability="0.8">papilionidae</creature>
-		<creature probability="0.8">lycaenidae</creature>
+		<creature probability="0.4">papilionidae</creature>
+		<creature probability="0.4">lycaenidae</creature>
 		<creature probability="0.8">sphingidae</creature>
 	</brings>
 </plant>

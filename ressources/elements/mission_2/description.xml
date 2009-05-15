@@ -28,9 +28,9 @@
 	</assets>
 	
 	<plants>
-		<plant id="buddleia">1</plant>
+		<plant id="buddleia">3</plant>
 		<plant id="serrulata">2</plant>
-		<plant id="mimosa">3</plant>
+		<plant id="mimosa">1</plant>
 	</plants>
 	
 	<goal>
