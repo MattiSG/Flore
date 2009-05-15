@@ -262,11 +262,11 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 
             // fin du déplacement ? on en prépare un nouveau
             // TODO /!\ appel récursif en boucle
-            System.out.println("début (1)");
+            //System.out.println("début (1)");
             if (mvtT >= 1) {
                 randomMvt(rect.width, rect.height);
             }
-            System.out.println("fin (1)");
+            //System.out.println("fin (1)");
 
             Point oldMvt = calcMvt(mvtT, dir);
 
