@@ -223,14 +223,13 @@ public class Creature extends XMLLoadableElement implements Cloneable {
             // calcul de la position après ce déplacement
             Point vd = calcMvt(1.337f, dir);
             Point newPos = new Point(pos.x + vd.x, pos.y + vd.y);
-            System.out.println("" + newPos.x + ", " + newPos.y);
+            //System.out.println("" + newPos.x + ", " + newPos.y);
 
             // si cette nouvelle position sort de l'écran
             if(newPos.x < 0 || newPos.x > width)
                 isOutside = true;
             if(newPos.y < 0 || newPos.y > height)
                 isOutside = true;
-            isOutside = false;
 
             // sinon on en cherche une autre
         } while (isOutside);
