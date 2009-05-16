@@ -42,6 +42,11 @@ import java.util.LinkedList;
 import java.io.File;
 import java.io.FilenameFilter;
 
+/*
+ * Classe gérant la fenêtre principale
+ *  ainsi que les évènements
+ *
+ */
 public class MainWindow extends JFrame {
     // listes de toutes les missions
     private List<Mission>   missions = new LinkedList<Mission>();
@@ -76,6 +81,7 @@ public class MainWindow extends JFrame {
 
         // autoriser l'affichage d'un message dans la progress bar
         levelBar.setStringPainted(true);
+        levelBar.setSize(300,400);
 
         // gestion des événements gauche, droite, entrée, espace et échap
         seedListView.addKeyListener(new KeyAdapter() {        	
@@ -90,6 +96,8 @@ public class MainWindow extends JFrame {
                     int i = gameView.getSelectedHoleIndex();
                     if (plantedPlants.get(i) == null) {
                         try {
+                            // récupère la plante dans la liste des graînes
+                            // et la clone pour en faire un nouvel objet
                             plantedPlants.set(i, ((Plant) seedListView.getSelectedValue()).clone());
                             gameView.updatePlantedPlants();
                         } catch(CloneNotSupportedException ex) {
@@ -109,8 +117,11 @@ public class MainWindow extends JFrame {
                     statusBar.setText("Au revoir !");
                     timer.stop();
                     dispose();
+                // f1 => lecture de l'indice courant
 				} else if (KeyEvent.VK_F1 == e.getKeyCode()) {
 					play(currentMission.hints().peek());
+                // f2 => enlever l'indice de la pile
+                //  (passe à l'indice suivant)
 				} else if (KeyEvent.VK_F2 == e.getKeyCode()) {
 					play(currentMission.hints().poll());
 				}
@@ -136,8 +147,8 @@ public class MainWindow extends JFrame {
         getContentPane().add(statusBar, BorderLayout.SOUTH);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        //setFullScreen();
-        setSize(700,700);
+        setFullScreen();
+        //setSize(700,700);
         setVisible(true);
         addWindowListener(new WindowAdapter() {
             public void windowClosed(WindowEvent e) {
@@ -152,7 +163,10 @@ public class MainWindow extends JFrame {
         run();
     }
 
+    // vérifie si les objectifs sont atteints
     private boolean checkInsects() {
+        // construit la liste des insectes <id, nombre>
+        // présent dans le jeu
         Map<String,Integer> ig = new HashMap<String,Integer>();
         for (Creature c : insectsOnGame) {
             if (c.isOnScreen()) {
@@ -164,22 +178,26 @@ public class MainWindow extends JFrame {
             }
         }
 
+        // compare la liste des insectes présents
+        // avec celle des objectifs
         int nbInsects = 0;
-        boolean noGood = true;
+        boolean goalsOk = true;
         for (Map.Entry<String, Integer> e : insects.entrySet()) {
             if (ig.containsKey(e.getKey())) {
                 nbInsects += ig.get(e.getKey());
                 if (ig.get(e.getKey()) < e.getValue())
-                    noGood = false;
+                    goalsOk = false;
             } else 
-                noGood = false;
+                goalsOk = false;
         }
 
+        // met à jour la barre de progression
         levelBar.setValue(nbInsects);
 
-        return noGood;
+        return goalsOk;
     }
 
+    // démarre le jeu
     private void run() {
         play(currentMission.description());
 

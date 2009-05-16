@@ -336,6 +336,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 	//@}
 
     public Creature clone() throws CloneNotSupportedException {
+        // TODO implémenter la méthode init() ici
         return (Creature) super.clone();
     }
 }

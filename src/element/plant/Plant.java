@@ -242,6 +242,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     }
 
     public Plant clone() throws CloneNotSupportedException {
+        // TODO ré-initialiser les données membres
         return (Plant) super.clone();
     }
 }

@@ -13,6 +13,11 @@ import devintAPI.MenuAbstrait;
 import java.awt.GraphicsDevice;
 import javax.swing.JWindow;
 
+/*
+ * Classe "lanceuse"
+ * TODO peut-être mettre une phrase d'accueil
+ *
+ */
 public class Flore extends MenuAbstrait {
     public Flore(String title) {
         super(title);
