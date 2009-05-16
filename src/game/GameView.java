@@ -213,11 +213,13 @@ public class GameView extends JPanel {
                                 insects.add(CreaturePool.getCreature(e.getKey()));
                     }
 
+                    List<Creature> newInsects = new ArrayList<Creature>();
                     // insectes appelant les insectes
                     for (Creature c : insects) 
                         for (Map.Entry<String, Double> e : c.brings().entrySet())
                             if (e.getValue() > Math.random())
-                                insects.add(CreaturePool.getCreature(e.getKey()));
+                                newInsects.add(CreaturePool.getCreature(e.getKey()));
+                    insects.addAll(newInsects);
 
                     // remise à zéro du compteur de boucle
                     loopCount = 0;

@@ -5,7 +5,13 @@ import element.creature.Creature;
 import java.util.Map;
 import java.util.HashMap;
 
+/*
+ * Classe permettant d'éviter le parsing des descriptions
+ *  des insectes à chaque nouvelle création.
+ *
+ */
 public class CreaturePool {
+    // liste des créatures déjà parsées
     private static final Map<String,Creature> pool = new HashMap<String,Creature>();
     
     private CreaturePool() {}
