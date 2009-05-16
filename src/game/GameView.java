@@ -49,11 +49,9 @@ public class GameView extends JPanel {
     private Mission          mission;
     // temps écoulé pour avoir un framerate fixe
     private long             timePrev = System.currentTimeMillis();
-    // hack pour calculer les insectes toutes les 30 boucles
-    //  (d'appel de paint)
+    // hack pour appeler les insectes toutes les MAX_COUNT_LOOP boucles
     private int              loopCount      = 0;
     private final static int MAX_COUNT_LOOP = 30;
-
 
     public GameView(List<Plant> plantedPlants) {
         this.plantedPlants = plantedPlants;
@@ -69,14 +67,13 @@ public class GameView extends JPanel {
         });
     }
 
+    // calule la nouvelle image de fond après un redimensionnement
     private void computeBackgroundImage() {
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gs = ge.getDefaultScreenDevice();
+        GraphicsEnvironment   ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice        gs = ge.getDefaultScreenDevice();
         GraphicsConfiguration gc = gs.getDefaultConfiguration();
 
         background = gc.createCompatibleImage(getWidth(), getHeight(), Transparency.TRANSLUCENT);
-        //background = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-
         Graphics2D g2d = background.createGraphics();
 
         // ciel
@@ -126,22 +123,24 @@ public class GameView extends JPanel {
         selectedHole = holes.get(previousSelectedHole);
     }
 
+    // met à jour les plantes
     public void updatePlantedPlants() {
         computeHoles();
     }
 
+    // change de mission
     public void setMission(Mission m) {
         insects.clear();
 
         mission = m;
 
         grass = m.getAssets("grass").get(0);
-
         cloud = m.getAssets("cloud").get(0);
 
         holesNumber = m.holes();
         computeHoles();
         selectedHole = holes.get(0);
+
         repaint();
     }
 

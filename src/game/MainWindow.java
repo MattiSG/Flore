@@ -20,6 +20,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JOptionPane;
 
+import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.Component;
 import java.awt.BorderLayout;
@@ -49,17 +50,22 @@ import java.io.FilenameFilter;
  */
 public class MainWindow extends JFrame {
     // listes de toutes les missions
-    private List<Mission>   missions = new LinkedList<Mission>();
+    private List<Mission>   missions     = new LinkedList<Mission>();
     // plantes disponibles pour la mission courante
-    private List<Plant>     plants   = new LinkedList<Plant>();
+    private List<Plant>     plants       = new LinkedList<Plant>();
     // insectes nécessaires pour valider la mission courante
     private Map<String,Integer> insects  = new HashMap<String,Integer>();
     // plantes en terre
-    private List<Plant> plantedPlants = new ArrayList<Plant>();
+    private List<Plant> plantedPlants    = new ArrayList<Plant>();
     // mission courante
     private Mission          currentMission;
+    // police par défaut pour tous les textes du jeu
+    private Font             defaultFont = new Font(null, Font.BOLD, 50);
     // timer pour la boucle du temps
     private Timer            timer;
+    // temps entre chaque ré-affichage
+    // boucle principale (en ms)
+    private final static int DELAY       = 100;
 
     private JLabel           statusBar     = new JLabel("Initialisation");
     private JProgressBar     levelBar      = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
@@ -80,10 +86,14 @@ public class MainWindow extends JFrame {
         seedListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // autoriser l'affichage d'un message dans la progress bar
+        //  augmentation de la taille du texte
         levelBar.setStringPainted(true);
-        levelBar.setSize(300,400);
+        levelBar.setFont(defaultFont);
 
-        // gestion des événements gauche, droite, entrée, espace et échap
+        // augmentation de la taille du texte de la barre de status
+        statusBar.setFont(defaultFont);
+
+        // gestion des événements
         seedListView.addKeyListener(new KeyAdapter() {        	
             public void keyPressed(KeyEvent e) {
                 // espace => ajouter de l'eau
@@ -138,13 +148,21 @@ public class MainWindow extends JFrame {
         });
 
         // scroll pour l'affichage de la liste
-        JScrollPane list = new JScrollPane(seedListView);
-        list.setPreferredSize(new Dimension(200, 400));
+        JScrollPane seedScroll = new JScrollPane(seedListView);
+        seedScroll.setPreferredSize(new Dimension(200, 400));
 
-        getContentPane().add(gameView,  BorderLayout.CENTER);
-        getContentPane().add(list,      BorderLayout.EAST);
-        getContentPane().add(levelBar,  BorderLayout.WEST);
-        getContentPane().add(statusBar, BorderLayout.SOUTH);
+        // scroll pour l'affichage de la barre de status
+        JScrollPane statusScroll = new JScrollPane(statusBar);
+        statusScroll.setPreferredSize(new Dimension(200, statusBar.getFontMetrics(statusBar.getFont()).getHeight() + 20));
+
+        // scroll pour l'affichage de la barre de progression
+        JScrollPane levelScroll = new JScrollPane(levelBar);
+        levelScroll.setPreferredSize(new Dimension(110, 400));
+
+        getContentPane().add(gameView,     BorderLayout.CENTER);
+        getContentPane().add(seedScroll,   BorderLayout.EAST);
+        getContentPane().add(levelScroll,  BorderLayout.WEST);
+        getContentPane().add(statusScroll, BorderLayout.SOUTH);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setFullScreen();
@@ -155,9 +173,6 @@ public class MainWindow extends JFrame {
                 timer.stop();
             }
         });
-
-        // chargement de la première mission
-        loadMission(0);
 
         // lancement du jeu
         run();
@@ -199,18 +214,20 @@ public class MainWindow extends JFrame {
 
     // démarre le jeu
     private void run() {
-        play(currentMission.description());
+        // chargement de la première mission
+        loadMission(0);
 
-        int delay = 100;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // fait pousser les plantes
                 for (Plant p : plantedPlants)
                     if (p != null && !p.isAdult())
                         p.grow();
                 
+                // repeint le plateau de jeu
                 gameView.repaint();
 
-
+                // vérifie si les objectifs sont atteints
                 if (checkInsects()) {
                     timer.stop();
                     play("Tu as gagné cette mission !", true);
@@ -223,17 +240,17 @@ public class MainWindow extends JFrame {
                     } else {
                         play("Niveau suivant");
                         loadMission(newMission);
-                        play(currentMission.description());
                         timer.start();
                     }
                 }
             }
         };
-        timer = new Timer(delay, taskPerformer);
+        timer = new Timer(DELAY, taskPerformer);
         timer.start();
     }
 
     // prononce le texte et l'affiche dans la barre de status
+    // {
     private void play(String readText, String statusText, boolean widthDialog) {
         player.stop();
         player.playText(readText);
@@ -253,7 +270,9 @@ public class MainWindow extends JFrame {
     private void play(String readText, String statusText) {
         play(readText, statusText, false);
     }
+    // }
 
+    // charge toutes les missions en listant le répertoire des ressources
     private void loadMissions() {
         File rep = new File("../ressources/elements/");
         File[] listMissions = rep.listFiles(new FilenameFilter() {
@@ -268,6 +287,7 @@ public class MainWindow extends JFrame {
             missions.add(new Mission(f.getName()));
     }
 
+    // charge une nouvelle mission
     private void loadMission(int index) {
         currentMission = missions.get(index);
         gameView.setMission(currentMission);
@@ -278,7 +298,7 @@ public class MainWindow extends JFrame {
 
         try {
 	        loadCurrentPlants();
-	        loadCurrentInsects();
+	        loadCurrentGoals();
         } catch (RuntimeException e) {
         	play("Impossible de charger la mission suivante.", true);
         }
@@ -287,37 +307,43 @@ public class MainWindow extends JFrame {
         seedListView.setSelectedIndex(0);
 
         gameView.repaint();
+
+        play(currentMission.description());
     }
 
+    // charge la liste des plantes disponibles
+    //  pour la mission courante
     private void loadCurrentPlants() {
         plants.clear();
         seedList.clear();
 
-        for (Map.Entry<String, Integer> i : currentMission.plants().entrySet())
-            plants.add(new Plant(i.getKey()));
-
-        // list on the left
-        for (Plant p : plants)
+        for (Map.Entry<String, Integer> i : currentMission.plants().entrySet()) {
+            Plant p = new Plant(i.getKey());
+            plants.add(p);
             seedList.addElement(p);
+        }
     }
 
-    private void loadCurrentInsects() {
+    // charge la liste des objectifs
+    //  pour la mission courante
+    private void loadCurrentGoals() {
         insects.clear();
 
         String msg = "";
         int value  = 0;
         for (Map.Entry<String, Integer> i : currentMission.goal().entrySet()) {
             value += i.getValue();
-            msg   += i.getValue() + " " + i.getKey() + "(s), ";
+            msg   += i.getValue() + " " + i.getKey() + (i.getValue() > 1 ? "s, " : ", ");
             insects.put(i.getKey(), i.getValue());
         }
 
         // adapte la barre de progression en fonction de la mission
         levelBar.setValue(0);
         levelBar.setMaximum(value);
-        levelBar.setString(msg);
+        levelBar.setString(msg.substring(0, msg.length() - 2));
     }
 
+    // bascule en plein écran
     private void setFullScreen() {
         setUndecorated(true);
         setSize(getToolkit().getScreenSize());
@@ -325,6 +351,8 @@ public class MainWindow extends JFrame {
         validate();
     }
 
+    // classe permettant de modifier l'affichage
+    //  de la liste des graînes
     class CustomCellRenderer extends DefaultListCellRenderer {
         public Component getListCellRendererComponent(
             JList list,
