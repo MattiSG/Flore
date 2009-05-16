@@ -125,7 +125,14 @@ public class GameView extends JPanel {
 
     // met à jour les plantes
     public void updatePlantedPlants() {
-        computeHoles();
+        for (int i = 0; i < holesNumber; ++i) {
+            Point pos = holes.get(i);
+            Plant p = plantedPlants.get(i);
+            if (p != null) {
+                p.setX(pos.x);
+                p.setY(pos.y);
+            }
+        }
     }
 
     // change de mission
