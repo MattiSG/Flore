@@ -16,7 +16,7 @@ public class CreaturePool {
 
         try {
             Creature c = pool.get(id).clone();
-            c.reInit();
+            c.init();
             return c;
         } catch(CloneNotSupportedException e) {
             throw new RuntimeException(e.getMessage());

@@ -27,20 +27,33 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsConfiguration;
 
 public class GameView extends JPanel {
+    // image de l'herbe
     private BufferedImage    grass;
-    private List<Point>      holes   = new ArrayList<Point>();
-    private List<Creature>   insects = new ArrayList<Creature>();
-    private Point            selectedHole;
-    private int              holesNumber = 0;
-    private List<Plant>      plantedPlants;
-    private Mission          mission;
+    // image d'un nuage
     private BufferedImage    cloud;
-    private int grassWidth, grassHeight;
+    // image représentant le fond (soleil + ciel + sol)
+    //  calculée à partir de la taille de l'écran
+    //  mise à jour à chaque redimensionnement
+    private BufferedImage    background;
+    // listes des trous présents
+    private List<Point>      holes   = new ArrayList<Point>();
+    // listes des créatures en jeu
+    private List<Creature>   insects = new ArrayList<Creature>();
+    // listes des plantes en jeu
+    private List<Plant>      plantedPlants;
+    // trou sélectionné
+    private Point            selectedHole;
+    // nombres de trous (d'après la mission)
+    private int              holesNumber = 0;
+    // mission courante
+    private Mission          mission;
+    // temps écoulé pour avoir un framerate fixe
     private long             timePrev = System.currentTimeMillis();
+    // hack pour calculer les insectes toutes les 30 boucles
+    //  (d'appel de paint)
+    private int              loopCount      = 0;
+    private final static int MAX_COUNT_LOOP = 30;
 
-    private BufferedImage background;
-
-    private int gg = 0;
 
     public GameView(List<Plant> plantedPlants) {
         this.plantedPlants = plantedPlants;
@@ -75,6 +88,8 @@ public class GameView extends JPanel {
         g2d.fillOval(20, 20, 75, 75);
 
         // herbe
+        int grassWidth  = grass.getWidth();
+        int grassHeight = grass.getHeight();
         int nbW = (getWidth() / grassWidth) + 1;
         int nbH = (getHeight() / grassHeight) + 1;
         for (int x = 0; x < nbW; ++x)
@@ -121,9 +136,6 @@ public class GameView extends JPanel {
         mission = m;
 
         grass = m.getAssets("grass").get(0);
-        // taille de l'image
-        grassWidth  = grass.getWidth();
-        grassHeight = grass.getHeight();
 
         cloud = m.getAssets("cloud").get(0);
 
@@ -192,16 +204,23 @@ public class GameView extends JPanel {
                                 null);
                 }
                 
-                // insectes
-                if (p.isEnoughtAdult() && ++gg > 30) {
-                    Map <String, Double> creatures = p.brings();
-                    for (Map.Entry<String, Double> e : creatures.entrySet())
-                        if (e.getValue() > Math.random()) {
-                            Creature c = CreaturePool.getCreature(e.getKey());
-                            insects.add(c);
-                            //System.out.println("insecte créé : " + c.ID() + " => " + c.toString());
-                        }
-                    gg = 0;
+                if (++loopCount > MAX_COUNT_LOOP) {
+                    // plantes appelant les insectes
+                    if (p.isEnoughtAdult()) {
+                        Map <String, Double> creatures = p.brings();
+                        for (Map.Entry<String, Double> e : creatures.entrySet())
+                            if (e.getValue() > Math.random())
+                                insects.add(CreaturePool.getCreature(e.getKey()));
+                    }
+
+                    // insectes appelant les insectes
+                    for (Creature c : insects) 
+                        for (Map.Entry<String, Double> e : c.brings().entrySet())
+                            if (e.getValue() > Math.random())
+                                insects.add(CreaturePool.getCreature(e.getKey()));
+
+                    // remise à zéro du compteur de boucle
+                    loopCount = 0;
                 }
             }
         }
@@ -211,7 +230,6 @@ public class GameView extends JPanel {
             Creature creature = insects.get(i);
             if (creature != null) {
                 if (creature.isDead()) {
-                    //System.out.println("suppression : " + creature.ID());
                     insects.remove(i);
                 } else {
                     creature.paint(g, dtime);

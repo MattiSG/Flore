@@ -55,7 +55,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 		load(ID);
         img = stillImages().get(0);
 
-        reInit();
+        init();
     }
 	
 	/**@name	Getters*/
@@ -208,7 +208,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
         return "" + pos.x + ", " + pos.y;
     }
 
-    public void reInit() {
+    public void init() {
         // l'insecte doit être placé au hasard sur l'écran, mais aucun accès ici à la taille de l'écran
         // le couple (-1 -1) signifie alors pour la méthode paint qu'il est nécéssaire d'initialiser la position
         pos = new Point(-1, -1);
