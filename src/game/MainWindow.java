@@ -109,7 +109,7 @@ public class MainWindow extends JFrame {
                             // récupère la plante dans la liste des graînes
                             // et la clone pour en faire un nouvel objet
                             plantedPlants.set(i, ((Plant) seedListView.getSelectedValue()).clone());
-                            //gameView.updatePlantedPlants();
+                            gameView.updatePlantedPlants();
                         } catch(CloneNotSupportedException ex) {
                             System.err.println("[erreur] Impossible de cloner l'objet plante : " + ex);
                         }
