@@ -31,6 +31,12 @@ public class GameView extends JPanel {
     private BufferedImage    grass;
     // image d'un nuage
     private BufferedImage    cloud;
+    // image d'un soleil
+    private BufferedImage    sun;
+    // image d'un trou
+    private BufferedImage    hole;
+    // image du ciel
+    private BufferedImage    sky;
     // image représentant le fond (soleil + ciel + sol)
     //  calculée à partir de la taille de l'écran
     //  mise à jour à chaque redimensionnement
@@ -77,18 +83,22 @@ public class GameView extends JPanel {
         Graphics2D g2d = background.createGraphics();
 
         // ciel
-        g2d.setColor(new Color(118, 142, 176));
-        g2d.fillRect(0, 0, getWidth(), getHeight() * 2 / 3);
+        int skyWidth  = sky.getWidth();
+        int skyHeight = sky.getHeight();
+        int nbW = (getWidth() / skyWidth) + 1;
+        int nbH = (getHeight() / skyHeight) + 1;
+        for (int x = 0; x < nbW; ++x)
+            for (int y = 0; y < nbH; ++y)
+                g2d.drawImage(sky, null, x * skyWidth, y * skyHeight);
 
         // soleil
-        g2d.setColor(Color.YELLOW);
-        g2d.fillOval(20, 20, 75, 75);
+        g2d.drawImage(sun, 0, 0, null);
 
         // herbe
         int grassWidth  = grass.getWidth();
         int grassHeight = grass.getHeight();
-        int nbW = (getWidth() / grassWidth) + 1;
-        int nbH = (getHeight() / grassHeight) + 1;
+        nbW = (getWidth() / grassWidth) + 1;
+        nbH = (getHeight() / grassHeight) + 1;
         for (int x = 0; x < nbW; ++x)
             for (int y = 0; y < nbH; ++y)
                 g2d.drawImage(grass, null, x * grassWidth, (getHeight() * 2 / 3) + y * grassHeight);
@@ -143,6 +153,9 @@ public class GameView extends JPanel {
 
         grass = m.getAssets("grass").get(0);
         cloud = m.getAssets("cloud").get(0);
+        hole  = m.getAssets("hole").get(0);
+        sun   = m.getAssets("sun").get(0);
+        sky   = m.getAssets("sky").get(0);
 
         holesNumber = m.holes();
         computeHoles();
@@ -186,12 +199,19 @@ public class GameView extends JPanel {
         // trous
         g2d.setColor(Color.BLACK);
         for (Point p : holes) {
+            int holeW = hole.getWidth();
+            int holeH = hole.getHeight();
+
+            int x = p.x - holeW / 2;
+            int y = p.y - holeH / 2;
+
             if (p == selectedHole) {
                 g2d.setColor(Color.RED);
-                g2d.fillOval(p.x-50, p.y-50, 100, 100);
+                g2d.fillOval(x - 25, y - 25, holeW + 50, holeH + 50);
                 g2d.setColor(Color.BLACK);
             }
-            g2d.fillOval(p.x-25, p.y-25, 50, 50);
+
+            g2d.drawImage(hole, x, y, holeW, holeH, null);
         }
 
         // plantes
