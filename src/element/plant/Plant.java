@@ -64,7 +64,7 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     
     public Plant(String ID, int xx, int yy) {
 		load(ID);
-        image = getAssets("flowers").get(0);
+        image = getAsset("flowers");
 		
         x = xx;
         y = yy;

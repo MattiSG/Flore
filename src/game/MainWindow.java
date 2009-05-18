@@ -362,7 +362,7 @@ public class MainWindow extends JFrame {
         {
             super.getListCellRendererComponent(list, value, index, iss, chf);
 
-            setIcon(new ImageIcon(((Plant) value).seedImages().get(0)));
+            setIcon(new ImageIcon(((Plant) value).getAsset("seed")));
             setText("");
 
             return this;

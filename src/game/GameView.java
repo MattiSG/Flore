@@ -151,11 +151,11 @@ public class GameView extends JPanel {
 
         mission = m;
 
-        grass = m.getAssets("grass").get(0);
-        cloud = m.getAssets("cloud").get(0);
-        hole  = m.getAssets("hole").get(0);
-        sun   = m.getAssets("sun").get(0);
-        sky   = m.getAssets("sky").get(0);
+        grass = m.getAsset("grass");
+        cloud = m.getAsset("cloud");
+        hole  = m.getAsset("hole");
+        sun   = m.getAsset("sun");
+        sky   = m.getAsset("sky");
 
         holesNumber = m.holes();
         computeHoles();

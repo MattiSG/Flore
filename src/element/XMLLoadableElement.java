@@ -25,8 +25,8 @@ import xml.XMLParser;
  *@version 0.2
  */
 public abstract class XMLLoadableElement {
-	
-	protected XMLParser parser;
+	/**If set to true, will throw an exception if parser version and parsed file version differ.*/
+	public final static boolean STRICT_VERSION_CHECKING = false;
 	
 	/**@name	Element description*/
 	//@{
@@ -48,8 +48,9 @@ public abstract class XMLLoadableElement {
 							EXPR_DESCRIPTION = rootElement() + "/description",
 							WIDTH_ATTRIBUTE = "width",
 							HEIGHT_ATTRIBUTE = "height";
-						
 	//@}
+	
+	protected XMLParser parser;
 	
 	/**@name	Getters*/
 	//@{
@@ -82,6 +83,14 @@ public abstract class XMLLoadableElement {
 	 *For example, the "Mission" class will most probably return "mission".
 	 */
 	public abstract String rootElement();
+	
+	/**A shortcut for assets that have only one image and a not a list of images.
+	 *Equivalent to getAssets(key).get(0).
+	 *@see	getAssets
+	 */
+	public BufferedImage getAsset(String key) {
+		return getAssets(key).get(0);
+	}
 	
 	/**The key has to be one from the String array returned by getAssetsNames.
 	 *@see	getAssetsNames
@@ -220,16 +229,18 @@ public abstract class XMLLoadableElement {
 	}
 		
 	/**Tells whether the given file format version is parsable or not.
+	 *Be careful as it may return true even though file version is not compatible, because the STRICT_VERSION_CHECKING mode would be deactivated.
  	 *@see	parserVersion
+	 *@see	STRICT_VERSION_CHECKING
 	 */
 	public boolean checkVersion(double version) {
 		double parserVersion = parserVersion();
 		if (version > parserVersion) {
 			System.err.println("File ID \"" + ID() + "\"'s version (" + version + ") is newer than this parser (" + parserVersion + ").\nYou should update this software.");
-			return false;
+			return ! STRICT_VERSION_CHECKING;
 		} else if (version < parserVersion) {
 			System.err.println("Please note that file ID \"" + ID() + "\" uses an obsolete syntax (parser version : " + parserVersion + ", file syntax version : " + version + ").");
-			return false;
+			return ! STRICT_VERSION_CHECKING;
 		}
 		return true;
 	}	
