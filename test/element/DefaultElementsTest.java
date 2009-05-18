@@ -57,9 +57,11 @@ public class DefaultElementsTest {
 	}
 	
 	public void runTests() {
+		System.out.print("Element ID \"" + subject.ID() + "\" ");
 		assertTrue("Element ID \"" + subject.ID() + "\" has an incompatible version number.", subject.checkVersion());
 		XMLLoadableElementTest.runTests(subject);
 		checkDependencies();
+		System.out.println("validated.");
 	}
 	
 	public void checkDependencies() {
