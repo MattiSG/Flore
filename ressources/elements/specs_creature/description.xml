@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<creature version="0.6" author="devint">
+<creature version="0.61" author="devint">
 	<!-- Ce fichier sert de spécifications pour les fichiers décrivant des créatures -->
 	<id>specs_creature</id>
 	<name lang="fr">Specifications Creature</name>
@@ -7,6 +7,7 @@
 	<description lang="fr">Ce fichier sert de specifications pour les fichiers decrivant des creatures.</description>
 	
 	<lifetime>10</lifetime> <!-- durée de vie, en secondes -->
+	<sound>sound.wav</sound> <!-- chemin relatif vers un fichier audio WAVE représentant le son de la créature -->
 	
 	<assets type="standard">
 		<still> <!--insecte immobile-->

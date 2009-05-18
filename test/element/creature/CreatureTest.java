@@ -13,6 +13,8 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.File;
+
 import java.util.List;
 import java.util.Map;
 
@@ -65,5 +67,13 @@ public class CreatureTest extends XMLLoadableElementTest {
 	@Test
 	public void lifetimeParsingTest() {
 		assertEquals(EXPECTED_LIFETIME, ((Creature) subject).lifetime());
+	}
+	
+	@Test
+	public void soundParsingTest() {
+		File sound = ((Creature) subject).sound();
+		assertNotNull(sound);
+		assertTrue("Given sound file doesn't exist !", sound.exists());
+		assertTrue("Given sound file is not readable !", sound.canRead());
 	}
 }

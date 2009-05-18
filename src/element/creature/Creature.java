@@ -1,5 +1,6 @@
 package element.creature;
 
+import java.io.File;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Map;
@@ -20,7 +21,7 @@ import element.XMLLoadableElement;
 public class Creature extends XMLLoadableElement implements Cloneable {
 	/**@name	Variables d'unmarshalling*/
 	//@{
-	private final static double PARSER_VERSION = 0.6;
+	private final static double PARSER_VERSION = 0.61;
 	private final static String DEFAULT_FOLDER = "../defaults/creature/";
 	private final static String[] ASSETS_NAMES = {"still", "left", "right", "up", "down"};
 	private final static int	DEFAULT_X_SIZE = 100,
@@ -30,7 +31,9 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 	private String	BRINGS_EXPR = rootElement() + "/brings",
 					DIMENSIONS_X_EXPR = rootElement() + "/dimension[@direction=\"x\"]",
 					DIMENSIONS_Y_EXPR = rootElement() + "/dimension[@direction=\"y\"]",
-					LIFETIME_EXPR = rootElement() + "/lifetime";
+					LIFETIME_EXPR = rootElement() + "/lifetime",
+					SOUND_EXPR = rootElement() + "/sound",
+					DEFAULT_SOUND = defaultFolder() + "/sound.wav";
 	//@}
 	
 	/**@name	Variables membres*/
@@ -39,6 +42,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 	private Map<String, Double> brings;
 	private Dimension dimensions;
 	private int lifetime;
+	private File sound;
     private boolean dead = false, outside = true;
     long timeBorn = System.currentTimeMillis();
 	//@}
@@ -54,7 +58,6 @@ public class Creature extends XMLLoadableElement implements Cloneable {
     public Creature(String ID) {
 		load(ID);
         img = stillImages().get(0);
-
         init();
     }
 	
@@ -103,6 +106,10 @@ public class Creature extends XMLLoadableElement implements Cloneable {
         return ASSETS_NAMES;
     }
 	
+	public File sound() {
+		return sound;
+	}
+	
 	public URI defaultFolder() {
 		try {
 			return new URI(DEFAULT_FOLDER);
@@ -119,6 +126,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 	protected void parsePrivates() {
 		brings = parseBrings();
 		lifetime = parseLifetime();
+		sound = parseSoundPath();
 	}
 	
 	private Map<String, Double> parseBrings() {
@@ -132,6 +140,23 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 	private int parseLifetime() {
 		int result = parser.getDouble(LIFETIME_EXPR).intValue();
 		return (result <= 0 ? DEFAULT_LIFETIME : result);
+	}
+	
+	private File parseSoundPath() {
+		String[] paths = {parser.get(SOUND_EXPR), DEFAULT_SOUND};
+		for (String path : paths) {
+			URI soundURI = parser.getDocumentURI();
+			try {
+				soundURI = soundURI.normalize().resolve(new URI(path));
+				File sound = new File(soundURI);
+				if (! sound.exists())
+					throw new java.io.IOException();
+				return sound;
+			} catch(Exception e) {
+				System.err.println("Unable to find sound file " + soundURI + " for creature \"" + ID() + "\".");
+			}
+		}
+		throw new RuntimeException("Erreur au chargement d'un son : fichier introuvable.");
 	}
 	//@}
 	
