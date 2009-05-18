@@ -27,6 +27,6 @@
 	
 	<brings>
 		<creature probability="0.5">papilionidae</creature>
-		<creature probability="0.5">coccinelle</creature>
+		<creature probability="0.6">aphidoidea</creature>
 	</brings>
 </plant>

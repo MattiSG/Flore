@@ -30,6 +30,6 @@
 	</assets>
 	
 	<brings>
-		<creature probability="0.9">coccinelle</creature>
+		<creature probability="0.3">coccinelle</creature>
 	</brings>
 </creature>
