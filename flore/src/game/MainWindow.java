@@ -133,23 +133,19 @@ public class MainWindow extends JFrame {
                                     seedsUsed.put(newPlant.ID(), seedsUsed.get(newPlant.ID()) + 1);
                                     plantedPlants.set(i, newPlant);
                                     gameView.updatePlantedPlants();
-                                    if (seedsUsed.get(newPlant.ID()) >= currentMission.plants().get(newPlant.ID())) {
-                                        for (int j = 0; j < seedList.getSize(); ++j)
-                                            if (((Plant) seedList.get(j)).ID() == newPlant.ID())
-                                                seedList.remove(j);
-                                        seedListView.setSelectedIndex(0);
-                                    }
                                 } else {
-                                    for (int j = 0; j < seedList.getSize(); ++j)
-                                        if (((Plant) seedList.get(j)).ID() == newPlant.ID())
-                                            seedList.remove(j);
-                                    seedListView.setSelectedIndex(0);
                                     play("Tu n'as plus de graîne de "+newPlant.name());
                                 }
                             } else {
                                 seedsUsed.put(newPlant.ID(), 1);
                                 plantedPlants.set(i, newPlant);
                                 gameView.updatePlantedPlants();
+                            }
+                            if (seedsUsed.get(newPlant.ID()) >= currentMission.plants().get(newPlant.ID())) {
+                                for (int j = 0; j < seedList.getSize(); ++j)
+                                    if (((Plant) seedList.get(j)).ID() == newPlant.ID())
+                                        seedList.remove(j);
+                                seedListView.setSelectedIndex(0);
                             }
                         } catch(CloneNotSupportedException ex) {
                             System.err.println("[erreur] Impossible de cloner l'objet plante : " + ex);
