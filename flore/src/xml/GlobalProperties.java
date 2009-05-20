@@ -16,10 +16,15 @@ public class GlobalProperties {
 	public static Properties defaults() {
 		Properties result = new Properties();
 		result.setProperty(TEST_KEY, TEST_VALUE);
+		result.setProperty("debug", "true");
+		result.setProperty("compatibility_mode", "true");
 		result.setProperty("Creature" + ZOOM_SUFFIX, "1.5");
 		result.setProperty("Plant" + ZOOM_SUFFIX, "1.0");
 		result.setProperty("Mission" + ZOOM_SUFFIX, "1.0");
 		result.setProperty("default_folder", "../defaults/");
+		result.setProperty("coef_croissance_plantes", "1.0");
+		result.setProperty("language", "fr");
+		result.setProperty("assets_type", "standard");
 		return result;
 	}
 	
@@ -97,6 +102,16 @@ public class GlobalProperties {
 			System.err.println("Couldn't get key \"" + key + "\" ! Returned default value " + DEFAULT_DOUBLE_VALUE + " instead.");
 			return DEFAULT_DOUBLE_VALUE;
 		}
+	}
+	
+	/**Returns the value for the given key as a Boolean, or false if none is found.
+	 *A key is evaluated to true if its value is "true", as described in Boolean.valueOf(String).
+	 *@see	Boolean.valueOf
+	 */	
+	public static Boolean getBoolean(String key) {
+		init();
+		Boolean value = new Boolean(props.getProperty(key));
+		return (value == null ? Boolean.FALSE : value);
 	}
 	//@}
 	

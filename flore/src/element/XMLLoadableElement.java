@@ -27,7 +27,7 @@ import xml.GlobalProperties;
  */
 public abstract class XMLLoadableElement {
 	/**If set to true, will throw an exception if parser version and parsed file version differ.*/
-	public final static boolean STRICT_VERSION_CHECKING = false;
+	public final static boolean STRICT_VERSION_CHECKING = ! GlobalProperties.getBoolean("compatibility_mode");
 	
 	/**@name	Element description*/
 	//@{
@@ -44,8 +44,8 @@ public abstract class XMLLoadableElement {
 	//@{
 	private final String	EXPR_VERSION = rootElement() + "/id/../@version",
 							EXPR_ID = rootElement() + "/id",
-							EXPR_NAME = rootElement() + "/name[@lang='fr']",
-							EXPR_ASSETS = rootElement() + "/assets[@type='standard']",
+							EXPR_NAME = rootElement() + "/name[@lang='" + GlobalProperties.get("language") + "']",
+							EXPR_ASSETS = rootElement() + "/assets[@type='" + GlobalProperties.get("assets_type") + "']",
 							EXPR_DESCRIPTION = rootElement() + "/description",
 							WIDTH_ATTRIBUTE = "width",
 							HEIGHT_ATTRIBUTE = "height";
