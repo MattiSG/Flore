@@ -26,14 +26,18 @@ public class Flore extends MenuAbstrait {
     }
 
     protected String[] nomOptions() {
-        return new String[] { "Jouer", "Options", "Quitter" };
+        return new String[] { "Jouer", "Apprendre à jouer", "Options", "Quitter" };
     }
 
     protected void lancerOption(int i) {
         switch (i) {  
-            case 0 : new MainWindow(); break;
-            case 1 : new OptionsEditor(); break;
-            case 2 : System.exit(0);
+            case 0 : new MainWindow();
+				break;
+			case 1 : new TutorialMainWindow();
+				break;
+            case 2 : new OptionsEditor();
+            	break;
+            case 3 : System.exit(0);
             default: System.err.println("action non définie");
         }
     } 

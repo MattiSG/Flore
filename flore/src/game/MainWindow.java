@@ -53,8 +53,10 @@ import java.io.FilenameFilter;
  *
  */
 public class MainWindow extends JFrame {
-    // listes de toutes les missions
-    private List<Mission>   missions     = new LinkedList<Mission>();
+	// listes de toutes les missions
+    protected List<Mission>   missions     = new LinkedList<Mission>();
+	
+	
     // plantes disponibles pour la mission courante
     private List<Plant>     plants       = new LinkedList<Plant>();
     // insectes nécessaires pour valider la mission courante
@@ -312,7 +314,7 @@ public class MainWindow extends JFrame {
     // }
 
     // charge toutes les missions en listant le répertoire des ressources
-    private void loadMissions() {
+    protected void loadMissions() {
         File rep = new File("../ressources/elements/");
         File[] listMissions = rep.listFiles(new FilenameFilter() {
             public boolean accept(File dir, String name) {
