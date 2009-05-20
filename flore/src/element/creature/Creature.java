@@ -275,6 +275,10 @@ public class Creature extends XMLLoadableElement implements Cloneable {
             // spawn sur côté gauche ou droit au hasard
             pos.x = random.nextInt(2) == 0 ? -(img.getWidth() - 1) : rect.width + img.getWidth() - 1;
             pos.y = random.nextInt(rect.height);
+            if (pos.y < img.getHeight())
+                pos.y = img.getHeight();
+            else if(pos.y > rect.height - img.getHeight())
+                pos.y = rect.height - img.getHeight();
 
             // selectionne un mouvement au hasard
             randomMvt(rect.width, rect.height);
