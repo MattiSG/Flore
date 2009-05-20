@@ -17,7 +17,7 @@ public class GlobalProperties {
 		Properties result = new Properties();
 		result.setProperty(TEST_KEY, TEST_VALUE);
 		result.setProperty("debug", "true");
-		result.setProperty("compatibility_mode", "true");
+		result.setProperty("compatibility_mode", "false");
 		result.setProperty("Creature" + ZOOM_SUFFIX, "1.5");
 		result.setProperty("Plant" + ZOOM_SUFFIX, "1.0");
 		result.setProperty("Mission" + ZOOM_SUFFIX, "1.0");
