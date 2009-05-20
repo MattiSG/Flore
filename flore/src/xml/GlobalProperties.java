@@ -46,7 +46,7 @@ public class GlobalProperties {
 			props = defaults();
 			try {
 				PROP_FILE = new File(PROP_FILE_PATH).getCanonicalFile();
-//				props.loadFromXML(new FileInputStream(PROP_FILE));
+				props.loadFromXML(new FileInputStream(PROP_FILE));
 			} catch (java.io.FileNotFoundException fnf) {
 				store();
 			} catch (Exception e) {
