@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<creature version="0.6" author="devint">
+<creature version="0.61" author="devint">
 
 	<id>sphingidae</id>
 	<name lang="fr">Sphinx Colibri</name>
@@ -7,6 +7,8 @@
 	<description lang="fr">Le sphinx colibri possède une très longue trompe pour butiner les fleurs, en vol stationnaire comme les oiseaux-mouches, d'où son nom.</description>
 	
 	<lifetime>8</lifetime>
+	
+	<sound></sound>
 
 	<assets type="standard">
 		<still>

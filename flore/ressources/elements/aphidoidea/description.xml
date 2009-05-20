@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<creature version="0.6" author="devint">
+<creature version="0.61" author="devint">
 	<id>aphidoidea</id>
 	<name lang="fr">Puceron</name>
 	
 	<description lang="fr">Les pucerons sont de très petits insectes, dont les larves se trouvent souvent sur les rosiers. Leurs plus grands prédateurs sont les coccinelles, qui les dévorent par centaines.</description>
 	
 	<lifetime>2</lifetime>
+	
+	<sound></sound>
 
 	<assets type="standard">
 		<still>

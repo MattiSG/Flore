@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<creature version="0.6" author="devint">
+<creature version="0.61" author="devint">
 	<id>papilionidae</id>
 	<name lang="fr">Machaon</name>
 	
 	<description lang="fr">Les Machaons sont de grands papillons aux couleurs très vives. La plupart possède une sorte de queue au bout de chaque aile.</description>
 	
 	<lifetime>12</lifetime>
+		
+	<sound></sound>
 	
 	<assets type="standard">
 		<still>

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<creature version="0.6" author="devint">
+<creature version="0.61" author="devint">
 	<id>coccinelle</id>
 	<name lang="fr">Coccinelle</name>
 
 	<description lang="fr">Les coccinelles, qu'on appelle aussi parfois bêtes à bon Dieu, sont des coléoptères. Véritables ogres à pucerons, les coccinelles sont aujourd'hui reconnues comme l'un des meilleurs insecticides naturels.</description>
 	
 	<lifetime>10</lifetime>
+		
+	<sound></sound>
 	
 	<assets type="standard">
 		<still>

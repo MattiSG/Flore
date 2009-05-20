@@ -64,7 +64,7 @@
     </junit>
   </target>
 
-  <target name="dist" depends="junit" description="Création du fichier zip final">
+  <target name="dist" depends="junit_extended" description="Création du fichier zip final">
     <mkdir dir="${dir.tmp}"/>
     <copy todir="${dir.tmp}/ressources">
         <fileset dir="${dir.rsc}"/>
