@@ -111,7 +111,7 @@ public class MainWindow extends JFrame {
         statusBar.setFont(defaultFont);
 
         // gestion des événements
-        seedListView.addKeyListener(new KeyAdapter() {        	
+        seedListView.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 // espace => ajouter de l'eau
                 if (KeyEvent.VK_SPACE == e.getKeyCode()) {
