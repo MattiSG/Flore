@@ -17,6 +17,7 @@
   <property name="lib.json" value="${dir.lib}/json.jar"/>
   <property name="lib.junit" value="${dir.lib}/junit-4.5.jar"/>
   <property name="project.name" value="Flore"/>
+  <property name="file.config" value="ressources/flore_config.xml"/>
 
   <target name="init" description="Preparation">
     <mkdir dir="${dir.bin}"/>
@@ -66,6 +67,7 @@
 
   <target name="dist" depends="junit_extended" description="Création du fichier zip final">
     <mkdir dir="${dir.tmp}"/>
+    <delete file="${file.config}"/>
     <copy todir="${dir.tmp}/ressources">
         <fileset dir="${dir.rsc}"/>
     </copy>
@@ -86,5 +88,7 @@
 
   <target name="clean" description="Remove build, jar and dist directories">
     <delete dir="${dir.bin}"/>
+    <delete dir="${dir.jars}"/>
+    <delete dir="${dir.dist}"/>
   </target>
 </project>

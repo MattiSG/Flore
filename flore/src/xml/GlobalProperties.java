@@ -18,7 +18,7 @@ public class GlobalProperties {
 	public static Properties defaults() {
 		Properties result = new Properties();
 		result.setProperty(TEST_KEY, TEST_VALUE);
-		result.setProperty("debug", "true");
+		result.setProperty("debug", "false");
 		result.setProperty("compatibility_mode", "false");
 		result.setProperty("Creature" + ZOOM_SUFFIX, "15");
 		result.setProperty("Plant" + ZOOM_SUFFIX, "10");
