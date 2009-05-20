@@ -22,7 +22,6 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 	/**@name	Variables d'unmarshalling*/
 	//@{
 	private final static double PARSER_VERSION = 0.61;
-	private final static String DEFAULT_FOLDER = "../defaults/creature/";
 	private final static String[] ASSETS_NAMES = {"still", "left", "right", "up", "down"};
 	private final static int	DEFAULT_X_SIZE = 100,
 								DEFAULT_Y_SIZE = 100,
@@ -106,15 +105,6 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 	
 	public File sound() {
 		return sound;
-	}
-	
-	public URI defaultFolder() {
-		try {
-			return new URI(DEFAULT_FOLDER);
-		} catch (java.net.URISyntaxException e) {
-			System.err.println("Default folder is unreachable.");
-			throw new RuntimeException(e);
-		}
 	}
 	
 	public int lifetime() {
@@ -350,9 +340,9 @@ public class Creature extends XMLLoadableElement implements Cloneable {
             outside = false;
 
         // à l'intérieur de l'écran ? (soit plus d'à moitié visible)
-        if (pos.x > 0 &&
-                pos.x < rect.width &&
-                pos.y > 0 &&
+        if (pos.x > 0 ||
+                pos.y > 0 ||
+                pos.x < rect.width ||
                 pos.y < rect.height)
             inside = true;
         else

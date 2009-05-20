@@ -16,7 +16,6 @@ import java.net.URI;
 
 public class Mission extends XMLLoadableElement {
 	private final static double PARSER_VERSION = 0.22;
-	private final static String DEFAULT_FOLDER = "../defaults/mission/";
     private final static String[] ASSETS_NAMES = {"icon", "sky", "grass", "sun", "hole", "hole_full", "hole_selected", "hole_full_selected", "cloud"};
 	private final static String ROOT = "mission";
 	private final String	HINTS_EXPR = rootElement() + "/hints/*",
@@ -65,15 +64,6 @@ public class Mission extends XMLLoadableElement {
 	 */
 	public Map<String, Integer> goal() {
 		return goal;
-	}
-	
-	public URI defaultFolder() {
-		try {
-			return new URI(DEFAULT_FOLDER);
-		} catch (java.net.URISyntaxException e) {
-			System.err.println("Default folder is unreachable.");
-			throw new RuntimeException(e);
-		}
 	}
 	//@}
 	

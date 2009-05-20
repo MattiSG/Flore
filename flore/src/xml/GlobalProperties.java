@@ -19,6 +19,7 @@ public class GlobalProperties {
 		result.setProperty("Creature" + ZOOM_SUFFIX, "1.5");
 		result.setProperty("Plant" + ZOOM_SUFFIX, "1.0");
 		result.setProperty("Mission" + ZOOM_SUFFIX, "1.0");
+		result.setProperty("default_folder", "../defaults/");
 		return result;
 	}
 	
@@ -39,7 +40,7 @@ public class GlobalProperties {
 			props = defaults();
 			try {
 				PROP_FILE = new File(PROP_FILE_PATH).getCanonicalFile();
-				props.loadFromXML(new FileInputStream(PROP_FILE));
+//				props.loadFromXML(new FileInputStream(PROP_FILE));
 			} catch (java.io.FileNotFoundException fnf) {
 				store();
 			} catch (Exception e) {

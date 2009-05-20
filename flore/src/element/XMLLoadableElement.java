@@ -103,7 +103,13 @@ public abstract class XMLLoadableElement {
 	/**URI of the folder containing the default values for assets.
 	 *The images inside have to be named from the key of the corresponding asset, and in the PNG format.
 	 */
-	protected abstract URI defaultFolder();
+	protected URI defaultFolder() {
+		try {
+			return new URI(GlobalProperties.get("default_folder") + this.getClass().getSimpleName() + "/");
+		} catch (java.net.URISyntaxException e) {
+			throw new RuntimeException("Impossible d'obtenir le dossier par défaut pour la classe \"" + this.getClass().getSimpleName() + "\" !\n" + e);
+		}
+	}
 	
 	/**Zoom level (Coefficient multiplicatif à appliquer aux images au chargement).
 	 *Loaded from the config file.

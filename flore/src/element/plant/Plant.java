@@ -32,7 +32,6 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 	/**@name	Variables d'unmarshalling*/
 	//@{
 	private final static double PARSER_VERSION = 0.4;
-	private final static String DEFAULT_FOLDER = "../defaults/plant/";
 	private final static String[] ASSETS_NAMES = {"seed", "shaft", "leaves", "flowers"};
 	private final static String ROOT = "plant";
 	private String BRINGS_EXPR = rootElement() + "/brings";
@@ -153,15 +152,6 @@ public class Plant extends XMLLoadableElement implements Cloneable {
 	
 	public String[] getAssetsNames() {
 		return ASSETS_NAMES;
-	}
-	
-	public URI defaultFolder() {
-		try {
-			return new URI(DEFAULT_FOLDER);
-		} catch (java.net.URISyntaxException e) {
-			System.err.println("Default folder is unreachable.");
-			throw new RuntimeException(e);
-		}
 	}
 	
 	protected void parsePrivates() {
