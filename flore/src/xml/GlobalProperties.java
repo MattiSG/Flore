@@ -10,7 +10,8 @@ import java.awt.Font;
 /**This class holds the global options used throughout the game.
  */
 public class GlobalProperties {
-
+	public static final double STORAGE_NUMBERS_COEF = 10.0;
+	
 	/**Get default options values.
 	 *Feel free to add your own values !
 	 */
@@ -19,15 +20,15 @@ public class GlobalProperties {
 		result.setProperty(TEST_KEY, TEST_VALUE);
 		result.setProperty("debug", "true");
 		result.setProperty("compatibility_mode", "false");
-		result.setProperty("Creature" + ZOOM_SUFFIX, "1.5");
-		result.setProperty("Plant" + ZOOM_SUFFIX, "1.0");
-		result.setProperty("Mission" + ZOOM_SUFFIX, "1.0");
+		result.setProperty("Creature" + ZOOM_SUFFIX, "15");
+		result.setProperty("Plant" + ZOOM_SUFFIX, "10");
+		result.setProperty("Mission" + ZOOM_SUFFIX, "10");
 		result.setProperty("default_folder", "../ressources/elements/defaults/");
-		result.setProperty("Creature_Speed", "3.0");
-		result.setProperty("coef_croissance_plantes", "1.0");
+		result.setProperty("Creature_Speed", "30");
+		result.setProperty("coef_croissance_plantes", "10");
 		result.setProperty("language", "fr");
 		result.setProperty("assets_type", "standard");
-		result.setProperty("font_size", "50");
+		result.setProperty("font_size", "40");
 		return result;
 	}
 	
@@ -72,6 +73,7 @@ public class GlobalProperties {
 	}
 	
 	/**Store options with the given comments.
+	 *<strong>WARNING</strong> for numeric values, store them by 10 times the value you want them to be read. This is due to a limitation of the GUI input discovered too late to be corrected.
 	 *@param	comments	comments to add to the file.
 	 */
 	public static void store(String comments) {
@@ -114,7 +116,7 @@ public class GlobalProperties {
 	public static Double getDouble(String key) {
 		init();
 		try {
-			return new Double(props.getProperty(key));
+			return new Integer(props.getProperty(key)) / STORAGE_NUMBERS_COEF;
 		} catch (NumberFormatException e) {
 			System.err.println("Couldn't parse option \"" + key + "\" as double ! Returned default value " + DEFAULT_DOUBLE_VALUE + " instead.");
 			return DEFAULT_DOUBLE_VALUE;

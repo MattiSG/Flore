@@ -48,10 +48,10 @@ public class OptionsEditor extends JFrame {
         JSpinner spinner = new JSpinner();
         JSpinner.NumberEditor spinnerEditor = new JSpinner.NumberEditor(spinner);
         spinner.setEditor(spinnerEditor);
-        spinnerEditor.getModel().setMinimum(0);
-        spinnerEditor.getModel().setMaximum(20);
+        spinnerEditor.getModel().setMinimum(1);
+        spinnerEditor.getModel().setMaximum(50);
         spinnerEditor.getModel().setStepSize(1);
-        spinnerEditor.getModel().setValue(GlobalProperties.getDouble("Creature_Speed"));
+        spinnerEditor.getModel().setValue(GlobalProperties.getDouble("Creature_Speed") * GlobalProperties.STORAGE_NUMBERS_COEF);
 
         spinnerEditor.getModel().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
@@ -66,10 +66,10 @@ public class OptionsEditor extends JFrame {
         JSpinner spinner = new JSpinner();
         JSpinner.NumberEditor spinnerEditor = new JSpinner.NumberEditor(spinner);
         spinner.setEditor(spinnerEditor);
-        spinnerEditor.getModel().setMinimum(0);
-        spinnerEditor.getModel().setMaximum(10);
+        spinnerEditor.getModel().setMinimum(5);
+        spinnerEditor.getModel().setMaximum(30);
         spinnerEditor.getModel().setStepSize(0.1);
-        spinnerEditor.getModel().setValue(GlobalProperties.getDouble("Creature" + GlobalProperties.ZOOM_SUFFIX));
+        spinnerEditor.getModel().setValue(GlobalProperties.getDouble("Creature" + GlobalProperties.ZOOM_SUFFIX) * GlobalProperties.STORAGE_NUMBERS_COEF);
 
         spinnerEditor.getModel().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
@@ -84,10 +84,10 @@ public class OptionsEditor extends JFrame {
         JSpinner spinner = new JSpinner();
         JSpinner.NumberEditor spinnerEditor = new JSpinner.NumberEditor(spinner);
         spinner.setEditor(spinnerEditor);
-        spinnerEditor.getModel().setMinimum(0);
-        spinnerEditor.getModel().setMaximum(10);
+        spinnerEditor.getModel().setMinimum(5);
+        spinnerEditor.getModel().setMaximum(30);
         spinnerEditor.getModel().setStepSize(0.1);
-        spinnerEditor.getModel().setValue(GlobalProperties.getDouble("Plant" + GlobalProperties.ZOOM_SUFFIX));
+        spinnerEditor.getModel().setValue(GlobalProperties.getDouble("Plant" + GlobalProperties.ZOOM_SUFFIX) * GlobalProperties.STORAGE_NUMBERS_COEF);
 
         spinnerEditor.getModel().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
@@ -98,23 +98,23 @@ public class OptionsEditor extends JFrame {
         addEditor("Zoom de la plante", spinner);
     }
 
-    private void setMissionZoomEditor() {
-        JSpinner spinner = new JSpinner();
-        JSpinner.NumberEditor spinnerEditor = new JSpinner.NumberEditor(spinner);
-        spinner.setEditor(spinnerEditor);
-        spinnerEditor.getModel().setMinimum(0);
-        spinnerEditor.getModel().setMaximum(10);
-        spinnerEditor.getModel().setStepSize(0.1);
-        spinnerEditor.getModel().setValue(GlobalProperties.getDouble("Mission" + GlobalProperties.ZOOM_SUFFIX));
-
-        spinnerEditor.getModel().addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                GlobalProperties.set("Mission"+GlobalProperties.ZOOM_SUFFIX, ""+((SpinnerNumberModel)e.getSource()).getValue());
-            }
-        });
-
-        addEditor("Zoom de la mission", spinner);
-    }
+//    private void setMissionZoomEditor() {
+//        JSpinner spinner = new JSpinner();
+//        JSpinner.NumberEditor spinnerEditor = new JSpinner.NumberEditor(spinner);
+//        spinner.setEditor(spinnerEditor);
+//        spinnerEditor.getModel().setMinimum(5);
+//        spinnerEditor.getModel().setMaximum(30);
+//        spinnerEditor.getModel().setStepSize(0.1);
+//        spinnerEditor.getModel().setValue(GlobalProperties.getDouble("Mission" + GlobalProperties.ZOOM_SUFFIX) * GlobalProperties.STORAGE_NUMBERS_COEF);
+//
+//        spinnerEditor.getModel().addChangeListener(new ChangeListener() {
+//            public void stateChanged(ChangeEvent e) {
+//                GlobalProperties.set("Mission"+GlobalProperties.ZOOM_SUFFIX, ""+((SpinnerNumberModel)e.getSource()).getValue());
+//            }
+//        });
+//
+//        addEditor("Zoom de la mission", spinner);
+//    }
 
 
     private void setFontSizeEditor() {
@@ -124,7 +124,7 @@ public class OptionsEditor extends JFrame {
         spinnerEditor.getModel().setMinimum(0);
         spinnerEditor.getModel().setMaximum(100);
         spinnerEditor.getModel().setStepSize(1);
-        spinnerEditor.getModel().setValue(GlobalProperties.getInteger("font_size"));
+        spinnerEditor.getModel().setValue(GlobalProperties.getInteger("font_size") * GlobalProperties.STORAGE_NUMBERS_COEF);
 
         spinnerEditor.getModel().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
