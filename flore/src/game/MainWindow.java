@@ -353,6 +353,7 @@ public class MainWindow extends JFrame {
         currentMission = missions.get(index);
         gameView.setMission(currentMission);
         plantedPlants.clear();
+        seedsUsed.clear();
 
         for (int i = 0; i < currentMission.holes(); ++i)
             plantedPlants.add(null);
