@@ -134,7 +134,7 @@ public class MainWindow extends JFrame {
                                     plantedPlants.set(i, newPlant);
                                     gameView.updatePlantedPlants();
                                 } else {
-                                    play("Tu n'as plus de graîne de "+newPlant.name());
+                                    play("Tu n'as plus de graine de "+newPlant.name());
                                 }
                             } else {
                                 seedsUsed.put(newPlant.ID(), 1);
