@@ -350,9 +350,9 @@ public class Creature extends XMLLoadableElement implements Cloneable {
             outside = false;
 
         // à l'intérieur de l'écran ? (soit plus d'à moitié visible)
-        if (pos.x > 0 ||
-                pos.y > 0 ||
-                pos.x < rect.width ||
+        if (pos.x > 0 &&
+                pos.x < rect.width &&
+                pos.y > 0 &&
                 pos.y < rect.height)
             inside = true;
         else
