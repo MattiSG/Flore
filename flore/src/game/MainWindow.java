@@ -135,12 +135,18 @@ public class MainWindow extends JFrame {
                     statusBar.setText("Au revoir !");
                     timer.stop();
                     dispose();
-                // f1 => lecture de l'indice courant
-				} else if (KeyEvent.VK_F1 == e.getKeyCode()) {
-					play(currentMission.hints().peek());
-                // f2 => passe à l'indice suivant et le lit
+				// F1 ou HELP => lit l'aide. TODO : mapper aussi le point d'interrogation.
+				} else if (KeyEvent.VK_F1 == e.getKeyCode() || KeyEvent.VK_HELP == e.getKeyCode()) {
+					play("Pour lire un indice, appuie sur F2. Pour passer à un indice plus précis, appuie sur F3. Pour lire la description de la mission, appuie sur la touche F ou la touche D. Pour sélectionner une graine, utilise les flèches haut et bas. Pour choisir un trou où planter la graine, utilise les flèches droite et gauche. Pour planter la graine, appuie sur la touche entrée. Pour arroser la plante, laisse la touche espace enfoncée. Pour quitter, appuie sur la touche échap. Si tu es perdu, commence par faire le tutoriel du jeu !");
+                // f2 => lecture de l'indice courant
 				} else if (KeyEvent.VK_F2 == e.getKeyCode()) {
+					play(currentMission.hints().peek());
+                // f3 => passe à l'indice suivant et le lit
+				} else if (KeyEvent.VK_F3 == e.getKeyCode()) {
 					play(currentMission.hints().poll());
+				// F => lit la description de la mission
+				} else if (KeyEvent.VK_F == e.getKeyCode()) {
+					play(currentMission.description());
 				}
             }
         });
