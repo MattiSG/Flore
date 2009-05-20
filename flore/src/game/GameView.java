@@ -37,6 +37,10 @@ public class GameView extends JPanel {
     private BufferedImage    hole;
     // image d'un trou sélectionné
     private BufferedImage    holeSelected;
+    // image d'un trou plein
+    private BufferedImage    holeFull;
+    // image d'un trou plein sélectionné
+    private BufferedImage    holeFullSelected;
     // image du ciel
     private BufferedImage    sky;
     // image représentant le fond (soleil + ciel + sol)
@@ -155,10 +159,13 @@ public class GameView extends JPanel {
 
         grass = m.getAsset("grass");
         cloud = m.getAsset("cloud");
-        hole  = m.getAsset("hole_full");
-        holeSelected  = m.getAsset("hole_full_selected");
         sun   = m.getAsset("sun");
         sky   = m.getAsset("sky");
+
+        hole              = m.getAsset("hole");
+        holeSelected      = m.getAsset("hole_selected");
+        holeFull          = m.getAsset("hole_full");
+        holeFullSelected  = m.getAsset("hole_full_selected");
 
         holesNumber = m.holes();
         computeHoles();
@@ -199,24 +206,18 @@ public class GameView extends JPanel {
         // image de fond
         g2d.drawImage(background, 0, 0, null);
 
-        // trous
-        g2d.setColor(Color.BLACK);
-        for (Point p : holes) {
-            int holeW = hole.getWidth();
-            int holeH = hole.getHeight();
-
-            int x = p.x - holeW / 2;
-            int y = p.y - holeH / 2;
-
-            if (p == selectedHole)
-                g2d.drawImage(holeSelected, x, y, holeW, holeH, null);
-
-            g2d.drawImage(hole, x, y, holeW, holeH, null);
-        }
-
         // plantes
-        for (Plant p : plantedPlants) {
+        for (int i = 0; i < plantedPlants.size(); ++i) {
+            Point h = holes.get(i);
+            BufferedImage holeImg;
+
+            Plant p = plantedPlants.get(i);
             if (p != null) {
+                if (h == selectedHole)
+                    holeImg = holeFullSelected;
+                else
+                    holeImg = holeFull;
+
                 p.paint(g);
                 if (p.hasWater()) {
                     // dessiner le nuage
@@ -250,7 +251,19 @@ public class GameView extends JPanel {
                     // remise à zéro du compteur de boucle
                     loopCount = 0;
                 }
+            } else {
+                if (h == selectedHole)
+                    holeImg = holeSelected;
+                else
+                    holeImg = hole;
             }
+
+            int holeW = holeImg.getWidth();
+            int holeH = holeImg.getHeight();
+
+            int x = h.x - holeW / 2;
+            int y = h.y - holeH / 2;
+            g2d.drawImage(holeImg, x, y, holeW, holeH, null);
         }
 
         // creatures
