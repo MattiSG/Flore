@@ -124,7 +124,9 @@ public class Mission extends XMLLoadableElement {
 		List<Node> hintsNodes = parser.getNodes(HINTS_EXPR);
 		Map<Integer, String> hintsMap = new TreeMap<Integer, String>(); //TODO : utiliser une file directement.
 		for (Node node : hintsNodes)
-			hintsMap.put(Integer.decode(node.getAttributes().getNamedItem("level").getNodeValue()), node.getTextContent());
+        {
+			hintsMap.put(-1 * Integer.decode(node.getAttributes().getNamedItem("level").getNodeValue()), node.getTextContent());
+        }
 		hints = new PriorityQueue<String>(hintsMap.values());
 	}
 	
