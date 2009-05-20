@@ -17,6 +17,7 @@ import java.awt.Dimension;
 import org.w3c.dom.Node;
 
 import element.XMLLoadableElement;
+import xml.GlobalProperties;
 
 public class Creature extends XMLLoadableElement implements Cloneable {
 	/**@name	Variables d'unmarshalling*/
@@ -237,6 +238,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
      */
     private void randomMvt(int width, int height)
     {
+        // anti boucle infinie
         int m = 50;
 
         // on empêche la créature de sortir de l'écran en cherchant un mouvement correct
@@ -305,7 +307,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
             Point oldMvt = calcMvt(mvtT, dir);
 
             // incrémentation du déplacement
-            mvtT += dtime * 0.3; 
+            mvtT += dtime * (GlobalProperties.getDouble("Creature_Speed") / 10.0f);
 
             Point newMvt = calcMvt(mvtT, dir);
  

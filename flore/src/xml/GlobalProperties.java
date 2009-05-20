@@ -21,6 +21,7 @@ public class GlobalProperties {
 		result.setProperty("Creature" + ZOOM_SUFFIX, "1.5");
 		result.setProperty("Plant" + ZOOM_SUFFIX, "1.0");
 		result.setProperty("Mission" + ZOOM_SUFFIX, "1.0");
+		result.setProperty("Creature_Speed", "3.0");
 		result.setProperty("default_folder", "../defaults/");
 		result.setProperty("coef_croissance_plantes", "1.0");
 		result.setProperty("language", "fr");
