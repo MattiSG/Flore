@@ -59,7 +59,9 @@ public class MainWindow extends JFrame {
     // plantes disponibles pour la mission courante
     private List<Plant>       plants       = new LinkedList<Plant>();
     // insectes nécessaires pour valider la mission courante
-    private Map<String,Integer> insects  = new HashMap<String,Integer>();
+    private Map<String,Integer> insects    = new HashMap<String,Integer>();
+    // nombres de graînes utilisées
+    private Map<String,Integer> seedsUsed  = new HashMap<String,Integer>();
     // plantes en terre
     private List<Plant> plantedPlants    = new ArrayList<Plant>();
     // mission courante
@@ -125,8 +127,20 @@ public class MainWindow extends JFrame {
                         try {
                             // récupère la plante dans la liste des graînes
                             // et la clone pour en faire un nouvel objet
-                            plantedPlants.set(i, ((Plant) seedListView.getSelectedValue()).clone());
-                            gameView.updatePlantedPlants();
+                            Plant newPlant = ((Plant) seedListView.getSelectedValue()).clone();
+                            if (seedsUsed.containsKey(newPlant.ID())) {
+                                if (seedsUsed.get(newPlant.ID()) < currentMission.plants().get(newPlant.ID())) {
+                                    seedsUsed.put(newPlant.ID(), seedsUsed.get(newPlant.ID()) + 1);
+                                    plantedPlants.set(i, newPlant);
+                                    gameView.updatePlantedPlants();
+                                } else {
+                                    play("Tu n'as plus de graîne de "+newPlant.name());
+                                }
+                            } else {
+                                seedsUsed.put(newPlant.ID(), 1);
+                                plantedPlants.set(i, newPlant);
+                                gameView.updatePlantedPlants();
+                            }
                         } catch(CloneNotSupportedException ex) {
                             System.err.println("[erreur] Impossible de cloner l'objet plante : " + ex);
                         }
