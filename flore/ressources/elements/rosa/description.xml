@@ -11,8 +11,8 @@
 	
 	<assets type="standard">
 		<seed>
-			<img width="120" height="120">assets/standard/seed.png</img>
 			<img width="120" height="120">assets/standard/seed_2.png</img>
+			<img width="120" height="120">assets/standard/seed.png</img>
 		</seed>
 		<shaft>
 			<img>assets/standard/blue_rose.png</img>

@@ -116,7 +116,7 @@ public class GlobalProperties {
 	public static Double getDouble(String key) {
 		init();
 		try {
-			return new Integer(props.getProperty(key)) / STORAGE_NUMBERS_COEF;
+			return new Double(props.getProperty(key)) / STORAGE_NUMBERS_COEF;
 		} catch (NumberFormatException e) {
 			System.err.println("Couldn't parse option \"" + key + "\" as double ! Returned default value " + DEFAULT_DOUBLE_VALUE + " instead.");
 			return DEFAULT_DOUBLE_VALUE;
