@@ -105,7 +105,8 @@ public abstract class XMLLoadableElement {
 	 */
 	protected URI defaultFolder() {
 		try {
-			return new URI(GlobalProperties.get("default_folder") + this.getClass().getSimpleName() + "/");
+			File defaultBase = new File(GlobalProperties.get("default_folder"));
+			return new URI(defaultBase.toURI() + "/" + this.getClass().getSimpleName() + "/");
 		} catch (java.net.URISyntaxException e) {
 			throw new RuntimeException("Impossible d'obtenir le dossier par défaut pour la classe \"" + this.getClass().getSimpleName() + "\" !\n" + e);
 		}

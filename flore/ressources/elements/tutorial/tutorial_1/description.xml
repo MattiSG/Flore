@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mission version="0.22" author="devint">
+	
+	<id>tutorial/tutorial_1</id>
+	<name lang="fr">Tutoriel</name>
+	
+	<description lang="fr">Bienvenue dans le tutoriel du jeu Flore ! Le but de ce jeu est de sauver des insectes en danger. Pour cela, tu dois réussir à les attirer. Pour savoir comment faire, utilise la touche F2. Si tu as oublié une des touches, tu peux à tout moment appuyer sur la touche F1.</description>
+
+	<hints>
+		<hint level="100">Bravo ! Tu viens de lire le premier indice de ce niveau. Pour le réécouter, tu peux appuyer sur à nouveau sur F2. Une fois que tu es prêt, tu peux passer à l'indice suivant en appuyant sur F3.</hint>
+		<hint level="99">Super ! Tu sais maintenant avancer dans la liste des indices. Pour savoir comment attirer les insectes, passe à l'indice suivant en appuyant sur F3.</hint>
+		<hint level="98">La plupart des insectes sont attirés par de belles fleurs. Pour en avoir, il faut commencer par planter une graine, puis l'arroser jusqu'à ce qu'elle soit assez grande. Pour savoir comment faire, appuie encore une fois sur F3.</hint>
+		<hint level="97">Au milieu de l'écran, il y a trois trous. Tu peux choisir dans lequel tu vas planter une graine avec les flèches gauche et droite. Commence par choisir un trou, puis appuie sur F3 pour l'indice suivant.</hint>
+		<hint level="96">Super ! Maintenant, il faut choisir la graine que l'on va planter. Pour cela, utilise les flèches haut et bas. Cela sélectionne une graine dans la liste à droite. Sélectionne la graine de mimosa, puis appuie sur F3 pour passer à l'étape suivante.</hint>
+		<hint level="95">Tu as bien choisi la graine de mimosa ? Alors, c'est le moment de la planter ! Pour cela, appuie sur la touche entrée. C'est la grosse touche à droite de toutes les lettres. Une fois la graine plantée, tu peux passer à l'indice suivant avec F3.</hint>
+		<hint level="94">Si tu as bien appuyé sur la touche entrée, la graine est maintenant plantée. Mais pourquoi n'y a-t-il pas de fleur ? Il faut arroser cette plante ! Pour cela, appuie sur la touche espace du clavier ! Passe à l'indice suivant pour plus de détails.</hint>
+		<hint level="93">Quand tu appuies sur la touche espace, un nuage apparaît au-dessus de la plante que tu arroses. Il faut continuer à l'arroser jusqu'à ce qu'elle arrête de pousser. Pour cela, laisse la touche espace enfoncée ! Une fois que la plante aura cessé de grandir, tu pourra appuyer sur F3 pour l'étape suivante.</hint>
+		<hint level="92">Si ta plante est assez grande, des papillons devraient commencer à apparaître. Si c'est le cas, appuie encore une fois sur F3. Sinon, il faut encore arroser avec la touche espace !</hint>
+		<hint level="91">Alors, tu vois des papillons ? C'est super ! Tu viens de faire venir des insectes herbivores. Le nombre de papillons que tu dois faire apparaître pour gagner est indiqué en haut. Pour cette mission, il y en a deux. Mais ce ne sont pas des papillons bleus ! Zut, le mimosa n'a pas l'air de faire venir ceux qu'il faut... Appuie vite sur F3 pour avancer !</hint>
+		<hint level="90">Il faut planter une autre plante pour faire venir les papillons jaunes. Commence par sélectionner un trou vide avec les flèches droite et gauche. Ensuite, passe à l'étape suivante avec F3.</hint>
+		<hint level="89">Maintenant, sélectionne la graine de Cerisier du Japon avec les flèches haut et bas, puis passe à l'étape suivante.</hint>
+		<hint level="88">Tu as bien choisi la graine de cerisier, et tu as sélectionné un trou vide ? Alors plante la graine avec la touche entrée, puis arrose-la en appuyant sur la touche espace !</hint>
+		<hint level="87">Si ta plante a assez poussé, elle va commencer à attirer les papillons dont tu as besoin pour gagner. Bravo !</hint>
+		<hint level="86">Tu as vu comment faire venir des insectes herbivores, mais certains insectes sont attirés par le fait de manger d'autres insectes... La suite dans le prochain tutoriel !</hint>
+	</hints>
+	
+	<difficulty>0</difficulty>
+	
+	<time_limit>10000</time_limit>
+	
+	<holes>2</holes>
+	
+	<assets type="standard">
+		<icon></icon>
+		<sky></sky>
+		<grass></grass>
+		<sun></sun>
+		<hole></hole>
+		<hole_full></hole_full>
+		<hole_selected></hole_selected>
+		<hole_full_selected></hole_full_selected>
+		<cloud></cloud>
+	</assets>
+	
+	<plants>
+		<plant id="mimosa">1</plant>
+		<plant id="serrulata">1</plant>
+	</plants>
+	
+	<goal>
+		<creature id="papilionidae">2</creature>
+	</goal>
+	
+</mission>
