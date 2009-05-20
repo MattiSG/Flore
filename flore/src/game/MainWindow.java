@@ -68,6 +68,8 @@ public class MainWindow extends JFrame {
     private final static int DELAY       = 100;
 
     private JLabel           statusBar     = new JLabel("Initialisation");
+    private DefaultListModel goalList      = new DefaultListModel();
+    private JList            goalListView  = new JList(goalList);
     private JProgressBar     levelBar      = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
     private DefaultListModel seedList      = new DefaultListModel();
     private JList            seedListView  = new JList(seedList);
@@ -82,13 +84,18 @@ public class MainWindow extends JFrame {
         loadMissions();
 
         // changement du type de rendu de la liste pour l'affichage des images
-        seedListView.setCellRenderer(new CustomCellRenderer());
+        seedListView.setCellRenderer(new PlantCellRenderer());
         seedListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // autoriser l'affichage d'un message dans la progress bar
         //  augmentation de la taille du texte
         levelBar.setStringPainted(true);
         levelBar.setFont(defaultFont);
+
+        goalListView.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        goalListView.setVisibleRowCount(1);
+        goalListView.setCellRenderer(new CreatureCellRenderer());
+        goalListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // augmentation de la taille du texte de la barre de status
         statusBar.setFont(defaultFont);
@@ -161,6 +168,7 @@ public class MainWindow extends JFrame {
         getContentPane().add(gameView,     BorderLayout.CENTER);
         getContentPane().add(seedScroll,   BorderLayout.EAST);
         getContentPane().add(levelScroll,  BorderLayout.WEST);
+        getContentPane().add(goalListView, BorderLayout.NORTH);
         getContentPane().add(statusScroll, BorderLayout.SOUTH);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -331,9 +339,17 @@ public class MainWindow extends JFrame {
         String msg = "";
         int value  = 0;
         for (Map.Entry<String, Integer> i : currentMission.goal().entrySet()) {
+            Creature c = new Creature(i.getKey());
+
             value += i.getValue();
-            msg   += i.getValue() + " " + i.getKey() + (i.getValue() > 1 ? "s, " : ", ");
+            msg   += i.getValue() + " " + c.name() + (i.getValue() > 1 ? "s, " : ", ");
+
             insects.put(i.getKey(), i.getValue());
+
+            for (int j = 0; j < i.getValue(); ++j) {
+                try { goalList.addElement(c.clone()); }
+                catch(Exception e) {}
+            }
         }
 
         // adapte la barre de progression en fonction de la mission
@@ -352,7 +368,7 @@ public class MainWindow extends JFrame {
 
     // classe permettant de modifier l'affichage
     //  de la liste des graînes
-    class CustomCellRenderer extends DefaultListCellRenderer {
+    class PlantCellRenderer extends DefaultListCellRenderer {
         public Component getListCellRendererComponent(
             JList list,
             Object value,   // value to display
@@ -362,7 +378,26 @@ public class MainWindow extends JFrame {
         {
             super.getListCellRendererComponent(list, value, index, iss, chf);
 
-            setIcon(new ImageIcon(((Plant) value).getAsset("seed")));
+            setIcon(new ImageIcon(((Plant) value).seedImages().get(0)));
+            setText("");
+
+            return this;
+        }
+    }
+
+    // classe permettant de modifier l'affichage
+    //  de la liste des buts à atteindre
+    class CreatureCellRenderer extends DefaultListCellRenderer {
+        public Component getListCellRendererComponent(
+            JList list,
+            Object value,   // value to display
+            int index,      // cell index
+            boolean iss,    // is the cell selected
+            boolean chf)    // the list and the cell have the focus
+        {
+            super.getListCellRendererComponent(list, value, index, iss, chf);
+
+            setIcon(new ImageIcon(((Creature) value).stillImages().get(0)));
             setText("");
 
             return this;

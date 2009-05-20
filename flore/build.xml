@@ -20,7 +20,6 @@
   <property name="project.name" value="Flore"/>
 
   <target name="init" description="Preparation">
-    <mkdir dir="${dir.doc}"/>
     <mkdir dir="${dir.bin}"/>
     <echo file="${dir.bin}/execution.bat">
       java -cp .;../../VocalyzeSIVOX/bin/SI_VOX.jar game.Flore 
@@ -103,7 +102,6 @@
   </target>
 
   <target name="clean" description="Remove build, jar and dist directories">
-    <delete dir="${dir.doc}"/>
     <delete dir="${dir.bin}"/>
   </target>
 </project>
