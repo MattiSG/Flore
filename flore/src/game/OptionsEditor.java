@@ -11,6 +11,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.SpinnerNumberModel;
 
+import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -21,6 +22,7 @@ import java.awt.event.KeyAdapter;
 
 public class OptionsEditor extends JFrame {
     private JPanel centerPanel = new JPanel();
+    private Font font = new Font(null, Font.BOLD, GlobalProperties.getInteger("font_size"));
 
     public OptionsEditor() {
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
@@ -41,8 +43,14 @@ public class OptionsEditor extends JFrame {
     private void addEditor(String label, Component comp) {
         JPanel editor = new JPanel();
         editor.setLayout(new BoxLayout(editor, BoxLayout.X_AXIS));
-        editor.add(new JLabel(label));
+
+        JLabel jlabel = new JLabel(label);
+        jlabel.setFont(font);
+        comp.setFont(font);
+
+        editor.add(jlabel);
         editor.add(comp);
+
         centerPanel.add(editor);
     }
 
