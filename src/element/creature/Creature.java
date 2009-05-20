@@ -43,7 +43,9 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 	private Dimension dimensions;
 	private int lifetime;
 	private File sound;
-    private boolean dead = false, outside = true;
+    private boolean dead = false,
+                    outside = true,
+                    inside = false;
     long timeBorn = System.currentTimeMillis();
 	//@}
 	
@@ -226,7 +228,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 
     public boolean isOnScreen()
     {
-        return !outside;
+        return inside;
     }
 
     public String toString() {
@@ -240,6 +242,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 
         dead = false;
         outside = true;
+        inside = false;
         timeBorn = System.currentTimeMillis();
     }
 
@@ -341,18 +344,25 @@ public class Creature extends XMLLoadableElement implements Cloneable {
         else                                       // aucun déplacement
             img = stillImages().get(0);
 
-        if (pos.x - img.getWidth() / 2 < 0 ||
-                pos.y - img.getHeight() / 2 < 0 ||
-                pos.x + img.getWidth() / 2 > rect.width ||
-                pos.y + img.getHeight() / 2 > rect.height)
+        // en dehors de l'écran ? (totalement invisible)
+        if (pos.x + img.getWidth() < 0 ||
+                pos.y + img.getHeight() < 0 ||
+                pos.x - img.getWidth() > rect.width ||
+                pos.y - img.getHeight() > rect.height)
             outside = true;
         else
             outside = false;
 
-        if (pos.x + img.getWidth() < 0 || pos.x - img.getWidth() > rect.width)
-            outside = true;
+        // à l'intérieur de l'écran ? (soit plus d'à moitié visible)
+        if (pos.x > 0 ||
+                pos.y > 0 ||
+                pos.x < rect.width ||
+                pos.y < rect.height)
+            inside = true;
+        else
+            inside = false;
 
-        // affichage
+        // affichage (au centre de la position indiquée)
         g.drawImage(img, newPos.x - img.getWidth() / 2, newPos.y - img.getHeight() / 2, null);
         
         // sauvegarde de l'ancienne position
