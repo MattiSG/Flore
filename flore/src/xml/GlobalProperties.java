@@ -10,7 +10,8 @@ import java.util.Properties;
  */
 public class GlobalProperties {
 	public static final String	TEST_KEY = "authors",
-								TEST_VALUE = "Alcmene, Tipoun, Wiz :)";
+								TEST_VALUE = "Alcmene, Tipoun, Wiz :)",
+								ZOOM_SUFFIX = "_zoom";
 	
 	private static final String PROP_FILE_PATH = "../ressources/flore_config.xml";
 	private static File PROP_FILE;
@@ -20,7 +21,7 @@ public class GlobalProperties {
 	
 	private static void init() {
 		if (props == null) {
-			props = new Properties(defaults());
+			props = defaults();
 			try {
 				PROP_FILE = new File(PROP_FILE_PATH).getCanonicalFile();
 				props.loadFromXML(new FileInputStream(PROP_FILE));
@@ -37,6 +38,9 @@ public class GlobalProperties {
 	public static Properties defaults() {
 		Properties result = new Properties();
 		result.setProperty(TEST_KEY, TEST_VALUE);
+		result.setProperty("Creature" + ZOOM_SUFFIX, "1.5");
+		result.setProperty("Plant" + ZOOM_SUFFIX, "1.0");
+		result.setProperty("Mission" + ZOOM_SUFFIX, "1.0");
 		return result;
 	}
 	
@@ -79,12 +83,15 @@ public class GlobalProperties {
 	 */	
 	public static Double getDouble(String key) {
 		init();
-		try {
+//		try {
 			return new Double(props.getProperty(key));
-		} catch (NumberFormatException e) {
-			System.err.println("Couldn't parse option \"" + key + "\" as double ! Returned default value " + DEFAULT_DOUBLE_VALUE + " instead.");
-			return DEFAULT_DOUBLE_VALUE;
-		}
+//		} catch (NumberFormatException e) {
+//			System.err.println("Couldn't parse option \"" + key + "\" as double ! Returned default value " + DEFAULT_DOUBLE_VALUE + " instead.");
+//			return DEFAULT_DOUBLE_VALUE;
+//		} catch (NullPointerException n) {
+//			System.err.println("Couldn't get key \"" + key + "\" ! Returned default value " + DEFAULT_DOUBLE_VALUE + " instead.");
+//			return DEFAULT_DOUBLE_VALUE;
+//		}
 	}
 	//@}
 	

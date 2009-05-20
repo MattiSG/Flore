@@ -18,6 +18,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.Dimension;
 
 import xml.XMLParser;
+import xml.GlobalProperties;
 
 /**Generic class to handle XML parsing for every distinct element of the game.
  *For example, insects, plants and so on are stored through XML files, and inherit this class to get free XML parsing and assets loading.
@@ -105,10 +106,10 @@ public abstract class XMLLoadableElement {
 	protected abstract URI defaultFolder();
 	
 	/**Zoom level (Coefficient multiplicatif à appliquer aux images au chargement).
-	 *Designed to be able to be overriden by inheriting classes (you may have a different zooming level for each type of element).
+	 *Loaded from the config file.
 	 */
 	public double zoom() {
-		return 1.0;
+		return GlobalProperties.getDouble(this.getClass().getSimpleName() + GlobalProperties.ZOOM_SUFFIX);
 	}
 	//@}
 	

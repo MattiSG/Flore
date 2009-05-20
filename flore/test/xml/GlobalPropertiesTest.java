@@ -19,7 +19,6 @@ public class GlobalPropertiesTest {
 	private static final String	TEST_KEY = GlobalProperties.TEST_KEY,
 								EXPECTED_VALUE = GlobalProperties.TEST_VALUE;
 	
-	@Test
 	public void defaultValueTest() {
 		assertEquals(EXPECTED_VALUE, GlobalProperties.get(TEST_KEY));
 	}
