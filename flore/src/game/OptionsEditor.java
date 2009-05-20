@@ -56,7 +56,7 @@ public class OptionsEditor extends JFrame {
         });
 
         ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e){
+            public void keyPressed(KeyEvent e){
                 if (KeyEvent.VK_ESCAPE == e.getKeyCode())
                     dispose();
             }
@@ -75,7 +75,7 @@ public class OptionsEditor extends JFrame {
         });
 
         ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e){
+            public void keyPressed(KeyEvent e){
                 if (KeyEvent.VK_ESCAPE == e.getKeyCode()) 
                     dispose();
             }
@@ -94,8 +94,8 @@ public class OptionsEditor extends JFrame {
         });
 
         ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e){
-                if (KeyEvent.VK_ESCAPE == e.getKeyCode()) 
+            public void keyPressed(KeyEvent e){
+                if (KeyEvent.VK_ESCAPE == e.getKeyCode())
                     dispose();
             }
         });
@@ -113,7 +113,7 @@ public class OptionsEditor extends JFrame {
         });
 
         ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e){
+            public void keyPressed(KeyEvent e){
                 if (KeyEvent.VK_ESCAPE == e.getKeyCode()) 
                     dispose();
             }
@@ -132,7 +132,7 @@ public class OptionsEditor extends JFrame {
         });
 
         ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e){
+            public void keyPressed(KeyEvent e){
                 if (KeyEvent.VK_ESCAPE == e.getKeyCode()) 
                     dispose();
             }
