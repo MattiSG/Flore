@@ -33,6 +33,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusAdapter;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -97,6 +99,11 @@ public class MainWindow extends JFrame {
         goalListView.setVisibleRowCount(1);
         goalListView.setCellRenderer(new CreatureCellRenderer());
         goalListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        goalListView.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                seedListView.grabFocus();
+            }
+        });
 
         // augmentation de la taille du texte de la barre de status
         statusBar.setFont(defaultFont);
