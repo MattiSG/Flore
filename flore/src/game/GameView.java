@@ -35,6 +35,8 @@ public class GameView extends JPanel {
     private BufferedImage    sun;
     // image d'un trou
     private BufferedImage    hole;
+    // image d'un trou sélectionné
+    private BufferedImage    holeSelected;
     // image du ciel
     private BufferedImage    sky;
     // image représentant le fond (soleil + ciel + sol)
@@ -153,7 +155,8 @@ public class GameView extends JPanel {
 
         grass = m.getAsset("grass");
         cloud = m.getAsset("cloud");
-        hole  = m.getAsset("hole");
+        hole  = m.getAsset("hole_full");
+        holeSelected  = m.getAsset("hole_full_selected");
         sun   = m.getAsset("sun");
         sky   = m.getAsset("sky");
 
@@ -205,11 +208,8 @@ public class GameView extends JPanel {
             int x = p.x - holeW / 2;
             int y = p.y - holeH / 2;
 
-            if (p == selectedHole) {
-                g2d.setColor(Color.RED);
-                g2d.fillOval(x - 25, y - 25, holeW + 50, holeH + 50);
-                g2d.setColor(Color.BLACK);
-            }
+            if (p == selectedHole)
+                g2d.drawImage(holeSelected, x, y, holeW, holeH, null);
 
             g2d.drawImage(hole, x, y, holeW, holeH, null);
         }
