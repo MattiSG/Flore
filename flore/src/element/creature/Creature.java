@@ -46,7 +46,8 @@ public class Creature extends XMLLoadableElement implements Cloneable {
     private boolean dead = false,
                     outside = true,
                     inside = false;
-    long timeBorn = System.currentTimeMillis();
+    private long timeBorn = System.currentTimeMillis();
+    private final float mvtSize = 150;
 	//@}
 	
 	/**@name	Variables d'affichage*/
@@ -159,8 +160,6 @@ public class Creature extends XMLLoadableElement implements Cloneable {
      */
     private Point calcMvt(float t, int dir)
     {
-        float mvtSize = 150;
-
         // virage
         if(dir < 4)
         {
@@ -317,7 +316,8 @@ public class Creature extends XMLLoadableElement implements Cloneable {
         else
         {
             // quelle moitié de l'écran ?
-            return new Point(pos.x < rect.width / 2 ? -10 : 10, 0);
+            int d = (int)(mvtSize * dtime * (GlobalProperties.getDouble("Creature_Speed") / 10.0f));
+            return new Point(pos.x < rect.width / 2 ? -d : d, 0);
         }
     }
 
