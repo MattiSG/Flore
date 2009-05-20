@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Flore" default="junit" basedir="." xmlns:doxygen="antlib:org.doxygen.tools">
+  <property name="dir.src" location="src"/>
+  <property name="dir.bin" location="bin"/>
+  <property name="dir.lib" location="lib"/>
+  <property name="dir.doc" location="doc"/>
+  <property name="dir.tmp" location="tmp"/>
+  <property name="dir.rsc" location="ressources"/>
+  <property name="dir.test" location="test"/>
+  <property name="dir.dist" location="dist"/>
+  <property name="dir.jar" location="jars"/>
+  <property name="compile.debug" value="true"/>
+  <property name="file.build" value="build.xml"/>
+  <property name="class.main" value="game.Flore"/>
+  <property name="class.test" value="test.RunAndPray"/>
+  <property name="class.test.extended" value="test.ExtendedTests"/>
+  <property name="lib.vox" value="${dir.lib}/si_vox.jar"/>
+  <property name="lib.json" value="${dir.lib}/json.jar"/>
+  <property name="lib.junit" value="${dir.lib}/junit-4.5.jar"/>
+  <property name="project.name" value="Flore"/>
+
+  <target name="init" description="Preparation">
+    <mkdir dir="${dir.doc}"/>
+    <mkdir dir="${dir.bin}"/>
+    <echo file="${dir.bin}/execution.bat">
+      java -cp .;../../VocalyzeSIVOX/bin/SI_VOX.jar game.Flore 
+    </echo>
+    <chmod perm="u+x" file="${dir.bin}/execution.bat"/>
+  </target>
+
+  <target name="doc" description="Build the documentation">
+    <doxygen:doxygen configFilename="doc.doxyfile"/>
+  </target>
+
+  <target name="compile" depends="init" description="Compile code">
+    <javac deprecation="on" srcdir="${dir.src}" destdir="${dir.bin}" source="1.6" target="1.6"
+           includeAntRuntime="no" debug="${compile.debug}" classpath="${lib.vox}">
+      <compilerarg value="-Xlint:unchecked"/>
+    </javac>
+  </target>
+
+  <target name="compile_tests" depends="compile" description="Compile tests code">
+    <javac deprecation="on" srcdir="${dir.test}" destdir="${dir.bin}" source="1.6" target="1.6"
+           includeAntRuntime="no" classpath="${lib.junit}" debug="${compile.debug}">
+      <compilerarg value="-Xlint:unchecked"/>
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile" description="Build jar">
+	<mkdir dir="${dir.jar}"/>
+    <jar jarfile="${dir.jar}/${project.name}.jar" basedir="${dir.src}">
+    </jar>
+  </target>
+
+  <target name="jar_tests" depends="compile_tests" description="Build tests jar">
+	<mkdir dir="${dir.jar}"/>
+    <jar jarfile="${dir.jar}/${project.name}_tests.jar" basedir="${dir.test}">
+    </jar>
+  </target>
+
+  <target name="junit" depends="jar_tests" description="Try to test">
+    <junit fork="yes" haltonfailure="yes">
+      <jvmarg value="-Duser.dir=${dir.bin}"/>
+      <formatter type="plain" usefile="false"/>
+      <test name="${class.test}"/>
+      <classpath>
+        <pathelement location="${dir.bin}"/>
+        <pathelement location="${lib.junit}"/>
+      </classpath>
+    </junit>
+  </target>
+  
+    <target name="junit_extended" depends="junit" description="Execute extended tests">
+    <junit fork="yes" haltonfailure="yes">
+      <jvmarg value="-Duser.dir=${dir.bin}"/>
+      <formatter type="plain" usefile="false"/>
+      <test name="${class.test.extended}"/>
+      <classpath>
+        <pathelement location="${dir.bin}"/>
+        <pathelement location="${lib.junit}"/>
+      </classpath>
+    </junit>
+  </target>
+
+  <target name="install" depends="jar,jar_tests,junit_extended,doc" description="Creer le repertoire dist, inclure les jars et la doc si tout s'est bien passe">
+    <mkdir dir="${dir.tmp}"/>
+    <mkdir dir="${dir.tmp}/config"/>
+    <copy file="${file.build}" todir="${dir.tmp}"/>
+    <copy todir="${dir.tmp}/config">
+        <fileset dir="${dir.config}"/>
+    </copy>
+    <zip destfile="${dir.dist}/${project.name}.zip" basedir="${dir.tmp}">
+      <fileset dir="${dir.jar}"/>
+      <fileset dir="${dir.doc}"/>
+    </zip>
+    <delete dir="${dir.tmp}"/>
+  </target>
+
+  <target name="run" depends="install" description="Run, run and run!">
+    <java outputproperty="out" errorproperty="err" classpath="${dir.bin}" classname="${class.main}" fork="true"/>
+    <echo>Output: '${out}'</echo>
+    <echo>Error : '${err}'</echo> 
+  </target>
+
+  <target name="clean" description="Remove build, jar and dist directories">
+    <delete dir="${dir.doc}"/>
+    <delete dir="${dir.bin}"/>
+  </target>
+</project>
