@@ -36,6 +36,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusAdapter;
+import java.awt.image.BufferedImage;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -55,10 +56,8 @@ import java.io.FilenameFilter;
 public class MainWindow extends JFrame {
 	// listes de toutes les missions
     protected List<Mission>   missions     = new LinkedList<Mission>();
-	
-	
     // plantes disponibles pour la mission courante
-    private List<Plant>     plants       = new LinkedList<Plant>();
+    private List<Plant>       plants       = new LinkedList<Plant>();
     // insectes nécessaires pour valider la mission courante
     private Map<String,Integer> insects  = new HashMap<String,Integer>();
     // plantes en terre
@@ -189,7 +188,7 @@ public class MainWindow extends JFrame {
 
         // scroll pour l'affichage de la barre d'avancement
         JScrollPane goalScroll = new JScrollPane(goalListView);
-        goalScroll.setPreferredSize(new Dimension(100, 100));
+        goalScroll.setPreferredSize(new Dimension(100, 110));
 
         getContentPane().add(gameView,     BorderLayout.CENTER);
         getContentPane().add(seedScroll,   BorderLayout.EAST);
@@ -433,7 +432,21 @@ public class MainWindow extends JFrame {
         {
             super.getListCellRendererComponent(list, value, index, iss, chf);
 
-            setIcon(new ImageIcon(((Creature) value).stillImages().get(0)));
+
+            BufferedImage image = ((Creature) value).stillImages().get(0);
+            Dimension dimensions = new Dimension(100, 100);
+
+            java.awt.GraphicsEnvironment ge = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
+            java.awt.GraphicsDevice gs = ge.getDefaultScreenDevice();
+            java.awt.GraphicsConfiguration gc = gs.getDefaultConfiguration();
+            
+    //		double ratio = image.getWidth() / image.getHeight();
+            BufferedImage result = gc.createCompatibleImage((int) (dimensions.getWidth()), (int) (dimensions.getHeight()), java.awt.Transparency.TRANSLUCENT);
+            java.awt.Graphics2D g = result.createGraphics();
+            g.drawImage(image, 0, 0, (int) (dimensions.getWidth()), (int) (dimensions.getHeight()), null);
+            g.dispose();
+            
+            setIcon(new ImageIcon(result));
             setText("");
 
             return this;
