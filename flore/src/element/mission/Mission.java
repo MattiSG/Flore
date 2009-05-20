@@ -8,7 +8,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.awt.image.BufferedImage;
 
 import org.w3c.dom.Node;
@@ -28,7 +28,7 @@ public class Mission extends XMLLoadableElement {
 	/**Increasing helpfulness.
 	 *I.e. the last element in the list is the answer.
 	 */
-	private PriorityQueue<String> hints;
+	private LinkedBlockingQueue<String> hints;
 	private Map<String, Integer>	plants,
 									goal;
 
@@ -50,7 +50,7 @@ public class Mission extends XMLLoadableElement {
 		return timeLimit;
 	}
 	
-	public PriorityQueue<String> hints() {
+	public LinkedBlockingQueue<String> hints() {
 		return hints;
 	}
 	
@@ -124,10 +124,8 @@ public class Mission extends XMLLoadableElement {
 		List<Node> hintsNodes = parser.getNodes(HINTS_EXPR);
 		Map<Integer, String> hintsMap = new TreeMap<Integer, String>(); //TODO : utiliser une file directement.
 		for (Node node : hintsNodes)
-        {
-			hintsMap.put(-1 * Integer.decode(node.getAttributes().getNamedItem("level").getNodeValue()), node.getTextContent());
-        }
-		hints = new PriorityQueue<String>(hintsMap.values());
+			hintsMap.put(Integer.decode(node.getAttributes().getNamedItem("level").getNodeValue()) * -1, node.getTextContent());
+		hints = new LinkedBlockingQueue<String>(hintsMap.values());
 	}
 	
 	/**Parses a Map whose keys are the value of the given attribute name and values are the value of the node itself.

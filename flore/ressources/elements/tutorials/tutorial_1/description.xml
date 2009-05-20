@@ -4,7 +4,7 @@
 	<id>tutorials/tutorial_1</id>
 	<name lang="fr">Tutoriel</name>
 	
-	<description lang="fr">Bienvenue dans le tutoriel du jeu Flore ! Le but de ce jeu est de sauver des insectes en danger. Pour cela, tu dois réussir à les attirer. Pour savoir comment faire, utilise la touche F 2. Si tu as oublié une des touches, tu peux à tout moment appuyer sur la touche F1.</description>
+	<description lang="fr">Bienvenue dans le tutoriel du jeu Flore ! Le but de ce jeu est de sauver des insectes en danger. Pour cela, tu dois réussir à les attirer. Pour savoir comment faire, utilise la touche F 2. Si tu as oublié une des touches, tu peux à tout moment appuyer sur la touche F 1.</description>
 
 	<hints>
 		<hint level="100">Bravo ! Tu viens de lire le premier indice de ce niveau. Pour le réécouter, tu peux appuyer sur à nouveau sur F 2. Une fois que tu es prêt, tu peux passer à l'indice suivant en appuyant sur F 3.</hint>
@@ -16,12 +16,13 @@
 		<hint level="94">Si tu as bien appuyé sur la touche entrée, la graine est maintenant plantée. Mais pourquoi n'y a-t-il pas de fleur ? Il faut arroser cette plante ! Pour cela, appuie sur la touche espace du clavier ! Passe à l'indice suivant pour plus de détails.</hint>
 		<hint level="93">Quand tu appuies sur la touche espace, un nuage apparaît au-dessus de la plante que tu arroses. Il faut continuer à l'arroser jusqu'à ce qu'elle arrête de pousser. Pour cela, laisse la touche espace enfoncée ! Une fois que la plante aura cessé de grandir, tu pourra appuyer sur F 3 pour l'étape suivante.</hint>
 		<hint level="92">Si ta plante est assez grande, des papillons devraient commencer à apparaître. Si c'est le cas, appuie encore une fois sur F 3. Sinon, il faut encore arroser avec la touche espace !</hint>
-		<hint level="91">Alors, tu vois des papillons ? C'est super ! Tu viens de faire venir des insectes herbivores. Le nombre de papillons que tu dois faire apparaître pour gagner est indiqué en haut. Pour cette mission, il y en a deux. Mais ce ne sont pas des papillons bleus ! Zut, le mimosa n'a pas l'air de faire venir ceux qu'il faut... Appuie vite sur F 3 pour avancer !</hint>
+		<hint level="91">Alors, tu vois des papillons ? C'est super ! Tu viens de faire venir des insectes herbivores. Le nombre de papillons que tu dois faire apparaître pour gagner est indiqué en haut. Pour cette mission, il y en a deux. Mais ce ne sont pas des papillons bleus ! Le mimosa n'a pas l'air de faire venir ceux qu'il faut... Appuie vite sur F 3 pour avancer !</hint>
 		<hint level="90">Il faut planter une autre plante pour faire venir les papillons jaunes. Commence par sélectionner un trou vide avec les flèches droite et gauche. Ensuite, passe à l'étape suivante avec F 3.</hint>
 		<hint level="89">Maintenant, sélectionne la graine de Cerisier du Japon avec les flèches haut et bas, puis passe à l'étape suivante.</hint>
 		<hint level="88">Tu as bien choisi la graine de cerisier, et tu as sélectionné un trou vide ? Alors plante la graine avec la touche entrée, puis arrose-la en appuyant sur la touche espace !</hint>
 		<hint level="87">Si ta plante a assez poussé, elle va commencer à attirer les papillons dont tu as besoin pour gagner. Bravo !</hint>
-		<hint level="86">Tu as vu comment faire venir des insectes herbivores, mais certains insectes sont attirés par le fait de manger d'autres insectes... La suite dans le prochain tutoriel !</hint>
+		<hint level="86">Tu peux voir le nombre de papillons nécessaires en haut de l'écran. Quand plus aucun insecte n'est visible dans la barre du haut, tu as gagné le niveau !</hint>
+		<hint level="85">Tu as vu comment faire venir des insectes herbivores, mais certains insectes sont attirés par le fait de manger d'autres insectes... La suite dans le prochain tutoriel !</hint>
 	</hints>
 	
 	<difficulty>0</difficulty>

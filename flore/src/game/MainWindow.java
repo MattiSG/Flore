@@ -153,8 +153,9 @@ public class MainWindow extends JFrame {
 					play(currentMission.hints().peek());
                 // f3 => passe à l'indice suivant et le lit
 				} else if (KeyEvent.VK_F3 == e.getKeyCode()) {
-					java.util.PriorityQueue<String> hints = currentMission.hints();
-					play(hints.size() >= 1 ? hints.poll() : hints.peek());
+					java.util.concurrent.LinkedBlockingQueue<String> hints = currentMission.hints();
+					if (hints.size() > 1) hints.poll();
+					play(hints.peek());
 				// F => lit la description de la mission
 				} else if (KeyEvent.VK_F == e.getKeyCode() || KeyEvent.VK_D == e.getKeyCode()) {
 					play(currentMission.description());

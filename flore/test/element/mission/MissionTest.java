@@ -24,7 +24,7 @@ import element.mission.Mission;
 
 public class MissionTest extends XMLLoadableElementTest {
 	
-	protected String[] EXPECTED_ORDERED_HINTS = {"Level 0 hint", "Level 1 hint", "Level 10 hint"};
+	protected String[] EXPECTED_ORDERED_HINTS = {"Level 10 hint", "ALevel 1 hint", "Level 0 hint"};
 	protected final int	EXPECTED_HOLES = 5,
 						EXPECTED_TIME_LIMIT = 120,
 						EXPECTED_DIFFICULTY = 0;
