@@ -40,6 +40,7 @@ public class GlobalProperties {
 	private static final String PROP_FILE_PATH = "../ressources/flore_config.xml";
 	private static File PROP_FILE;
 	private static final double DEFAULT_DOUBLE_VALUE = 1.0;
+	private static final int    DEFAULT_INTEGER_VALUE = 1;
 	
 	private static Properties props;
 	
@@ -89,6 +90,22 @@ public class GlobalProperties {
 	public static String get(String key) {
 		init();
 		return props.getProperty(key);
+	}
+	
+	/**Returns the value for the given key as a Integer, or a default value if none is found.
+	 *@see	DEFAULT_INTEGER_VALUE
+	 */	
+	public static Integer getInteger(String key) {
+		init();
+		try {
+			return new Integer(props.getProperty(key));
+		} catch (NumberFormatException e) {
+			System.err.println("Couldn't parse option \"" + key + "\" as integer ! Returned default value " + DEFAULT_INTEGER_VALUE + " instead.");
+			return DEFAULT_INTEGER_VALUE;
+		} catch (NullPointerException n) {
+			System.err.println("Couldn't get key \"" + key + "\" ! Returned default value " + DEFAULT_INTEGER_VALUE + " instead.");
+			return DEFAULT_INTEGER_VALUE;
+		}
 	}
 	
 	/**Returns the value for the given key as a Double, or a default value if none is found.

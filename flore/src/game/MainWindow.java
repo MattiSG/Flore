@@ -64,7 +64,7 @@ public class MainWindow extends JFrame {
     // mission courante
     private Mission          currentMission;
     // police par défaut pour tous les textes du jeu
-    private Font             defaultFont = new Font(null, Font.BOLD, Integer.parseInt(GlobalProperties.get("font_size")));
+    private Font             defaultFont = new Font(null, Font.BOLD, GlobalProperties.getInteger("font_size"));
     // timer pour la boucle du temps
     private Timer            timer;
     // temps entre chaque ré-affichage
