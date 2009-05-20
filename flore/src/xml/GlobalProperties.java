@@ -9,6 +9,21 @@ import java.util.Properties;
 /**This class holds the global options used throughout the game.
  */
 public class GlobalProperties {
+
+	/**Get default options values.
+	 *Feel free to add your own values !
+	 */
+	public static Properties defaults() {
+		Properties result = new Properties();
+		result.setProperty(TEST_KEY, TEST_VALUE);
+		result.setProperty("Creature" + ZOOM_SUFFIX, "1.5");
+		result.setProperty("Plant" + ZOOM_SUFFIX, "1.0");
+		result.setProperty("Mission" + ZOOM_SUFFIX, "1.0");
+		return result;
+	}
+	
+	
+	
 	public static final String	TEST_KEY = "authors",
 								TEST_VALUE = "Alcmene, Tipoun, Wiz :)",
 								ZOOM_SUFFIX = "_zoom";
@@ -31,17 +46,6 @@ public class GlobalProperties {
 				throw new RuntimeException("Configuration file \"" + PROP_FILE + "\" can't be read!\n" + e);
 			}			
 		}
-	}
-	
-	/**Get default options values.
-	 */
-	public static Properties defaults() {
-		Properties result = new Properties();
-		result.setProperty(TEST_KEY, TEST_VALUE);
-		result.setProperty("Creature" + ZOOM_SUFFIX, "1.5");
-		result.setProperty("Plant" + ZOOM_SUFFIX, "1.0");
-		result.setProperty("Mission" + ZOOM_SUFFIX, "1.0");
-		return result;
 	}
 	
 	/**Writes the default values for options to the config file.
@@ -83,15 +87,15 @@ public class GlobalProperties {
 	 */	
 	public static Double getDouble(String key) {
 		init();
-//		try {
+		try {
 			return new Double(props.getProperty(key));
-//		} catch (NumberFormatException e) {
-//			System.err.println("Couldn't parse option \"" + key + "\" as double ! Returned default value " + DEFAULT_DOUBLE_VALUE + " instead.");
-//			return DEFAULT_DOUBLE_VALUE;
-//		} catch (NullPointerException n) {
-//			System.err.println("Couldn't get key \"" + key + "\" ! Returned default value " + DEFAULT_DOUBLE_VALUE + " instead.");
-//			return DEFAULT_DOUBLE_VALUE;
-//		}
+		} catch (NumberFormatException e) {
+			System.err.println("Couldn't parse option \"" + key + "\" as double ! Returned default value " + DEFAULT_DOUBLE_VALUE + " instead.");
+			return DEFAULT_DOUBLE_VALUE;
+		} catch (NullPointerException n) {
+			System.err.println("Couldn't get key \"" + key + "\" ! Returned default value " + DEFAULT_DOUBLE_VALUE + " instead.");
+			return DEFAULT_DOUBLE_VALUE;
+		}
 	}
 	//@}
 	
