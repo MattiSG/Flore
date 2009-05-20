@@ -8,7 +8,6 @@
   <property name="dir.rsc" location="ressources"/>
   <property name="dir.test" location="test"/>
   <property name="dir.dist" location="dist"/>
-  <property name="dir.jar" location="jars"/>
   <property name="compile.debug" value="true"/>
   <property name="file.build" value="build.xml"/>
   <property name="class.main" value="game.Flore"/>
@@ -27,10 +26,6 @@
     <chmod perm="u+x" file="${dir.bin}/execution.bat"/>
   </target>
 
-  <target name="doc" description="Build the documentation">
-    <doxygen:doxygen configFilename="doc.doxyfile"/>
-  </target>
-
   <target name="compile" depends="init" description="Compile code">
     <javac deprecation="on" srcdir="${dir.src}" destdir="${dir.bin}" source="1.6" target="1.6"
            includeAntRuntime="no" debug="${compile.debug}" classpath="${lib.vox}">
@@ -45,19 +40,7 @@
     </javac>
   </target>
 
-  <target name="jar" depends="compile" description="Build jar">
-	<mkdir dir="${dir.jar}"/>
-    <jar jarfile="${dir.jar}/${project.name}.jar" basedir="${dir.src}">
-    </jar>
-  </target>
-
-  <target name="jar_tests" depends="compile_tests" description="Build tests jar">
-	<mkdir dir="${dir.jar}"/>
-    <jar jarfile="${dir.jar}/${project.name}_tests.jar" basedir="${dir.test}">
-    </jar>
-  </target>
-
-  <target name="junit" depends="jar_tests" description="Try to test">
+  <target name="junit" depends="compile_tests" description="Try to test">
     <junit fork="yes" haltonfailure="yes">
       <jvmarg value="-Duser.dir=${dir.bin}"/>
       <formatter type="plain" usefile="false"/>
@@ -81,28 +64,27 @@
     </junit>
   </target>
 
-  <target name="install" depends="jar,jar_tests,junit_extended,doc" description="Creer le repertoire dist, inclure les jars et la doc si tout s'est bien passe">
+  <target name="dist" depends="junit" description="Création du fichier zip final">
     <mkdir dir="${dir.tmp}"/>
-    <mkdir dir="${dir.tmp}/config"/>
-    <copy file="${file.build}" todir="${dir.tmp}"/>
-    <copy todir="${dir.tmp}/config">
-        <fileset dir="${dir.config}"/>
+    <copy todir="${dir.tmp}/ressources">
+        <fileset dir="${dir.rsc}"/>
     </copy>
-    <zip destfile="${dir.dist}/${project.name}.zip" basedir="${dir.tmp}">
-      <fileset dir="${dir.jar}"/>
-      <fileset dir="${dir.doc}"/>
-    </zip>
+    <copy todir="${dir.tmp}/src">
+        <fileset dir="${dir.src}"/>
+    </copy>
+    <copy todir="${dir.tmp}/bin">
+        <fileset dir="${dir.bin}">
+          <exclude name="test/**"/>
+        </fileset>
+    </copy>
+    <copy todir="${dir.tmp}/doc">
+        <fileset dir="${dir.doc}"/>
+    </copy>
+    <zip destfile="../${project.name}.zip" basedir="${dir.tmp}"/>
     <delete dir="${dir.tmp}"/>
-  </target>
-
-  <target name="run" depends="install" description="Run, run and run!">
-    <java outputproperty="out" errorproperty="err" classpath="${dir.bin}" classname="${class.main}" fork="true"/>
-    <echo>Output: '${out}'</echo>
-    <echo>Error : '${err}'</echo> 
   </target>
 
   <target name="clean" description="Remove build, jar and dist directories">
     <delete dir="${dir.bin}"/>
-    <delete dir="${dir.jar}"/>
   </target>
 </project>
