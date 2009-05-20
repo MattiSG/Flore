@@ -4,6 +4,7 @@ import element.XMLLoadableElement;
 import element.plant.Plant;
 import element.creature.Creature;
 import element.mission.Mission;
+import game.CreaturePool;
 
 import t2s.SIVOXDevint;
 
@@ -165,10 +166,14 @@ public class MainWindow extends JFrame {
         JScrollPane levelScroll = new JScrollPane(levelBar);
         levelScroll.setPreferredSize(new Dimension(110, 400));
 
+        // scroll pour l'affichage de la barre d'avancement
+        JScrollPane goalScroll = new JScrollPane(goalListView);
+        goalScroll.setPreferredSize(new Dimension(100, 100));
+
         getContentPane().add(gameView,     BorderLayout.CENTER);
         getContentPane().add(seedScroll,   BorderLayout.EAST);
-        getContentPane().add(levelScroll,  BorderLayout.WEST);
-        getContentPane().add(goalListView, BorderLayout.NORTH);
+        //getContentPane().add(levelScroll,  BorderLayout.WEST);
+        getContentPane().add(goalScroll,   BorderLayout.NORTH);
         getContentPane().add(statusScroll, BorderLayout.SOUTH);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -204,14 +209,23 @@ public class MainWindow extends JFrame {
         // avec celle des objectifs
         int nbInsects = 0;
         boolean goalsOk = true;
+        DefaultListModel newList = new DefaultListModel();
         for (Map.Entry<String, Integer> e : insects.entrySet()) {
             if (ig.containsKey(e.getKey())) {
                 nbInsects += ig.get(e.getKey());
-                if (ig.get(e.getKey()) < e.getValue())
+                if (ig.get(e.getKey()) < e.getValue()) {
                     goalsOk = false;
-            } else 
+                    for (int i = 0; i < e.getValue() - ig.get(e.getKey()); ++i)
+                        newList.addElement(CreaturePool.getCreature(e.getKey()));
+                }
+            } else  {
+                for (int i = 0; i < e.getValue(); ++i)
+                    newList.addElement(CreaturePool.getCreature(e.getKey()));
                 goalsOk = false;
+            }
         }
+
+        goalListView.setModel(newList);
 
         // met à jour la barre de progression
         levelBar.setValue(nbInsects);
@@ -312,6 +326,7 @@ public class MainWindow extends JFrame {
 
         seedListView.requestFocus();
         seedListView.setSelectedIndex(0);
+        ((DefaultListModel) goalListView.getModel()).clear();
 
         gameView.repaint();
 
@@ -339,7 +354,7 @@ public class MainWindow extends JFrame {
         String msg = "";
         int value  = 0;
         for (Map.Entry<String, Integer> i : currentMission.goal().entrySet()) {
-            Creature c = new Creature(i.getKey());
+            Creature c = CreaturePool.getCreature(i.getKey());
 
             value += i.getValue();
             msg   += i.getValue() + " " + c.name() + (i.getValue() > 1 ? "s, " : ", ");
