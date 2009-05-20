@@ -160,7 +160,7 @@ public class MainWindow extends JFrame {
                     dispose();
 				// F1 ou HELP => lit l'aide. TODO : mapper aussi le point d'interrogation.
 				} else if (KeyEvent.VK_F1 == e.getKeyCode() || KeyEvent.VK_HELP == e.getKeyCode()) {
-					play("Pour lire un indice, appuie sur F2. Pour passer à un indice plus précis, appuie sur F3. Pour lire la description de la mission, appuie sur la touche F ou la touche D. Pour sélectionner une graine, utilise les flèches haut et bas. Appuie sur J pour avoir une description de la graine. Pour choisir un trou où planter la graine, utilise les flèches droite et gauche. Pour planter la graine, appuie sur la touche entrée. Pour arroser la plante, laisse la touche espace enfoncée. Pour quitter, appuie sur la touche échap. Si tu es perdu, commence par faire le tutoriel du jeu !");
+					play("Pour lire un indice, appuie sur F 2. Pour passer à un indice plus précis, appuie sur F 3. Pour lire la description de la mission, appuie sur la touche F ou la touche D. Pour sélectionner une graine, utilise les flèches haut et bas. Appuie sur J pour avoir une description de la graine. Pour choisir un trou où planter la graine, utilise les flèches droite et gauche. Pour planter la graine, appuie sur la touche entrée. Pour arroser la plante, laisse la touche espace enfoncée. Pour quitter, appuie sur la touche échap. Si tu es perdu, commence par faire le tutoriel du jeu !");
                 // f2 => lecture de l'indice courant
 				} else if (KeyEvent.VK_F2 == e.getKeyCode()) {
 					play(currentMission.hints().peek());
