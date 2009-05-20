@@ -103,5 +103,6 @@
 
   <target name="clean" description="Remove build, jar and dist directories">
     <delete dir="${dir.bin}"/>
+    <delete dir="${dir.jar}"/>
   </target>
 </project>
