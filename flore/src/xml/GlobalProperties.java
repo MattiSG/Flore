@@ -1,5 +1,7 @@
 package xml;
 
+import java.io.File;
+import java.net.URI;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
@@ -7,38 +9,74 @@ import java.util.Properties;
 /**This class holds the global options used throughout the game.
  */
 public class GlobalProperties {
-	private static final String PROP_FILE = "../ressources/flore_config.xml";
+	public static final String	TEST_KEY = "authors",
+								TEST_VALUE = "Alcmene, Tipoun, Wiz :)";
+	
+	private static final String PROP_FILE_PATH = "../ressources/flore_config.xml";
+	private static File PROP_FILE;
 	private static final double DEFAULT_DOUBLE_VALUE = 1.0;
 	
 	private static Properties props;
 	
 	private static void init() {
 		if (props == null) {
-			props = new Properties();
+			props = new Properties(defaults());
 			try {
+				PROP_FILE = new File(PROP_FILE_PATH).getCanonicalFile();
 				props.loadFromXML(new FileInputStream(PROP_FILE));
+			} catch (java.io.FileNotFoundException fnf) {
+				store();
 			} catch (Exception e) {
 				throw new RuntimeException("Configuration file \"" + PROP_FILE + "\" can't be read!\n" + e);
 			}			
 		}
 	}
 	
-	/**Writes the default values for options to the config file.*/
-	public void revertDefaults() {
-		props = new Properties();
-		props.setProperty("debug", "false");
+	/**Get default options values.
+	 */
+	public static Properties defaults() {
+		Properties result = new Properties();
+		result.setProperty(TEST_KEY, TEST_VALUE);
+		return result;
+	}
+	
+	/**Writes the default values for options to the config file.
+	 */
+	public static void revertDefaults() {
+		props = defaults();
+		store("Reverted to default properties on " + new java.util.Date(System.currentTimeMillis()) + ".");
+	}
+	
+	/**Store options with a timetag as comment.
+	 */
+	public static void store() {
+		store("Saved options on " + new java.util.Date(System.currentTimeMillis()) + ".");
+	}
+	
+	/**Store options with the given comments.
+	 *@param	comments	comments to add to the file.
+	 */
+	public static void store(String comments) {
 		try {
-			props.storeToXML(new FileOutputStream(PROP_FILE), "Reverted to default properties on " + new java.util.Date(System.currentTimeMillis()) + ".");
+			props.storeToXML(new FileOutputStream(PROP_FILE), comments);
 		} catch (Exception e) {
 			throw new RuntimeException("Configuration file \"" + PROP_FILE + "\" can't be written to!\n" + e);
 		}
 	}
 	
+	
+	/**@name	Values getters*/
+	//@{
+	/**Returns the value for the given key, or null if none is found.
+	 */
 	public static String get(String key) {
 		init();
 		return props.getProperty(key);
 	}
 	
+	/**Returns the value for the given key as a Double, or a default value if none is found.
+	 *@see	DEFAULT_DOUBLE_VALUE
+	 */	
 	public static Double getDouble(String key) {
 		init();
 		try {
@@ -48,4 +86,14 @@ public class GlobalProperties {
 			return DEFAULT_DOUBLE_VALUE;
 		}
 	}
+	//@}
+	
+	/**@name	Values setters*/
+	//@{
+	public static void set(String key, String value) {
+		init();
+		props.put(key, value);
+		store();
+	}
+	//@}
 }
