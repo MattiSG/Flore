@@ -5,6 +5,7 @@ import element.plant.Plant;
 import element.creature.Creature;
 import element.mission.Mission;
 import game.CreaturePool;
+import xml.GlobalProperties;
 
 import t2s.SIVOXDevint;
 
@@ -63,7 +64,7 @@ public class MainWindow extends JFrame {
     // mission courante
     private Mission          currentMission;
     // police par défaut pour tous les textes du jeu
-    private Font             defaultFont = new Font(null, Font.BOLD, 50);
+    private Font             defaultFont = new Font(null, Font.BOLD, Integer.parseInt(GlobalProperties.get("font_size")));
     // timer pour la boucle du temps
     private Timer            timer;
     // temps entre chaque ré-affichage

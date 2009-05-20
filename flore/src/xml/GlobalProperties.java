@@ -5,6 +5,7 @@ import java.net.URI;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
+import java.awt.Font;
 
 /**This class holds the global options used throughout the game.
  */
@@ -26,6 +27,7 @@ public class GlobalProperties {
 		result.setProperty("coef_croissance_plantes", "1.0");
 		result.setProperty("language", "fr");
 		result.setProperty("assets_type", "standard");
+		result.setProperty("font_size", "50");
 		return result;
 	}
 	
