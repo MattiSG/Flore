@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Flore" default="junit" basedir="." xmlns:doxygen="antlib:org.doxygen.tools">
+  <property name="project.name" value="Flore"/>
   <property name="dir.src" location="src"/>
   <property name="dir.bin" location="bin"/>
   <property name="dir.lib" location="lib"/>
@@ -7,17 +8,16 @@
   <property name="dir.tmp" location="tmp"/>
   <property name="dir.rsc" location="ressources"/>
   <property name="dir.test" location="test"/>
-  <property name="dir.dist" location="dist"/>
   <property name="compile.debug" value="true"/>
   <property name="file.build" value="build.xml"/>
   <property name="class.main" value="game.Flore"/>
   <property name="class.test" value="test.RunAndPray"/>
   <property name="class.test.extended" value="test.ExtendedTests"/>
   <property name="lib.vox" value="${dir.lib}/si_vox.jar"/>
-  <property name="lib.json" value="${dir.lib}/json.jar"/>
   <property name="lib.junit" value="${dir.lib}/junit-4.5.jar"/>
-  <property name="project.name" value="Flore"/>
   <property name="file.config" value="ressources/flore_config.xml"/>
+  <property name="file.dist" location="../${project.name}.zip"/>
+
 
   <target name="init" description="Preparation">
     <mkdir dir="${dir.bin}"/>
@@ -82,13 +82,12 @@
     <copy todir="${dir.tmp}/doc">
         <fileset dir="${dir.doc}"/>
     </copy>
-    <zip destfile="../${project.name}.zip" basedir="${dir.tmp}"/>
+    <zip destfile="${file.dist}" basedir="${dir.tmp}"/>
     <delete dir="${dir.tmp}"/>
   </target>
 
-  <target name="clean" description="Remove build, jar and dist directories">
+  <target name="clean" description="Remove build products">
     <delete dir="${dir.bin}"/>
-    <delete dir="${dir.jars}"/>
-    <delete dir="${dir.dist}"/>
+    <delete file="${file.dist}"/>
   </target>
 </project>
