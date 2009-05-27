@@ -181,16 +181,15 @@ public class MainWindow extends JFrame {
 				// J => lit la description de la plante
 				} else if (KeyEvent.VK_J == e.getKeyCode()) {
 					play(((Plant) seedListView.getSelectedValue()).description());
-				}
+                }
             }
-        });
-
-        // pronociation du nom de la plante dont la graine est sélectionnée
-        seedListView.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                Plant p = (Plant) seedListView.getSelectedValue();
-                if (p != null)
-                    play(p.name());
+            public void keyReleased(KeyEvent e) {
+                // pronociation du nom de la plante dont la graine est sélectionnée
+                if (KeyEvent.VK_UP == e.getKeyCode() || KeyEvent.VK_DOWN == e.getKeyCode()) {
+                    Plant p = (Plant) seedListView.getSelectedValue();
+                    if (p != null)
+                        play(p.name());
+                }
             }
         });
 
