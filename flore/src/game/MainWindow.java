@@ -286,9 +286,6 @@ public class MainWindow extends JFrame {
     }
 
     private void nextMission() {
-        timer.stop();
-        play("Tu as gagné cette mission !", true);
-
         int newMission = missions.indexOf(currentMission) + 1;
         if (newMission >= missions.size()) {
             play("Tu as fini de jouer. Il n'y a plus de niveau disponible.", true);
@@ -316,8 +313,11 @@ public class MainWindow extends JFrame {
                 gameView.repaint();
 
                 // vérifie si les objectifs sont atteints
-                if (checkInsects())
+                if (checkInsects()) {
                     nextMission();
+                    timer.stop();
+                    play("Tu as gagné cette mission !", true);
+                }
             }
         };
         timer = new Timer(DELAY, taskPerformer);
@@ -331,8 +331,8 @@ public class MainWindow extends JFrame {
         player.playText(readText);
         statusBar.setText(statusText);
         if (widthDialog) {
-            //try { Thread.sleep(5 * 1000); }
-            //catch(Exception e) {}
+            try { Thread.sleep(5 * 100); }
+            catch(Exception e) {}
             JOptionPane.showMessageDialog(null, statusText, "Information", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -380,6 +380,8 @@ public class MainWindow extends JFrame {
 	        loadCurrentGoals();
         } catch (RuntimeException e) {
         	play("Impossible de charger la mission suivante.", true);
+            nextMission();
+            return;
         }
 
         seedListView.requestFocus();
