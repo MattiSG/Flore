@@ -24,10 +24,10 @@
 		<sky></sky>
 		<grass></grass>
 		<sun></sun>
-		<hole></hole>
-		<hole_full></hole_full>
-		<hole_selected></hole_selected>
-		<hole_full_selected></hole_full_selected>
+		<hole width="200" height="200"></hole>
+		<hole_full width="200" height="200"></hole_full>
+		<hole_selected width="350" height="350"></hole_selected>
+		<hole_full_selected width="350" height="350"></hole_full_selected>
 		<cloud></cloud>
 	</assets>
 	
