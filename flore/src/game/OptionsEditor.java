@@ -25,6 +25,7 @@ import java.awt.event.ItemListener;
 
 public class OptionsEditor extends JFrame {
 	public static final String[] assetsTypes = {"standard", "high_contrast"};
+	public static final String[] languages = {"fr"};
 	
     private JPanel centerPanel = new JPanel();
     private Font font = new Font(null, Font.BOLD, GlobalProperties.getInteger("font_size"));
@@ -164,9 +165,8 @@ public class OptionsEditor extends JFrame {
     }
 
     private void setLanguage() {
-        String[] items = {"fr"};
-        JComboBox list = new JComboBox(items);
-        list.setSelectedItem("fr");
+        JComboBox list = new JComboBox(languages);
+        list.setSelectedItem(GlobalProperties.get("language"));
 
         list.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -185,5 +185,22 @@ public class OptionsEditor extends JFrame {
     }
     
     private void setAssetType() {
+        JComboBox list = new JComboBox(assetsTypes);
+        list.setSelectedItem(GlobalProperties.get("assets_type"));
+
+        list.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                GlobalProperties.set("assets_type", (String)((JComboBox)e.getSource()).getSelectedItem());
+            }
+        });
+
+        list.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e){
+                if (KeyEvent.VK_ESCAPE == e.getKeyCode()) 
+                    dispose();
+            }
+        });
+
+        addEditor("Thème", list);
     }
 }
