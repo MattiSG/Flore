@@ -90,6 +90,9 @@ public class MainWindow extends JFrame {
         // chargement de toutes les missions
         loadMissions();
 
+        // modification de la police de tous les labels
+        javax.swing.UIManager.put("Label.font", defaultFont);
+
         // changement du type de rendu de la liste pour l'affichage des images
         seedListView.setCellRenderer(new PlantCellRenderer());
         seedListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -181,8 +184,13 @@ public class MainWindow extends JFrame {
 				// J => lit la description de la plante
 				} else if (KeyEvent.VK_J == e.getKeyCode()) {
 					play(((Plant) seedListView.getSelectedValue()).description());
+                // N => en debug mode passe à la mission suivante
+				} else if (KeyEvent.VK_N == e.getKeyCode()) {
+                    if (GlobalProperties.getBoolean("debug"))
+                        nextMission();
                 }
             }
+
             public void keyReleased(KeyEvent e) {
                 // pronociation du nom de la plante dont la graine est sélectionnée
                 if (KeyEvent.VK_UP == e.getKeyCode() || KeyEvent.VK_DOWN == e.getKeyCode()) {
@@ -272,10 +280,30 @@ public class MainWindow extends JFrame {
         return goalsOk;
     }
 
-    // démarre le jeu
-    private void run() {
+    private void missionChoice() {
         // chargement de la première mission
         loadMission(0);
+    }
+
+    private void nextMission() {
+        timer.stop();
+        play("Tu as gagné cette mission !", true);
+
+        int newMission = missions.indexOf(currentMission) + 1;
+        if (newMission >= missions.size()) {
+            play("Tu as fini de jouer. Il n'y a plus de niveau disponible.", true);
+            setVisible(false);
+            dispose();
+        } else {
+            play("Niveau suivant");
+            loadMission(newMission);
+            timer.start();
+        }
+    }
+
+    // démarre le jeu
+    private void run() {
+        missionChoice();
 
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -288,21 +316,8 @@ public class MainWindow extends JFrame {
                 gameView.repaint();
 
                 // vérifie si les objectifs sont atteints
-                if (checkInsects()) {
-                    timer.stop();
-                    play("Tu as gagné cette mission !", true);
-
-                    int newMission = missions.indexOf(currentMission) + 1;
-                    if (newMission >= missions.size()) {
-                        play("Tu as fini de jouer. Il n'y a plus de niveau disponible.", true);
-                        setVisible(false);
-                        dispose();
-                    } else {
-                        play("Niveau suivant");
-                        loadMission(newMission);
-                        timer.start();
-                    }
-                }
+                if (checkInsects())
+                    nextMission();
             }
         };
         timer = new Timer(DELAY, taskPerformer);
@@ -315,8 +330,11 @@ public class MainWindow extends JFrame {
         player.stop();
         player.playText(readText);
         statusBar.setText(statusText);
-        if (widthDialog)
+        if (widthDialog) {
+            //try { Thread.sleep(5 * 1000); }
+            //catch(Exception e) {}
             JOptionPane.showMessageDialog(null, statusText, "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     private void play(String readText) {
