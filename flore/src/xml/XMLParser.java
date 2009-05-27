@@ -82,6 +82,10 @@ public class XMLParser {
 		}
 	}
 	
+	public Node getNode(String query) {
+		return getNodes(query).get(0);
+	}
+	
 	/**Returns the result of the evaluation of an Xpath query as a list of Nodes.
 	 *Every entry of the list will be one of the nodes described in the query parameter.
 	 */	

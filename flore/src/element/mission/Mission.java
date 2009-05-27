@@ -85,27 +85,21 @@ public class Mission extends XMLLoadableElement {
 	protected Map<String, List<BufferedImage>> loadAssets(String query) {
 		Map<String, List<BufferedImage>> result = new HashMap<String, List<BufferedImage>>();
 		List<String> tags = parser.getTags(query + "/*");
-		List<String> path = new ArrayList<String>(1);
 		for (String tag : tags) {
-			if (! isAssetKey(tag))
-				throw new RuntimeException("One of the assets nodes has unknown value \"" + tag + "\".");
-			
-			List<BufferedImage> images;
-			path.add(parser.get(query + "/" + tag));
+			Node node = parser.getNode(query + "/" + tag);
+			List<BufferedImage> images = new ArrayList<BufferedImage>(1);
 			try {
-				images = loadImages(path);
+				images.add(loadImage(node));
 			} catch (RuntimeException e) {
-				path.clear();
 				URI defaultImage = defaultFolder().resolve(tag + ".png");
-				path.add(defaultImage.toString());
-				images = loadImages(path);
+				node.setTextContent(defaultImage.toString());
+				images.add(loadImage(node));
 			}
 			
 			if (images.isEmpty())
 				throw new RuntimeException("Erreur à l'initialisation de l'élément " + ID() + " (\"" + name() + "\") : aucune image n'a pu être chargée !\nClé recherchée : " + tag);
 			
 			result.put(tag, images);
-			path.clear();
 		}
 		return result;
     }

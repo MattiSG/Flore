@@ -263,7 +263,7 @@ public class GameView extends JPanel {
 
             int x = h.x - holeW / 2;
             int y = h.y - holeH / 2;
-            g2d.drawImage(holeImg, x, y, holeW, holeH, null);
+            g2d.drawImage(holeImg, x, y, null);
         }
 
         // creatures

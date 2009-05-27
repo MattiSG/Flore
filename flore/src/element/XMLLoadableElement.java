@@ -127,40 +127,20 @@ public abstract class XMLLoadableElement {
 		Map<String, List<Node>> map = parser.getNodesListsMap(query);
 		Map<String, List<BufferedImage>> assets = new HashMap<String, List<BufferedImage>>();
 		for (String key : map.keySet()) {
-			List<Node> imagesNodes = map.get(key);
-			List<String> imagesPaths = new ArrayList<String>(imagesNodes.size());
-			List<Dimension> dimensions = new ArrayList<Dimension>(imagesNodes.size());
+			List<Node> imagesNodes = map.get(key);		
+			List<BufferedImage> images = new ArrayList<BufferedImage>(imagesNodes.size());
 			for (Node node : imagesNodes) {
-				int width, height;
 				try {
-					width = new Integer(node.getAttributes().getNamedItem(WIDTH_ATTRIBUTE).getNodeValue());
-					height = new Integer(node.getAttributes().getNamedItem(HEIGHT_ATTRIBUTE).getNodeValue());
+					images.add(loadImage(node));
 				} catch (Exception e) {
-					width = height = 0;
+					node.setTextContent(defaultFolder().resolve(key + ".png").toString());
+					images.add(loadImage(node));
 				}
-				dimensions.add(new Dimension(width, height));
-				imagesPaths.add(node.getTextContent());
-			}
-			
-			List<BufferedImage> images = new ArrayList<BufferedImage>(1);
-			try {
-				images = loadImages(imagesPaths);
-			} catch (RuntimeException e) {
-				URI defaultImage = defaultFolder().resolve(key + ".png");
-				images.add(loadImage(defaultImage.toString()));
 			}
 			
 			if (images.isEmpty())
 				throw new RuntimeException("Erreur à l'initialisation de l'élément " + ID() + " (\"" + name() + "\") : aucune image n'a pu être chargée !\nClé recherchée : " + key);
-			
-			for (int i = 0; i < images.size(); i++) {
-				Dimension dim = dimensions.get(i);
-				BufferedImage image = images.get(i);
-				if (dim.getWidth() <= 0 || dim.getHeight() <= 0)
-					dim = new Dimension(image.getWidth(), image.getHeight());
-				images.set(i, resize(image, dim));
-			}
-			
+
 			assets.put(key, images);
 		}
 		return assets;
@@ -180,7 +160,6 @@ public abstract class XMLLoadableElement {
 		java.awt.GraphicsEnvironment ge = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
 		java.awt.GraphicsDevice gs = ge.getDefaultScreenDevice();
 		java.awt.GraphicsConfiguration gc = gs.getDefaultConfiguration();
-		
 //		double ratio = image.getWidth() / image.getHeight();
 		BufferedImage result = gc.createCompatibleImage((int) (dimensions.getWidth() * zoom()), (int) (dimensions.getHeight() * zoom()), java.awt.Transparency.TRANSLUCENT);
 		java.awt.Graphics2D g = result.createGraphics();
@@ -198,17 +177,40 @@ public abstract class XMLLoadableElement {
 		return result;
 	}
 	
+	/**Returns an image, correctly loaded and resized according to the width and height attributes of the node, if available, and with the zoom factor from the zoom() method.
+	 *@throws	RuntimeException	if the given image couldn't be loaded.
+	 *@see	zoom
+	 *@see	resize
+	 *@see	loadImage(String)
+	 */
+	protected BufferedImage loadImage(Node node) {
+		int width, height;
+		try {
+			width = new Integer(node.getAttributes().getNamedItem(WIDTH_ATTRIBUTE).getNodeValue());
+			height = new Integer(node.getAttributes().getNamedItem(HEIGHT_ATTRIBUTE).getNodeValue());
+		} catch (Exception e) {
+			width = height = 0;
+		}
+		BufferedImage result = loadImage(node.getTextContent());
+		if (width <= 0 || height <= 0) {
+			width = result.getWidth();
+			height = result.getHeight();
+		}
+		return resize(result, new Dimension(width, height));
+	}
+	
+	/**Returns a loaded image from the given path.
+	 *@throws	RuntimeException	if the given image couldn't be loaded.
+	 */
 	private BufferedImage loadImage(String path) {
 		URI imageURI = parser.getDocumentURI();
 		try {
 			imageURI = imageURI.normalize().resolve(new URI(path));
 			File image = new File(imageURI);
 			if (! image.exists())
-				throw new java.io.IOException();
+				throw new java.io.IOException("L'image demandée n'existe pas.");
 			return ImageIO.read(image);
-		} catch(java.io.IOException e) {
-			throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + imageURI);
-		} catch(java.net.URISyntaxException e) {
+		} catch(Exception e) {
 			throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + imageURI);
 		}
 	}
