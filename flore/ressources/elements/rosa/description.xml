@@ -25,6 +25,21 @@
 		</flowers>
 	</assets>
 	
+	<assets type="high_contrast">
+		<seed>
+			<img width="120" height="120">assets/high_contrast/rosa-high_contrast-seed.png</img>
+		</seed>
+		<shaft>
+			<img></img>
+		</shaft>
+		<leaves>
+			<img></img>
+		</leaves>
+		<flowers>
+			<img>assets/high_contrast/rosa-high_contrast-plant.png</img>
+		</flowers>
+	</assets>
+	
 	<brings>
 		<creature probability="0.5">papilionidae</creature>
 		<creature probability="0.6">aphidoidea</creature>

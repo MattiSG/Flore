@@ -31,6 +31,24 @@
 		</up>
 	</assets>
 	
+	<assets type="high_contrast">
+		<still>
+			<img width="30" height="30">assets/high_contrast/aph_high_contrast_up.png</img>
+		</still>
+		<left>
+			<img width="30" height="30">assets/high_contrast/aph_high_contrast_left.png</img>
+		</left>
+		<right>
+			<img width="30" height="30">assets/high_contrast/aph_high_contrast_right.png</img>
+		</right>
+		<down>
+			<img width="30" height="30">assets/high_contrast/aph_high_contrast_down.png</img>
+		</down>
+		<up>
+			<img width="30" height="30">assets/high_contrast/aph_high_contrast_up.png</img>
+		</up>
+	</assets>
+	
 	<brings>
 		<creature probability="0.3">coccinelle</creature>
 	</brings>

@@ -28,6 +28,21 @@
 		</flowers>
 	</assets>
 	
+	<assets type="high_contrast">
+		<seed>
+			<img width="120" height="120">assets/high_contrast/mimosa-high_contrast-flower.png</img>
+		</seed>
+		<shaft>
+			<img></img>
+		</shaft>
+		<leaves>
+			<img></img>
+		</leaves>
+		<flowers>
+			<img>assets/high_contrast/mimosa-high_contrast-plant.png</img>
+		</flowers>
+	</assets>
+	
 	<brings>
 		<creature probability="0.3">lycaenidae</creature>
 	</brings>

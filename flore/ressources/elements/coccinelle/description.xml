@@ -30,4 +30,22 @@
 			<img width="60" height="60">assets/standard/coccinellehaut2.png</img>
 		</up>
 	</assets>
+	
+	<assets type="high_contrast">
+		<still>
+			<img width="60" height="60">assets/standard/coccinelle-high_contrast-up.png</img>
+		</still>
+		<left>
+			<img width="60" height="60">assets/standard/coccinelle-high_contrast-left.png</img>
+		</left>
+		<right>
+			<img width="60" height="60">assets/standard/coccinelle-high_contrast-right.png</img>
+		</right>
+		<down>
+			<img width="60" height="60">assets/standard/coccinelle-high_contrast-down.png</img>
+		</down>
+		<up>
+			<img width="60" height="60">assets/standard/coccinelle-high_contrast-up.png</img>
+		</up>
+	</assets>
 </creature>

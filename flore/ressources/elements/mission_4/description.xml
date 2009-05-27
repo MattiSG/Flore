@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mission version="0.22" author="devint">
+	<id>mission_4</id>
+	<name lang="fr">Oiseaux insectivores</name>
+	
+	<description lang="fr">Tu as vu des oiseaux qui aimaient les fruits. Mais la plupart des oiseaux préfèrent un autre type de nourriture...</description>
+
+	<hints>
+		<hint level="0">Plante un platane pour faire venir des moucherons.</hint>
+		<hint level="1">Le mûrier fait des fruits, mais les hirondelles n'aiment pas cela. Le buddleia fait venir des papillons, mais ceux-ci sont trop gros pour les hirondelles.</hint>
+		<hint level="4">Les papillons sont de tros gros insectes pour les hirondelles.</hint>
+		<hint level="9">Les hirondelles aiment les insectes, mais encore faut-il qu'elles puissent les manger...</hint>
+		<hint level="10">Les hirondelles sont insectivores.</hint>
+	</hints>
+	
+	<difficulty>4</difficulty>
+	
+	<time_limit>240</time_limit>
+	
+	<holes>4</holes>
+	
+	<assets type="standard">
+		<icon></icon>
+		<sky></sky>
+		<grass></grass>
+		<sun></sun>
+		<hole></hole>
+		<hole_full></hole_full>
+		<hole_selected></hole_selected>
+		<hole_full_selected></hole_full_selected>
+		<cloud></cloud>
+	</assets>
+	
+	<plants>
+		<plant id="buddleia">2</plant>
+		<plant id="murier">2</plant>
+		<plant id="rosa">2</plant>
+		<plant id="platane">2</plant>
+	</plants>
+	
+	<goal>
+		<creature id="hirondelle">3</creature>
+	</goal>
+	
+</mission>

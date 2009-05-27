@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mission version="0.22" author="devint">
+	<id>mission_3</id>
+	<name lang="fr">Oiseaux</name>
+	
+	<description lang="fr">Jusqu'à présent, les seuls animaux que tu as sauvés étaient des insectes... Mais cette fois-ci, ce sont des oiseaux qui ont besoin de toi !</description>
+
+	<hints>
+		<hint level="0">Plante un mûrier pour attirer les pies.</hint>
+		<hint level="1">Le buddleia ne fait que des fleurs. Les oiseaux, eux, sont attirés par le sucre !</hint>
+		<hint level="2">Le buddleia s'appelle aussi "L'arbre à papillons".</hint>
+	</hints>
+	
+	<difficulty>2</difficulty>
+	
+	<time_limit>240</time_limit>
+	
+	<holes>3</holes>
+	
+	<assets type="standard">
+		<icon></icon>
+		<sky></sky>
+		<grass></grass>
+		<sun></sun>
+		<hole></hole>
+		<hole_full></hole_full>
+		<hole_selected></hole_selected>
+		<hole_full_selected></hole_full_selected>
+		<cloud></cloud>
+	</assets>
+	
+	<plants>
+		<plant id="buddleia">2</plant>
+		<plant id="murier">1</plant>
+	</plants>
+	
+	<goal>
+		<creature id="pie">3</creature>
+	</goal>
+	
+</mission>
