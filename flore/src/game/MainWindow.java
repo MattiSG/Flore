@@ -73,6 +73,12 @@ public class MainWindow extends JFrame {
     // temps entre chaque ré-affichage
     // boucle principale (en ms)
     private final static int DELAY       = 100;
+    // timer pour la durée d'affichage d'un message
+    //  dans la barre de status
+    private Timer            statusTimer = new Timer(5000, new ActionListener() {
+                                                 public void actionPerformed(ActionEvent e) {
+                                                   statusBar.setText("");
+                                               }});
 
     private JLabel           statusBar     = new JLabel("Initialisation");
     private DefaultListModel goalList      = new DefaultListModel();
@@ -327,6 +333,7 @@ public class MainWindow extends JFrame {
     // prononce le texte et l'affiche dans la barre de status
     // {
     private void play(String readText, String statusText, boolean widthDialog) {
+        statusTimer.stop();
         player.stop();
         player.playText(readText);
         statusBar.setText(statusText);
@@ -335,6 +342,7 @@ public class MainWindow extends JFrame {
             catch(Exception e) {}
             JOptionPane.showMessageDialog(null, statusText, "Information", JOptionPane.INFORMATION_MESSAGE);
         }
+        statusTimer.start();
     }
 
     private void play(String readText) {
