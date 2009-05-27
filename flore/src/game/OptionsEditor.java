@@ -21,6 +21,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 
 public class OptionsEditor extends JFrame {
+	public static final String[] assetsTypes = {"standard", "high_contrast"};
+	
     private JPanel centerPanel = new JPanel();
     private Font font = new Font(null, Font.BOLD, GlobalProperties.getInteger("font_size"));
 
