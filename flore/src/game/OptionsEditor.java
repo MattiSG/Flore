@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
+import javax.swing.JComboBox;
 import javax.swing.BoxLayout;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -19,6 +20,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class OptionsEditor extends JFrame {
 	public static final String[] assetsTypes = {"standard", "high_contrast"};
@@ -33,6 +36,8 @@ public class OptionsEditor extends JFrame {
         setCreatureSpeedEditor();
         setCreatureZoomEditor();
         setPlantZoomEditor();
+        setLanguage();
+        setAssetType();
         //setMissionZoomEditor();
 
         getContentPane().add(centerPanel, BorderLayout.CENTER);
@@ -156,5 +161,29 @@ public class OptionsEditor extends JFrame {
         setSize(getToolkit().getScreenSize());
         setLocationRelativeTo(null);
         validate();
+    }
+
+    private void setLanguage() {
+        String[] items = {"fr"};
+        JComboBox list = new JComboBox(items);
+        list.setSelectedItem("fr");
+
+        list.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                GlobalProperties.set("language", (String)((JComboBox)e.getSource()).getSelectedItem());
+            }
+        });
+
+        list.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e){
+                if (KeyEvent.VK_ESCAPE == e.getKeyCode()) 
+                    dispose();
+            }
+        });
+
+        addEditor("Langue", list);
+    }
+    
+    private void setAssetType() {
     }
 }
