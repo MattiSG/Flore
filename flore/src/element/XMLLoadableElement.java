@@ -280,6 +280,7 @@ public abstract class XMLLoadableElement {
 				assets = loadAssets(EXPR_ASSETS + "[@type='" + GlobalProperties.AVAILABLE_ASSETS_TYPES[assetsTypeIndex] + "']");
 				ok = true;
 			} catch (IllegalArgumentException e) {
+				System.err.println("No " + GlobalProperties.AVAILABLE_ASSETS_TYPES[assetsTypeIndex] + " assets found for " + ID() + ". Falling back to " + GlobalProperties.AVAILABLE_ASSETS_TYPES[assetsTypeIndex - 1] + " assets.");
 				assetsTypeIndex--;
 			}
 		} while (! ok);
