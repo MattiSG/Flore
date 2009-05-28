@@ -27,5 +27,23 @@
 			<img width="80" height="80">assets/standard/haut.png</img>
 		</up>
 	</assets>
-	
+
+	<assets type="high_contrast">
+		<still>
+			<img width="95" height="95">assets/high_contrast/lyc-high_contrast-up.png</img>
+		</still>
+		<left>
+			<img width="95" height="95">assets/high_contrast/lyc-high_contrast-left.png</img>
+		</left>
+		<right>
+			<img width="95" height="95">assets/high_contrast/lyc-high_contrast-right.png</img>
+		</right>
+		<down>
+			<img width="95" height="95">assets/high_contrast/lyc-high_contrast-down.png</img>
+		</down>
+		<up>
+			<img width="95" height="95">assets/high_contrast/lyc-high_contrast-up.png</img>
+		</up>
+	</assets>
+		
 </creature>
