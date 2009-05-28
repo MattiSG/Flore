@@ -140,16 +140,12 @@ public class MainWindow extends JFrame {
                             Plant newPlant = ((Plant) seedListView.getSelectedValue()).clone();
                             if (seedsUsed.containsKey(newPlant.ID())) {
                                 if (seedsUsed.get(newPlant.ID()) < currentMission.plants().get(newPlant.ID())) {
-                                    seedsUsed.put(newPlant.ID(), seedsUsed.get(newPlant.ID()) + 1);
-                                    plantedPlants.set(i, newPlant);
-                                    gameView.updatePlantedPlants();
+                                    plantNewPlant(newPlant, seedsUsed.get(newPlant.ID()) + 1, i);
                                 } else {
                                     play("Tu n'as plus de graine de "+newPlant.name());
                                 }
                             } else {
-                                seedsUsed.put(newPlant.ID(), 1);
-                                plantedPlants.set(i, newPlant);
-                                gameView.updatePlantedPlants();
+                                plantNewPlant(newPlant, 1, i);
                             }
                             if (seedsUsed.get(newPlant.ID()) >= currentMission.plants().get(newPlant.ID())) {
                                 for (int j = 0; j < seedList.getSize(); ++j)
@@ -242,6 +238,13 @@ public class MainWindow extends JFrame {
 
         // lancement du jeu
         run();
+    }
+
+    private void plantNewPlant(Plant newPlant, int nb, int pos) {
+        seedsUsed.put(newPlant.ID(), nb);
+        plantedPlants.set(pos, newPlant);
+        Player.getPlayer().playWav("/home/tipoun/java/flore/flore/ressources/elements/defaults/Mission/earth.wav");
+        gameView.updatePlantedPlants();
     }
 
     // vérifie si les objectifs sont atteints

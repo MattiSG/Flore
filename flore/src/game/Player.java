@@ -17,8 +17,20 @@ public class Player {
         sivox.playText(text);
     }
 
-    public void playWav(String path) {
-        sivox.stop();
-        sivox.playWav(path);
+    public void playWav(String waveFile) {
+        (new WaveThread(waveFile)).start();
+    }
+
+    class WaveThread extends Thread {
+        private String waveFile;
+
+        public WaveThread(String waveFile) {
+            this.waveFile = waveFile;
+        }
+
+        public void run() {
+            SIVOXDevint v = new SIVOXDevint();
+            v.playWav(waveFile);
+        }
     }
 }

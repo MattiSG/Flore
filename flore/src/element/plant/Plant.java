@@ -1,5 +1,7 @@
 package element.plant;
 
+import game.Player;
+
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
@@ -77,6 +79,8 @@ public class Plant extends XMLLoadableElement implements Cloneable {
     }
 
     public void incrWater() {
+        if (water <= 0)
+            Player.getPlayer().playWav("/home/tipoun/java/flore/flore/ressources/elements/defaults/Mission/rain.wav");
         water += 10 * (DEV_MODE ? DEV_COEF : 1.0);
     }
     
