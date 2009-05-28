@@ -14,6 +14,8 @@ import java.awt.Rectangle;
 import java.awt.Point;
 import java.awt.Dimension;
 
+import t2s.SIVOXDevint;
+
 import org.w3c.dom.Node;
 
 import element.XMLLoadableElement;
@@ -48,6 +50,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
                     inside = false;
     private long timeBorn = System.currentTimeMillis();
     private final float mvtSize = 150;
+    private SIVOXDevint player;
 	//@}
 	
 	/**@name	Variables d'affichage*/
@@ -58,10 +61,10 @@ public class Creature extends XMLLoadableElement implements Cloneable {
     private Random random = new Random();
 	//@}
 	
-    public Creature(String ID) {
+    public Creature(String ID, SIVOXDevint player) {
 		load(ID);
         img = getAsset("still");
-        init();
+        this.player = player;
     }
 	
 	/**@name	Getters*/
@@ -345,6 +348,8 @@ public class Creature extends XMLLoadableElement implements Cloneable {
         else
             outside = false;
 
+        boolean oldInside = inside;
+
         // à l'intérieur de l'écran ? (soit plus d'à moitié visible)
         if (pos.x > 0 &&
                 pos.y > 0 &&
@@ -353,6 +358,11 @@ public class Creature extends XMLLoadableElement implements Cloneable {
             inside = true;
         else
             inside = false;
+
+        if(oldInside == false && inside == true) {
+            player.stop();
+            player.playWav(sound().getCanonicalPath());
+        }
 
         // affichage (au centre de la position indiquée)
         g.drawImage(img, newPos.x - img.getWidth() / 2, newPos.y - img.getHeight() / 2, null);
@@ -364,7 +374,6 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 
     public Creature clone() throws CloneNotSupportedException {
         Creature c = (Creature) super.clone();
-        c.init();
         return c;
     }
 }

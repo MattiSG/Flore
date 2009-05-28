@@ -2,6 +2,8 @@ package game;
 
 import element.creature.Creature;
 
+import t2s.SIVOXDevint;
+
 import java.util.Map;
 import java.util.HashMap;
 
@@ -19,9 +21,9 @@ public class CreaturePool {
 
     // méthode renvoyant une créature clonée
     //  à partir de la liste existante
-    public static Creature getCreature(String id) {
+    public static Creature getCreature(String id, SIVOXDevint player) {
         if (!pool.containsKey(id))
-            pool.put(id, new Creature(id));
+            pool.put(id, new Creature(id, player));
 
         try {
             Creature c = pool.get(id).clone();

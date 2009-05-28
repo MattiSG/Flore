@@ -4,6 +4,8 @@ import element.plant.Plant;
 import element.creature.Creature;
 import element.mission.Mission;
 
+import t2s.SIVOXDevint;
+
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -64,9 +66,11 @@ public class GameView extends JPanel {
     // hack pour appeler les insectes toutes les MAX_COUNT_LOOP boucles
     private int              loopCount      = 0;
     private final static int MAX_COUNT_LOOP = 30;
+    private SIVOXDevint      player;
 
-    public GameView(List<Plant> plantedPlants) {
+    public GameView(List<Plant> plantedPlants, SIVOXDevint player) {
         this.plantedPlants = plantedPlants;
+        this.player = player;
 
         addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
@@ -237,7 +241,7 @@ public class GameView extends JPanel {
                         Map <String, Double> creatures = p.brings();
                         for (Map.Entry<String, Double> e : creatures.entrySet())
                             if (e.getValue() > Math.random())
-                                insects.add(CreaturePool.getCreature(e.getKey()));
+                                insects.add(CreaturePool.getCreature(e.getKey(), player));
                     }
 
                     List<Creature> newInsects = new ArrayList<Creature>();
@@ -245,7 +249,7 @@ public class GameView extends JPanel {
                     for (Creature c : insects) 
                         for (Map.Entry<String, Double> e : c.brings().entrySet())
                             if (e.getValue() > Math.random())
-                                newInsects.add(CreaturePool.getCreature(e.getKey()));
+                                newInsects.add(CreaturePool.getCreature(e.getKey(), player));
                     insects.addAll(newInsects);
 
                     // remise à zéro du compteur de boucle

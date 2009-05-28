@@ -86,8 +86,8 @@ public class MainWindow extends JFrame {
     private JProgressBar     levelBar      = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
     private DefaultListModel seedList      = new DefaultListModel();
     private JList            seedListView  = new JList(seedList);
-    private GameView         gameView      = new GameView(plantedPlants);
     private SIVOXDevint      player        = new SIVOXDevint();
+    private GameView         gameView      = new GameView(plantedPlants, player);
 
     // créatures apparus lors de la pousse des plantes
     private List<Creature>   insectsOnGame = gameView.getCreaturesOnGame();
@@ -269,11 +269,11 @@ public class MainWindow extends JFrame {
                 if (ig.get(e.getKey()) < e.getValue()) {
                     goalsOk = false;
                     for (int i = 0; i < e.getValue() - ig.get(e.getKey()); ++i)
-                        newList.addElement(CreaturePool.getCreature(e.getKey()));
+                        newList.addElement(CreaturePool.getCreature(e.getKey(), player));
                 }
             } else  {
                 for (int i = 0; i < e.getValue(); ++i)
-                    newList.addElement(CreaturePool.getCreature(e.getKey()));
+                    newList.addElement(CreaturePool.getCreature(e.getKey(), player));
                 goalsOk = false;
             }
         }
@@ -422,7 +422,7 @@ public class MainWindow extends JFrame {
         String msg = "";
         int value  = 0;
         for (Map.Entry<String, Integer> i : currentMission.goal().entrySet()) {
-            Creature c = CreaturePool.getCreature(i.getKey());
+            Creature c = CreaturePool.getCreature(i.getKey(), player);
 
             value += i.getValue();
             msg   += i.getValue() + " " + c.name() + (i.getValue() > 1 ? "s, " : ", ");
