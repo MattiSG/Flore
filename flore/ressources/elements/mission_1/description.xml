@@ -31,6 +31,19 @@
 		<cloud></cloud>
 	</assets>
 	
+	<assets type="high_contrast">
+		<icon></icon>
+		<sky></sky>
+		<grass></grass>
+		<sun></sun>
+		<hole width="200" height="200"></hole>
+		<hole_full width="200" height="200"></hole_full>
+		<hole_selected width="350" height="350"></hole_selected>
+		<hole_full_selected width="350" height="350"></hole_full_selected>
+		<cloud></cloud>
+	</assets>
+	
+	
 	<plants>
 		<plant id="rosa">2</plant>
 		<plant id="mimosa">2</plant>
