@@ -49,7 +49,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
                     outside = true,
                     inside = false;
     private long timeBorn = System.currentTimeMillis();
-    private final float mvtSize = 150;
+    private float mvtSize;
     private Player player = Player.getPlayer();
 	//@}
 	
@@ -64,6 +64,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
     public Creature(String ID) {
 		load(ID);
         img = getAsset("still");
+        mvtSize = stillImages().get(0).getWidth() * 3;
         init();
     }
 	
