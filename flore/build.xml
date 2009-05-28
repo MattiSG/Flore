@@ -88,8 +88,9 @@
     <delete dir="${dir.tmp}"/>
   </target>
 
-  <target name="clean" description="Remove build products">
+  <target name="clean" description="Remove build products and config">
     <delete dir="${dir.bin}"/>
     <delete file="${file.dist}"/>
+	<delete file="${file.config}"/>
   </target>
 </project>
