@@ -4,7 +4,7 @@ import element.plant.Plant;
 import element.creature.Creature;
 import element.mission.Mission;
 
-import t2s.SIVOXDevint;
+import game.Player;
 
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;
@@ -66,21 +66,24 @@ public class GameView extends JPanel {
     // hack pour appeler les insectes toutes les MAX_COUNT_LOOP boucles
     private int              loopCount      = 0;
     private final static int MAX_COUNT_LOOP = 30;
-    private SIVOXDevint      player;
+    private Player      player = Player.getPlayer();
 
-    public GameView(List<Plant> plantedPlants, SIVOXDevint player) {
+    public GameView(List<Plant> plantedPlants) {
         this.plantedPlants = plantedPlants;
-        this.player = player;
 
         addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
                 if (e.getID() == ComponentEvent.COMPONENT_RESIZED) {
-                    computeHoles();
-                    computeBackgroundImage();
-                    repaint();
+                    computePainting();
                 }
             }
         });
+    }
+
+    public void computePainting() {
+        computeHoles();
+        computeBackgroundImage();
+        repaint();
     }
 
     // calule la nouvelle image de fond après un redimensionnement
@@ -241,7 +244,7 @@ public class GameView extends JPanel {
                         Map <String, Double> creatures = p.brings();
                         for (Map.Entry<String, Double> e : creatures.entrySet())
                             if (e.getValue() > Math.random())
-                                insects.add(CreaturePool.getCreature(e.getKey(), player));
+                                insects.add(CreaturePool.getCreature(e.getKey()));
                     }
 
                     List<Creature> newInsects = new ArrayList<Creature>();
@@ -249,7 +252,7 @@ public class GameView extends JPanel {
                     for (Creature c : insects) 
                         for (Map.Entry<String, Double> e : c.brings().entrySet())
                             if (e.getValue() > Math.random())
-                                newInsects.add(CreaturePool.getCreature(e.getKey(), player));
+                                newInsects.add(CreaturePool.getCreature(e.getKey()));
                     insects.addAll(newInsects);
 
                     // remise à zéro du compteur de boucle

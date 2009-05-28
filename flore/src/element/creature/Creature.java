@@ -1,5 +1,7 @@
 package element.creature;
 
+import game.Player;
+
 import java.io.File;
 import java.util.List;
 import java.util.LinkedList;
@@ -13,8 +15,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Point;
 import java.awt.Dimension;
-
-import t2s.SIVOXDevint;
 
 import org.w3c.dom.Node;
 
@@ -50,7 +50,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
                     inside = false;
     private long timeBorn = System.currentTimeMillis();
     private final float mvtSize = 150;
-    private SIVOXDevint player;
+    private Player player = Player.getPlayer();
 	//@}
 	
 	/**@name	Variables d'affichage*/
@@ -60,11 +60,11 @@ public class Creature extends XMLLoadableElement implements Cloneable {
     private Point pos;  // position
     private Random random = new Random();
 	//@}
-	
-    public Creature(String ID, SIVOXDevint player) {
+
+    public Creature(String ID) {
 		load(ID);
         img = getAsset("still");
-        this.player = player;
+        init();
     }
 	
 	/**@name	Getters*/
@@ -138,6 +138,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 	private File parseSoundPath() {
 		String[] paths = {parser.get(SOUND_EXPR), DEFAULT_SOUND};
 		for (String path : paths) {
+            if (path.length() == 0) continue;
 			URI soundURI = parser.getDocumentURI();
 			try {
 				soundURI = soundURI.normalize().resolve(new URI(path));
@@ -300,11 +301,9 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 
             // fin du déplacement ? on en prépare un nouveau
             // TODO /!\ appel récursif en boucle
-            //System.out.println("début (1)");
             if (mvtT >= 1) {
                 randomMvt(rect.width, rect.height);
             }
-            //System.out.println("fin (1)");
 
             Point oldMvt = calcMvt(mvtT, dir);
 
@@ -360,8 +359,11 @@ public class Creature extends XMLLoadableElement implements Cloneable {
             inside = false;
 
         if(oldInside == false && inside == true) {
-            player.stop();
-            player.playWav(sound().getCanonicalPath());
+            try {
+                player.playWav(sound().getCanonicalPath());
+            } catch(Exception e) {
+                System.err.println("[erreur] Creature: getCanonicalPath()");
+            }
         }
 
         // affichage (au centre de la position indiquée)
@@ -374,6 +376,11 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 
     public Creature clone() throws CloneNotSupportedException {
         Creature c = (Creature) super.clone();
+        // ne pas oublier le init() sinon risque de bugs
+        // la méthode clone des créatures réalise des
+        // copies bits-à-bits, donc ne recopie que les
+        // pointeurs pour les types non-primitifs
+        c.init();
         return c;
     }
 }

@@ -49,6 +49,7 @@
       <classpath>
         <pathelement location="${dir.bin}"/>
         <pathelement location="${lib.junit}"/>
+        <pathelement location="${lib.vox}"/>
       </classpath>
     </junit>
   </target>
@@ -61,6 +62,7 @@
       <classpath>
         <pathelement location="${dir.bin}"/>
         <pathelement location="${lib.junit}"/>
+        <pathelement location="${lib.vox}"/>
       </classpath>
     </junit>
   </target>

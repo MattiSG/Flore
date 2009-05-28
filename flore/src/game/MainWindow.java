@@ -5,9 +5,8 @@ import element.plant.Plant;
 import element.creature.Creature;
 import element.mission.Mission;
 import game.CreaturePool;
+import game.Player;
 import xml.GlobalProperties;
-
-import t2s.SIVOXDevint;
 
 import javax.swing.Timer;
 import javax.swing.JFrame;
@@ -21,6 +20,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
 
 import java.awt.Font;
 import java.awt.Dimension;
@@ -86,8 +86,8 @@ public class MainWindow extends JFrame {
     private JProgressBar     levelBar      = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
     private DefaultListModel seedList      = new DefaultListModel();
     private JList            seedListView  = new JList(seedList);
-    private SIVOXDevint      player        = new SIVOXDevint();
-    private GameView         gameView      = new GameView(plantedPlants, player);
+    private Player           player        = Player.getPlayer();
+    private GameView         gameView      = new GameView(plantedPlants);
 
     // créatures apparus lors de la pousse des plantes
     private List<Creature>   insectsOnGame = gameView.getCreaturesOnGame();
@@ -98,6 +98,7 @@ public class MainWindow extends JFrame {
 
         // modification de la police de tous les labels
         javax.swing.UIManager.put("Label.font", defaultFont);
+        javax.swing.UIManager.put("ComboBox.font", defaultFont);
 
         // changement du type de rendu de la liste pour l'affichage des images
         seedListView.setCellRenderer(new PlantCellRenderer());
@@ -269,11 +270,11 @@ public class MainWindow extends JFrame {
                 if (ig.get(e.getKey()) < e.getValue()) {
                     goalsOk = false;
                     for (int i = 0; i < e.getValue() - ig.get(e.getKey()); ++i)
-                        newList.addElement(CreaturePool.getCreature(e.getKey(), player));
+                        newList.addElement(CreaturePool.getCreature(e.getKey()));
                 }
             } else  {
                 for (int i = 0; i < e.getValue(); ++i)
-                    newList.addElement(CreaturePool.getCreature(e.getKey(), player));
+                    newList.addElement(CreaturePool.getCreature(e.getKey()));
                 goalsOk = false;
             }
         }
@@ -287,8 +288,14 @@ public class MainWindow extends JFrame {
     }
 
     private void missionChoice() {
-        // chargement de la première mission
+        JComboBox jcb = new JComboBox();
+        for (Mission m : missions)
+            jcb.addItem(m.name());
+
+        //JOptionPane.showMessageDialog(null, jcb, "Choisis ta mission : ", JOptionPane.QUESTION_MESSAGE);
+        //loadMission(jcb.getSelectedIndex());
         loadMission(0);
+        gameView.computePainting();
     }
 
     private void nextMission() {
@@ -320,9 +327,9 @@ public class MainWindow extends JFrame {
 
                 // vérifie si les objectifs sont atteints
                 if (checkInsects()) {
-                    nextMission();
                     timer.stop();
                     play("Tu as gagné cette mission !", true);
+                    nextMission();
                 }
             }
         };
@@ -334,7 +341,6 @@ public class MainWindow extends JFrame {
     // {
     private void play(String readText, String statusText, boolean widthDialog) {
         statusTimer.stop();
-        player.stop();
         player.playText(readText);
         statusBar.setText(statusText);
         if (widthDialog) {
@@ -422,7 +428,7 @@ public class MainWindow extends JFrame {
         String msg = "";
         int value  = 0;
         for (Map.Entry<String, Integer> i : currentMission.goal().entrySet()) {
-            Creature c = CreaturePool.getCreature(i.getKey(), player);
+            Creature c = CreaturePool.getCreature(i.getKey());
 
             value += i.getValue();
             msg   += i.getValue() + " " + c.name() + (i.getValue() > 1 ? "s, " : ", ");
