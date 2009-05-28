@@ -24,6 +24,13 @@ import java.awt.event.ItemListener;
 import xml.GlobalProperties;
 
 public class OptionsEditor extends JFrame {
+	public final static double STORAGE_NUMBERS_COEF = 10.0; //this is to circumvent a GUI limitation (can't edit below integers). Yeah, that sucks.
+	
+	private final static int	FONT_SIZE_MIN = 10,
+								FONT_SIZE_MAX = 120,
+								ZOOM_MIN = 5,
+								ZOOM_MAX = 40;
+	
     private JPanel centerPanel = new JPanel();
     private Font font = new Font(null, Font.BOLD, GlobalProperties.getInteger("font_size"));
 
@@ -31,12 +38,11 @@ public class OptionsEditor extends JFrame {
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
 
         setFontSizeEditor();
-        setCreatureSpeedEditor();
         setCreatureZoomEditor();
         setPlantZoomEditor();
-        setLanguage();
+        setMissionZoomEditor();
         setAssetType();
-        //setMissionZoomEditor();
+        setLanguage();
 
         getContentPane().add(centerPanel, BorderLayout.CENTER);
 
@@ -59,84 +65,42 @@ public class OptionsEditor extends JFrame {
         centerPanel.add(editor);
     }
 
-    private void setCreatureSpeedEditor() {
-        JSpinner spinner = new JSpinner(new SpinnerNumberModel(GlobalProperties.getDouble("Creature_Speed") * GlobalProperties.STORAGE_NUMBERS_COEF, 1, 50, 1));
-
-        spinner.getModel().addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                GlobalProperties.set("Creature_Speed", ""+((SpinnerNumberModel)e.getSource()).getNumber().doubleValue() * GlobalProperties.STORAGE_NUMBERS_COEF);
-            }
-        });
-
-        ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e){
-                if (KeyEvent.VK_ESCAPE == e.getKeyCode())
-                    dispose();
-            }
-        });
-
-        addEditor("Vitesse de la créature", spinner);
-    }
-
     private void setCreatureZoomEditor() {
-        JSpinner spinner = new JSpinner(new SpinnerNumberModel(GlobalProperties.getDouble("Creature" + GlobalProperties.ZOOM_SUFFIX) * GlobalProperties.STORAGE_NUMBERS_COEF, 5, 30, 1));
-
-        spinner.getModel().addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                GlobalProperties.set("Creature"+GlobalProperties.ZOOM_SUFFIX, ""+((SpinnerNumberModel)e.getSource()).getNumber().doubleValue() * GlobalProperties.STORAGE_NUMBERS_COEF);
-            }
-        });
-
-        ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e){
-                if (KeyEvent.VK_ESCAPE == e.getKeyCode()) 
-                    dispose();
-            }
-        });
-
-        addEditor("Zoom de la créature", spinner);
+        addEditor("Taille des créatures", zoomSpinner("Creature"));
     }
 
     private void setPlantZoomEditor() {
-        JSpinner spinner = new JSpinner(new SpinnerNumberModel(GlobalProperties.getDouble("Plant" + GlobalProperties.ZOOM_SUFFIX) * GlobalProperties.STORAGE_NUMBERS_COEF, 5, 30, 1));
-
-        spinner.getModel().addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                GlobalProperties.set("Plant"+GlobalProperties.ZOOM_SUFFIX, ""+((SpinnerNumberModel)e.getSource()).getNumber().doubleValue() * GlobalProperties.STORAGE_NUMBERS_COEF);
-            }
-        });
-
-        ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e){
-                if (KeyEvent.VK_ESCAPE == e.getKeyCode())
-                    dispose();
-            }
-        });
-
-        addEditor("Zoom de la plante", spinner);
+        addEditor("Taille des plantes", zoomSpinner("Plant"));
     }
 
     private void setMissionZoomEditor() {
-        JSpinner spinner = new JSpinner(new SpinnerNumberModel(GlobalProperties.getDouble("Mission" + GlobalProperties.ZOOM_SUFFIX) * GlobalProperties.STORAGE_NUMBERS_COEF, 5, 30, 1));
-
-        spinner.getModel().addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                GlobalProperties.set("Mission"+GlobalProperties.ZOOM_SUFFIX, ""+((SpinnerNumberModel)e.getSource()).getNumber().doubleValue() * GlobalProperties.STORAGE_NUMBERS_COEF);
-            }
-        });
-
-        ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e){
-                if (KeyEvent.VK_ESCAPE == e.getKeyCode()) 
-                    dispose();
-            }
-        });
-
-        addEditor("Zoom de la mission", spinner);
+        addEditor("Taille des décors", zoomSpinner("Mission"));
     }
+	
+	private JSpinner zoomSpinner(final String element) {
+		int value = (int) (GlobalProperties.getDouble(element + GlobalProperties.ZOOM_SUFFIX) * STORAGE_NUMBERS_COEF);
+		if (value < ZOOM_MIN || value > ZOOM_MAX)
+			value = new Integer(GlobalProperties.defaults().getProperty(element + GlobalProperties.ZOOM_SUFFIX));
+		JSpinner result = new JSpinner(new SpinnerNumberModel(value, ZOOM_MIN, ZOOM_MAX, 5));
+		result.getModel().addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				GlobalProperties.set(element + GlobalProperties.ZOOM_SUFFIX, "" + ((SpinnerNumberModel) e.getSource()).getNumber().doubleValue() / STORAGE_NUMBERS_COEF);
+			}
+		});
+        ((JSpinner.DefaultEditor) result.getEditor()).getTextField().addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (KeyEvent.VK_ESCAPE == e.getKeyCode()) 
+					dispose();
+			}
+		});
+		return result;
+	}
 
     private void setFontSizeEditor() {
-        JSpinner spinner = new JSpinner(new SpinnerNumberModel((int)GlobalProperties.getInteger("font_size"), 20, 100, 1));
+		int value = (int) GlobalProperties.getInteger("font_size");
+		if (value < FONT_SIZE_MIN || value > FONT_SIZE_MAX)
+			value = new Integer(GlobalProperties.defaults().getProperty("font_size"));
+		JSpinner spinner = new JSpinner(new SpinnerNumberModel(value, FONT_SIZE_MIN, FONT_SIZE_MAX, 5));
 
         spinner.getModel().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {

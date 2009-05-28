@@ -10,8 +10,6 @@ import java.awt.Font;
 /**This class holds the global options used throughout the game.
  */
 public class GlobalProperties {
-	public static final double STORAGE_NUMBERS_COEF = 10.0; //this is to circumvent a GUI limitation (can't edit below integers). Yeah, that sucks.
-	
 	/**The types of assets available to the player, in decreasing standardization order.
 	 *Put otherwise, the order of the types in this array gives the importance of the different types: ALL elements should provide particular "standard" assets, and may optionnally give others, in decreasing importance.
 	 */
@@ -27,12 +25,12 @@ public class GlobalProperties {
 		result.setProperty(TEST_KEY, TEST_VALUE);
 		result.setProperty("debug", "false");
 		result.setProperty("compatibility_mode", "false");
-		result.setProperty("Creature" + ZOOM_SUFFIX, "15");
-		result.setProperty("Plant" + ZOOM_SUFFIX, "10");
-		result.setProperty("Mission" + ZOOM_SUFFIX, "10");
+		result.setProperty("Creature" + ZOOM_SUFFIX, "1.5");
+		result.setProperty("Plant" + ZOOM_SUFFIX, "1");
+		result.setProperty("Mission" + ZOOM_SUFFIX, "1");
 		result.setProperty("default_folder", "../ressources/elements/defaults/");
-		result.setProperty("Creature_Speed", "30");
-		result.setProperty("coef_croissance_plantes", "10");
+		result.setProperty("Creature_Speed", "3");
+		result.setProperty("coef_croissance_plantes", "1");
 		result.setProperty("language", AVAILABLE_LANGUAGES[0]);
 		result.setProperty("assets_type", AVAILABLE_ASSETS_TYPES[0]);
 		result.setProperty("font_size", "40");
@@ -123,7 +121,7 @@ public class GlobalProperties {
 	public static Double getDouble(String key) {
 		init();
 		try {
-			return new Double(props.getProperty(key)) / STORAGE_NUMBERS_COEF;
+			return new Double(props.getProperty(key));
 		} catch (NumberFormatException e) {
 			System.err.println("Couldn't parse option \"" + key + "\" as double ! Returned default value " + DEFAULT_DOUBLE_VALUE + " instead.");
 			return DEFAULT_DOUBLE_VALUE;
