@@ -60,7 +60,7 @@ public class Creature extends XMLLoadableElement implements Cloneable {
 	
     public Creature(String ID) {
 		load(ID);
-        img = stillImages().get(0);
+        img = getAsset("still");
         init();
     }
 	

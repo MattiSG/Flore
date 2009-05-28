@@ -1,7 +1,5 @@
 package game;
 
-import xml.GlobalProperties;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -23,10 +21,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import xml.GlobalProperties;
+
 public class OptionsEditor extends JFrame {
-	public static final String[] assetsTypes = {"standard", "high_contrast"};
-	public static final String[] languages = {"fr"};
-	
     private JPanel centerPanel = new JPanel();
     private Font font = new Font(null, Font.BOLD, GlobalProperties.getInteger("font_size"));
 
@@ -165,7 +162,7 @@ public class OptionsEditor extends JFrame {
     }
 
     private void setLanguage() {
-        JComboBox list = new JComboBox(languages);
+        JComboBox list = new JComboBox(GlobalProperties.AVAILABLE_LANGUAGES);
         list.setSelectedItem(GlobalProperties.get("language"));
 
         list.addItemListener(new ItemListener() {
@@ -185,7 +182,7 @@ public class OptionsEditor extends JFrame {
     }
     
     private void setAssetType() {
-        JComboBox list = new JComboBox(assetsTypes);
+        JComboBox list = new JComboBox(GlobalProperties.AVAILABLE_ASSETS_TYPES);
         list.setSelectedItem(GlobalProperties.get("assets_type"));
 
         list.addItemListener(new ItemListener() {

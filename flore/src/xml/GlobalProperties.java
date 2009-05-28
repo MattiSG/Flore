@@ -10,7 +10,14 @@ import java.awt.Font;
 /**This class holds the global options used throughout the game.
  */
 public class GlobalProperties {
-	public static final double STORAGE_NUMBERS_COEF = 10.0;
+	public static final double STORAGE_NUMBERS_COEF = 10.0; //this is to circumvent a GUI limitation (can't edit below integers). Yeah, that sucks.
+	
+	/**The types of assets available to the player, in decreasing standardization order.
+	 *Put otherwise, the order of the types in this array gives the importance of the different types: ALL elements should provide particular "standard" assets, and may optionnally give others, in decreasing importance.
+	 */
+	public static final String[] AVAILABLE_ASSETS_TYPES = {"standard", "high_contrast"}; //WARNING : ORDER DOES MATTER ! ALWAYS PUT STANDARD IN THE FIRST PLACE !
+	
+	public static final String[] AVAILABLE_LANGUAGES = {"fr"};
 	
 	/**Get default options values.
 	 *Feel free to add your own values !
@@ -26,8 +33,8 @@ public class GlobalProperties {
 		result.setProperty("default_folder", "../ressources/elements/defaults/");
 		result.setProperty("Creature_Speed", "30");
 		result.setProperty("coef_croissance_plantes", "10");
-		result.setProperty("language", "fr");
-		result.setProperty("assets_type", "standard");
+		result.setProperty("language", AVAILABLE_LANGUAGES[0]);
+		result.setProperty("assets_type", AVAILABLE_ASSETS_TYPES[0]);
 		result.setProperty("font_size", "40");
 		return result;
 	}

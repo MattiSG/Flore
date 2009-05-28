@@ -45,7 +45,7 @@ public abstract class XMLLoadableElement {
 	private final String	EXPR_VERSION = rootElement() + "/id/../@version",
 							EXPR_ID = rootElement() + "/id",
 							EXPR_NAME = rootElement() + "/name[@lang='" + GlobalProperties.get("language") + "']",
-							EXPR_ASSETS = rootElement() + "/assets[@type='" + GlobalProperties.get("assets_type") + "']",
+							EXPR_ASSETS = rootElement() + "/assets",
 							EXPR_DESCRIPTION = rootElement() + "/description",
 							WIDTH_ATTRIBUTE = "width",
 							HEIGHT_ATTRIBUTE = "height";
@@ -125,6 +125,8 @@ public abstract class XMLLoadableElement {
 	//@{
 	protected Map<String, List<BufferedImage>> loadAssets(String query) {
 		Map<String, List<Node>> map = parser.getNodesListsMap(query);
+		if (map.isEmpty())
+			throw new IllegalArgumentException("Erreur à l'initialisation de l'élément " + ID() + " (\"" + name() + "\") : aucune image n'a pu être chargée !\nLa requête Xpath \"" + query + "\" n'a pu être satisfaite.");
 		Map<String, List<BufferedImage>> assets = new HashMap<String, List<BufferedImage>>();
 		for (String key : map.keySet()) {
 			List<Node> imagesNodes = map.get(key);		
@@ -144,37 +146,6 @@ public abstract class XMLLoadableElement {
 			assets.put(key, images);
 		}
 		return assets;
-	}
-	
-	/**Resizes the given image to the given dimensions.
-	 */
-	private BufferedImage resize(BufferedImage image, Dimension dimensions) {
-//		AffineTransform t = new AffineTransform();
-//        t.scale(dimensions.getWidth() / image.getWidth(), dimensions.getHeight() / image.getHeight());
-//        AffineTransformOp op = new AffineTransformOp(t, AffineTransformOp.TYPE_BILINEAR);
-//		java.awt.GraphicsEnvironment ge = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
-//		java.awt.GraphicsDevice gs = ge.getDefaultScreenDevice();
-//		java.awt.GraphicsConfiguration gc = gs.getDefaultConfiguration();
-//		BufferedImage result = gc.createCompatibleImage((int) dimensions.getWidth(), (int) dimensions.getHeight(), java.awt.Transparency.TRANSLUCENT);
-//        return op.filter(image, result);
-		java.awt.GraphicsEnvironment ge = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
-		java.awt.GraphicsDevice gs = ge.getDefaultScreenDevice();
-		java.awt.GraphicsConfiguration gc = gs.getDefaultConfiguration();
-//		double ratio = image.getWidth() / image.getHeight();
-		BufferedImage result = gc.createCompatibleImage((int) (dimensions.getWidth() * zoom()), (int) (dimensions.getHeight() * zoom()), java.awt.Transparency.TRANSLUCENT);
-		java.awt.Graphics2D g = result.createGraphics();
-		g.drawImage(image, 0, 0, (int) (dimensions.getWidth() * zoom()), (int) (dimensions.getHeight() * zoom()), null);
-		g.dispose();
-		return result;
-	}
-	
-	/**Returns a list of buffered images from a list of their paths, relative to the XML document of this element.
-	 */
-	public List<BufferedImage> loadImages(List<String> paths) {
-		List<BufferedImage> result = new ArrayList<BufferedImage>(paths.size());
-		for (String path : paths)
-			result.add(loadImage(path));
-		return result;
 	}
 	
 	/**Returns an image, correctly loaded and resized according to the width and height attributes of the node, if available, and with the zoom factor from the zoom() method.
@@ -213,6 +184,28 @@ public abstract class XMLLoadableElement {
 		} catch(Exception e) {
 			throw new RuntimeException("Erreur (" + e + ") au chargement d'une image !\nFichier à charger : " + imageURI);
 		}
+	}
+	
+	/**Resizes the given image to the given dimensions.
+	 */
+	private BufferedImage resize(BufferedImage image, Dimension dimensions) {
+		//		AffineTransform t = new AffineTransform();
+		//        t.scale(dimensions.getWidth() / image.getWidth(), dimensions.getHeight() / image.getHeight());
+		//        AffineTransformOp op = new AffineTransformOp(t, AffineTransformOp.TYPE_BILINEAR);
+		//		java.awt.GraphicsEnvironment ge = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
+		//		java.awt.GraphicsDevice gs = ge.getDefaultScreenDevice();
+		//		java.awt.GraphicsConfiguration gc = gs.getDefaultConfiguration();
+		//		BufferedImage result = gc.createCompatibleImage((int) dimensions.getWidth(), (int) dimensions.getHeight(), java.awt.Transparency.TRANSLUCENT);
+		//        return op.filter(image, result);
+		java.awt.GraphicsEnvironment ge = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
+		java.awt.GraphicsDevice gs = ge.getDefaultScreenDevice();
+		java.awt.GraphicsConfiguration gc = gs.getDefaultConfiguration();
+		//		double ratio = image.getWidth() / image.getHeight();
+		BufferedImage result = gc.createCompatibleImage((int) (dimensions.getWidth() * zoom()), (int) (dimensions.getHeight() * zoom()), java.awt.Transparency.TRANSLUCENT);
+		java.awt.Graphics2D g = result.createGraphics();
+		g.drawImage(image, 0, 0, (int) (dimensions.getWidth() * zoom()), (int) (dimensions.getHeight() * zoom()), null);
+		g.dispose();
+		return result;
 	}
 	
 	/**Tells whether the given String is a valid key for an asset or not.
@@ -279,7 +272,17 @@ public abstract class XMLLoadableElement {
 		name = parser.get(EXPR_NAME);
 		description = parser.get(EXPR_DESCRIPTION);
 		
-		assets = loadAssets(EXPR_ASSETS);
+		boolean ok = false;
+		int assetsTypeIndex = java.util.Arrays.asList(GlobalProperties.AVAILABLE_ASSETS_TYPES).indexOf(GlobalProperties.get("assets_type"));
+		assetsTypeIndex = (assetsTypeIndex >= 0 ? assetsTypeIndex : 0); //protecting the type against bad property value
+		do {
+			try {
+				assets = loadAssets(EXPR_ASSETS + "[@type='" + GlobalProperties.AVAILABLE_ASSETS_TYPES[assetsTypeIndex] + "']");
+				ok = true;
+			} catch (IllegalArgumentException e) {
+				assetsTypeIndex--;
+			}
+		} while (! ok);
 		
 		parsePrivates();
 	}
